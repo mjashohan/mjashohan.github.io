@@ -27,8 +27,15 @@ export default function Navigation() {
                 const el = document.getElementById(s.id);
                 if (el && el.offsetTop <= scrollY) current = s.id;
             });
+
+            const atBottom =
+                window.innerHeight + window.scrollY >=
+                document.documentElement.scrollHeight - 4;
+            if (atBottom) current = sections[sections.length - 1].id;
+
             setActive(current);
         };
+
         window.addEventListener('scroll', handleScroll, { passive: true });
         handleScroll();
         return () => window.removeEventListener('scroll', handleScroll);
