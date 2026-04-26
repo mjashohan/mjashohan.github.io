@@ -8,8 +8,6 @@
   --text: #e6f1ff;
   --text-dim: #8892b0;
   --border: rgba(100, 255, 218, 0.1);
-  --safe-top: env(safe-area-inset-top);
-  --safe-bottom: env(safe-area-inset-bottom);
 }
 
 * {
@@ -26,12 +24,8 @@ html, body {
   color: var(--text);
   scroll-behavior: smooth;
   font-family: "Manrope", sans-serif;
-  /* Prevents iOS Safari zooming when an input is focused.
-     Inputs themselves should also stay >= 16px for the same reason. */
+  /* Stay >= 16px to prevent iOS Safari zoom-on-focus for inputs */
   font-size: 16px;
-  /* Allow content to extend under iOS notch + home indicator */
-  min-height: 100vh;
-  min-height: 100dvh;
 }
 
 body {
@@ -39,10 +33,10 @@ body {
           radial-gradient(ellipse 80% 50% at 50% 0%, rgba(100, 255, 218, 0.08), transparent 60%),
           radial-gradient(ellipse 60% 40% at 80% 100%, rgba(255, 126, 95, 0.05), transparent 60%);
   background-attachment: fixed;
-  overscroll-behavior-y: none;
+  min-height: 100vh;
 }
 
-/* Custom scrollbar — desktop only. Touch devices get the OS-native one. */
+/* Custom scrollbar — desktop pointers only. Touch devices keep the OS scrollbar. */
 @media (hover: hover) and (pointer: fine) {
   ::-webkit-scrollbar { width: 10px; height: 10px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
@@ -146,15 +140,12 @@ body {
 
 html, body { overflow-x: hidden; }
 
-/* Honor reduced-motion preference (vestibular accessibility).
-   Framer Motion already respects this for its own animations,
-   but our CSS keyframes need explicit handling. */
+/* Honor reduced-motion preference (vestibular accessibility). */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
   .glow-orb { animation: none; }
   .cursor-blink { animation: none; opacity: 1; }

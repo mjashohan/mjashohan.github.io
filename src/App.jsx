@@ -21,7 +21,14 @@ export default function App() {
                     maxWidth="xl"
                     sx={{
                         px: { xs: 1.5, sm: 2.5, md: 3, lg: 4 },
-                        py: { xs: 2, sm: 3, md: 4 },
+                        // Top padding must clear the fixed AppBar (56 / 64 / 72 px),
+                        // plus iOS safe-area, plus breathing room before content.
+                        pt: {
+                            xs: 'calc(56px + env(safe-area-inset-top) + 24px)',
+                            sm: 'calc(64px + env(safe-area-inset-top) + 28px)',
+                            md: 'calc(72px + env(safe-area-inset-top) + 32px)',
+                        },
+                        pb: { xs: 3, sm: 4, md: 5 },
                     }}
                 >
                     <Box
