@@ -67,11 +67,11 @@ export default function Sidebar() {
             aria-hidden
             sx={{
               position: 'absolute',
-              inset: -6,
+              inset: -8,
               borderRadius: '50%',
               background:
                 'conic-gradient(from 0deg, #64ffda, #ff7e5f, #64ffda)',
-              filter: 'blur(8px)',
+              filter: 'blur(10px)',
               opacity: 0.5,
             }}
           />
@@ -79,8 +79,8 @@ export default function Sidebar() {
             src={personal.avatar}
             alt={personal.name}
             sx={{
-              width: 130,
-              height: 130,
+              width: 200,
+              height: 200,
               border: '3px solid',
               borderColor: 'background.paper',
               position: 'relative',
