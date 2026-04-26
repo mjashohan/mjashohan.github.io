@@ -12,7 +12,7 @@ export const personal = {
   linkedin: 'https://www.linkedin.com/in/mjashohan1/',
   // Replace this with your real headshot — drop a file at /public/avatar.jpg
   // and change the line below to './avatar.jpg'.
-  avatar: './avatar.svg',
+  avatar: './shohan.jpg',
   // TODO: Write your "about me" intro here. Keep it 2–4 sentences.
   about: `Backend-leaning full-stack engineer based in Essen, Germany. I currently build and modernize CMS platforms with Liferay and Java at CONVOTIS Münster, and I enjoy the unglamorous work of upgrading legacy systems until they hum. I care about clean APIs, reliable data, and developer experience.`,
 };
