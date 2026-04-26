@@ -6,29 +6,29 @@ import { experience } from '../data/experience.js';
 
 export default function ExperienceSection() {
   return (
-    <Box id="experience" component="section" sx={{ py: { xs: 6, md: 10 }, scrollMarginTop: 96 }}>
+    <Box id="experience" component="section" sx={{ py: { xs: 5, sm: 6, md: 10 }, scrollMarginTop: 96  }}>
       <SectionHeader
         tag="01. Where I've worked"
         title="Experience"
         subtitle="A few of the places I've contributed code, broken builds, and shipped fixes."
       />
 
-      <Box
-        sx={{
-          position: 'relative',
-          pl: { xs: 3, md: 4 },
-          '&::before': {
-            content: '""',
-            position: 'absolute',
-            left: { xs: 6, md: 8 },
-            top: 8,
-            bottom: 8,
-            width: 2,
-            background:
-              'linear-gradient(180deg, rgba(100,255,218,0.5) 0%, rgba(100,255,218,0.05) 100%)',
-          },
-        }}
-      >
+        <Box
+            sx={{
+                position: 'relative',
+                pl: { xs: 2.5, sm: 3, md: 4 },
+                '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    left: { xs: 4, sm: 6, md: 8 },
+                    top: 8,
+                    bottom: 8,
+                    width: 2,
+                    background:
+                        'linear-gradient(180deg, rgba(100,255,218,0.5) 0%, rgba(100,255,218,0.05) 100%)',
+                },
+            }}
+        >
         {experience.map((job, idx) => (
           <motion.div
             key={`${job.company}-${idx}`}
@@ -42,7 +42,7 @@ export default function ExperienceSection() {
               <Box
                 sx={{
                   position: 'absolute',
-                  left: { xs: -22, md: -28 },
+                  left: { xs: -20, sm: -22, md: -28 },
                   top: 24,
                   width: 14,
                   height: 14,
@@ -74,7 +74,7 @@ export default function ExperienceSection() {
                   },
                 }}
               >
-                <CardContent sx={{ p: 3 }}>
+                <CardContent sx={{ p: { xs: 2, sm: 2.5, md: 3 } }}>
                   <Stack
                     direction={{ xs: 'column', sm: 'row' }}
                     justifyContent="space-between"

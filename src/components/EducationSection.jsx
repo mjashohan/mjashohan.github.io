@@ -6,7 +6,7 @@ import { education } from '../data/education.js';
 
 export default function EducationSection() {
   return (
-    <Box id="education" component="section" sx={{ py: { xs: 6, md: 10 }, scrollMarginTop: 96 }}>
+      <Box id="education" component="section" sx={{ py: { xs: 5, sm: 6, md: 10 }, scrollMarginTop: 96 }}>
       <SectionHeader tag="02. Where I studied" title="Education" />
 
       <Stack spacing={3}>
@@ -44,7 +44,7 @@ export default function EducationSection() {
                   borderBottomLeftRadius: 12,
                 }}
               />
-              <CardContent sx={{ p: 3, pl: 4 }}>
+              <CardContent sx={{ p: { xs: 2, sm: 2.5, md: 3 }, pl: { xs: 2.5, sm: 3, md: 4 } }}>
                 <Stack
                   direction={{ xs: 'column', sm: 'row' }}
                   justifyContent="space-between"

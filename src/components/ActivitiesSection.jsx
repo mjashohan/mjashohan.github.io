@@ -12,14 +12,14 @@ const ICONS = {
 
 export default function ActivitiesSection() {
   return (
-    <Box id="activities" component="section" sx={{ py: { xs: 6, md: 10 }, scrollMarginTop: 96 }}>
+     <Box id="activities" component="section" sx={{ py: { xs: 5, sm: 6, md: 10 }, scrollMarginTop: 96 }}>
       <SectionHeader
         tag="04. Off the clock"
         title="Extra-Curricular"
         subtitle="A few things I've done outside of work and studies."
       />
 
-      <Grid container spacing={3}>
+      <Grid container spacing={{ xs: 2, sm: 3 }}>
         {activities.map((cat, idx) => {
           const Icon = ICONS[cat.category] || EmojiEventsOutlinedIcon;
           return (
@@ -41,7 +41,7 @@ export default function ActivitiesSection() {
                     },
                   }}
                 >
-                  <CardContent sx={{ p: 3 }}>
+                   <CardContent sx={{ p: { xs: 2, sm: 2.5, md: 3 } }}>
                     <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 2.5 }}>
                       <Box
                         sx={{

@@ -5,7 +5,7 @@ import ThesisProjects from './ThesisProjects.jsx';
 
 export default function ProjectsSection() {
   return (
-    <Box id="projects" component="section" sx={{ py: { xs: 6, md: 10 }, scrollMarginTop: 96 }}>
+    <Box id="projects" component="section" sx={{ py: { xs: 5, sm: 6, md: 10 }, scrollMarginTop: 96 }}>
       <SectionHeader
         tag="03. What I've built"
         title="Projects"

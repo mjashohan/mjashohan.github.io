@@ -10,35 +10,41 @@ import ActivitiesSection from './components/ActivitiesSection.jsx';
 import Footer from './components/Footer.jsx';
 
 export default function App() {
-  return (
-    <Box sx={{ position: 'relative', minHeight: '100vh' }}>
-      <BackgroundEffect />
+    return (
+        <Box sx={{ position: 'relative', minHeight: '100vh' }}>
+            <BackgroundEffect />
 
-      <Box sx={{ position: 'relative', zIndex: 2 }}>
-        <Navigation />
+            <Box sx={{ position: 'relative', zIndex: 2 }}>
+                <Navigation />
 
-        <Container maxWidth="xl" sx={{ px: { xs: 2, md: 4 }, py: { xs: 3, md: 4 } }}>
-          <Box
-            sx={{
-              display: 'flex',
-              gap: { xs: 3, md: 4 },
-              flexDirection: { xs: 'column', md: 'row' },
-              alignItems: 'flex-start',
-            }}
-          >
-            <Sidebar />
+                <Container
+                    maxWidth="xl"
+                    sx={{
+                        px: { xs: 1.5, sm: 2.5, md: 3, lg: 4 },
+                        py: { xs: 2, sm: 3, md: 4 },
+                    }}
+                >
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            gap: { xs: 2.5, md: 3, lg: 4 },
+                            flexDirection: { xs: 'column', lg: 'row' },
+                            alignItems: 'flex-start',
+                        }}
+                    >
+                        <Sidebar />
 
-            <Box component="main" sx={{ flex: 1, minWidth: 0 }}>
-              <Hero />
-              <ExperienceSection />
-              <EducationSection />
-              <ProjectsSection />
-              <ActivitiesSection />
-              <Footer />
+                        <Box component="main" sx={{ flex: 1, minWidth: 0, width: '100%' }}>
+                            <Hero />
+                            <ExperienceSection />
+                            <EducationSection />
+                            <ProjectsSection />
+                            <ActivitiesSection />
+                            <Footer />
+                        </Box>
+                    </Box>
+                </Container>
             </Box>
-          </Box>
-        </Container>
-      </Box>
-    </Box>
-  );
+        </Box>
+    );
 }
