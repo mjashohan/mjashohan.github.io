@@ -1,9 +1,9 @@
 // Personal info — edit here to update across the site.
 export const personal = {
-  name: 'Md Jahan Ali Shohan',
+  name: 'Muhammad Jahan Ali Shohan',
   shortName: 'Shohan',
   title: 'Software Engineer',
-  tagline: ['I build things for the backend.', 'Java · Liferay · Spring Boot · React'],
+  tagline: ['I build webapps and softwares.', 'Java · Liferay · Spring Boot · React'],
   location: 'Essen, Germany',
   email: 'mjashohan@gmail.com',
   phone: '+49 1522 8363090',

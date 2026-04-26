@@ -6,7 +6,7 @@ import { experience } from '../data/experience.js';
 
 export default function ExperienceSection() {
   return (
-    <Box id="experience" component="section" sx={{ py: { xs: 6, md: 10 }, scrollMarginTop: 80 }}>
+    <Box id="experience" component="section" sx={{ py: { xs: 6, md: 10 }, scrollMarginTop: 96 }}>
       <SectionHeader
         tag="01. Where I've worked"
         title="Experience"

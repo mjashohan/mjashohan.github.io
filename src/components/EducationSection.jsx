@@ -6,7 +6,7 @@ import { education } from '../data/education.js';
 
 export default function EducationSection() {
   return (
-    <Box id="education" component="section" sx={{ py: { xs: 6, md: 10 }, scrollMarginTop: 80 }}>
+    <Box id="education" component="section" sx={{ py: { xs: 6, md: 10 }, scrollMarginTop: 96 }}>
       <SectionHeader tag="02. Where I studied" title="Education" />
 
       <Stack spacing={3}>

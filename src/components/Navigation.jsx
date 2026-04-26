@@ -3,6 +3,8 @@ import { AppBar, Box, Button, Stack, Toolbar, Typography, useMediaQuery } from '
 import { useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 
+export const NAV_HEIGHT = { xs: 64, md: 72 };
+
 const sections = [
   { id: 'home', label: 'Home', code: '00' },
   { id: 'experience', label: 'Experience', code: '01' },
@@ -16,39 +18,48 @@ export default function Navigation() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY + 200;
-      let current = 'home';
-      sections.forEach((s) => {
-        const el = document.getElementById(s.id);
-        if (el && el.offsetTop <= scrollY) current = s.id;
-      });
-      setActive(current);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    useEffect(() => {
+        const handleScroll = () => {
+            const navHeight = window.innerWidth >= 900 ? 72 : 64;
+            const scrollY = window.scrollY + navHeight + 80;
+            let current = 'home';
+            sections.forEach((s) => {
+                const el = document.getElementById(s.id);
+                if (el && el.offsetTop <= scrollY) current = s.id;
+            });
+            setActive(current);
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
-  const scrollTo = (id) => {
-    const el = document.getElementById(id);
-    if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - 24;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
-  };
+    const scrollTo = (id) => {
+        const el = document.getElementById(id);
+        if (el) {
+            // Offset by navbar height + small breathing room so the section heading
+            // isn't tucked right against the bottom of the bar.
+            const navHeight = window.innerWidth >= 900 ? 72 : 64;
+            const top = el.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+            window.scrollTo({ top, behavior: 'smooth' });
+        }
+    };
 
   return (
     <AppBar
-      position="sticky"
+      position="fixed"
       elevation={0}
       sx={{
-        bgcolor: 'rgba(10, 14, 23, 0.7)',
-        backdropFilter: 'blur(16px)',
-        borderBottom: '1px solid',
-        borderColor: 'divider',
-        zIndex: 10,
+          top: 0,
+          left: 0,
+          right: 0,
+          width: '100%',
+          bgcolor: 'rgba(10, 14, 23, 0.78)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          borderBottom: '1px solid',
+          borderColor: 'divider',
+          zIndex: (t) => t.zIndex.appBar,
       }}
     >
       <Toolbar

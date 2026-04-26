@@ -12,7 +12,7 @@ const ICONS = {
 
 export default function ActivitiesSection() {
   return (
-    <Box id="activities" component="section" sx={{ py: { xs: 6, md: 10 }, scrollMarginTop: 80 }}>
+    <Box id="activities" component="section" sx={{ py: { xs: 6, md: 10 }, scrollMarginTop: 96 }}>
       <SectionHeader
         tag="04. Off the clock"
         title="Extra-Curricular"

@@ -48,13 +48,14 @@ const fadeIn = {
 export default function Hero() {
   const typed = useTypewriter(personal.tagline);
 
-  const scrollTo = (id) => {
-    const el = document.getElementById(id);
-    if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - 24;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
-  };
+    const scrollTo = (id) => {
+        const el = document.getElementById(id);
+        if (el) {
+            const navHeight = window.innerWidth >= 900 ? 72 : 64;
+            const top = el.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+            window.scrollTo({ top, behavior: 'smooth' });
+        }
+    };
 
   return (
     <Box
@@ -63,7 +64,7 @@ export default function Hero() {
       sx={{
         position: 'relative',
         py: { xs: 6, md: 10 },
-        scrollMarginTop: 80,
+        scrollMarginTop: 96,
       }}
     >
       <motion.div
