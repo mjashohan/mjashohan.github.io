@@ -14,7 +14,7 @@ export const personal = {
   // and change the line below to './avatar.jpg'.
   avatar: './shohan.jpg',
   // TODO: Write your "about me" intro here. Keep it 2–4 sentences.
-  about: `Backend-leaning full-stack engineer based in Essen, Germany. I currently build and modernize CMS platforms with Liferay and Java at CONVOTIS Münster, and I enjoy the unglamorous work of upgrading legacy systems until they hum. I care about clean APIs, reliable data, and developer experience.`,
+  about: `Hi, I'm Md Jahan Ali Shohan. I am a Software Engineer based in Essen  who loves bridging the gap between digital code and the physical world. By day, I build robust, full-stack web applications using Java, Spring Boot, and React. But my tech journey goes way beyond the browser—I have built everything from line-following robots and automated bike parking systems to an autonomous aquatic rover that tests lake water quality! Whether I am developing a blockchain search engine to track banned European products or helping arrange the press conference for Bangladesh's very first satellite launch, I am always chasing the next big challenge`,
 };
 
 export const languages = [
