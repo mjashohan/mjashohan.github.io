@@ -3,7 +3,6 @@ export const education = [
     degree: 'M.S. in Web Engineering',
     institution: 'Technische Universität Chemnitz',
     period: 'October 2018 — Present',
-    expected: 'Expected graduation: 2024',
     focus: [
       'Software Service Engineering',
       'Current Trends in Web Engineering',
