@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 
@@ -26,6 +27,13 @@ const sections = [
     { id: 'education', label: 'Education', code: '02' },
     { id: 'projects', label: 'Projects', code: '03' },
     { id: 'activities', label: 'Activities', code: '04' },
+];
+
+// Outbound links to standalone static pages served from public/.
+// Deliberately kept OUT of `sections` so the scroll-spy and the
+// `atBottom` last-section fallback keep working untouched.
+const externalLinks = [
+    { label: 'German', code: '05', href: '/germanLessons/artikel/' },
 ];
 
 // Single source of truth for how tall the nav is at the current viewport.
@@ -181,6 +189,42 @@ export default function Navigation() {
                                     </Button>
                                 );
                             })}
+
+                            {/* Outbound static pages — never "active", so no layoutId underline */}
+                            {externalLinks.map((l) => (
+                                <Button
+                                    key={l.href}
+                                    component="a"
+                                    href={l.href}
+                                    target="_blank"
+                                    rel="noopener"
+                                    sx={{
+                                        minWidth: 'auto',
+                                        px: 1.8,
+                                        py: 0.8,
+                                        color: 'text.primary',
+                                        position: 'relative',
+                                        fontSize: '0.92rem',
+                                        fontWeight: 500,
+                                        '&:hover': { color: 'primary.main', bgcolor: 'transparent' },
+                                    }}
+                                >
+                                    <Typography
+                                        component="span"
+                                        sx={{
+                                            color: 'primary.main',
+                                            fontFamily: '"JetBrains Mono", monospace',
+                                            fontSize: '0.72rem',
+                                            mr: 0.8,
+                                            opacity: 0.7,
+                                        }}
+                                    >
+                                        {l.code}.
+                                    </Typography>
+                                    {l.label}
+                                    <OpenInNewIcon sx={{ fontSize: 13, ml: 0.6, opacity: 0.55 }} />
+                                </Button>
+                            ))}
                         </Stack>
                     )}
 
@@ -281,6 +325,46 @@ export default function Navigation() {
                             </ListItemButton>
                         );
                     })}
+
+                    {/* Outbound static pages */}
+                    {externalLinks.map((l) => (
+                        <ListItemButton
+                            key={l.href}
+                            component="a"
+                            href={l.href}
+                            target="_blank"
+                            rel="noopener"
+                            onClick={() => setDrawerOpen(false)}
+                            sx={{
+                                py: 1.5,
+                                px: 3,
+                                borderLeft: '2px solid',
+                                borderColor: 'transparent',
+                                transition: 'all 0.2s ease',
+                                '&:hover': { bgcolor: 'rgba(100, 255, 218, 0.08)' },
+                            }}
+                        >
+                            <Typography
+                                component="span"
+                                sx={{
+                                    color: 'primary.main',
+                                    fontFamily: '"JetBrains Mono", monospace',
+                                    fontSize: '0.72rem',
+                                    mr: 1.5,
+                                    opacity: 0.8,
+                                }}
+                            >
+                                {l.code}.
+                            </Typography>
+                            <ListItemText
+                                primary={l.label}
+                                primaryTypographyProps={{
+                                    sx: { color: 'text.primary', fontWeight: 500 },
+                                }}
+                            />
+                            <OpenInNewIcon sx={{ fontSize: 15, opacity: 0.5, ml: 1 }} />
+                        </ListItemButton>
+                    ))}
                 </List>
             </Drawer>
         </>
