@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        html{color-scheme:light dark}
+        body{margin:0}
+        img{max-width:100%}
+        [hidden]{display:none!important}
+    </style>
+    <title>Wortschatz A1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+Bengali:wght@400;500;600&display=swap">
+
+    <style>
+        :root{
+            --paper:#F4F6F8;
+            --surface:#FFFFFF;
+            --surface-2:#E9ECF1;
+            --ink:#131B25;
+            --ink-2:#3B4A5A;
+            --muted:#69788A;
+            --line:#D6DCE4;
+            --line-strong:#B4BECB;
+            --m:#1F5FA8;  --m-soft:#E3ECF8;
+            --f:#AC2E43;  --f-soft:#FAE5E8;
+            --n:#2A7752;  --n-soft:#E0F0E7;
+            --pl:#665594; --pl-soft:#ECE8F5;
+            --shadow:0 1px 2px rgba(19,27,37,.05), 0 8px 24px -16px rgba(19,27,37,.28);
+            --sans:"Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+            --slab:"Zilla Slab", Georgia, "Times New Roman", serif;
+            --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+            --bn:"Noto Sans Bengali", "Nirmala UI", "Vrinda", "Shonar Bangla", sans-serif;
+        }
+        @media (prefers-color-scheme: dark){
+            :root:not([data-theme="light"]){
+                --paper:#0F141B; --surface:#161E27; --surface-2:#1E2833;
+                --ink:#E9EEF4; --ink-2:#BAC5D2; --muted:#8A98A9;
+                --line:#293441; --line-strong:#3A4756;
+                --m:#7FB4EE;  --m-soft:#15283C;
+                --f:#F0919E;  --f-soft:#391C24;
+                --n:#79CB9F;  --n-soft:#142D21;
+                --pl:#B3A4DE; --pl-soft:#231E36;
+                --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 28px -18px rgba(0,0,0,.9);
+            }
+        }
+        :root[data-theme="dark"]{
+            --paper:#0F141B; --surface:#161E27; --surface-2:#1E2833;
+            --ink:#E9EEF4; --ink-2:#BAC5D2; --muted:#8A98A9;
+            --line:#293441; --line-strong:#3A4756;
+            --m:#7FB4EE;  --m-soft:#15283C;
+            --f:#F0919E;  --f-soft:#391C24;
+            --n:#79CB9F;  --n-soft:#142D21;
+            --pl:#B3A4DE; --pl-soft:#231E36;
+            --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 28px -18px rgba(0,0,0,.9);
+        }
+
+        *{box-sizing:border-box}
+        body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+            font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+        .wrap{max-width:1000px;margin:0 auto;padding:0 24px 80px}
+        h1,h3{font-family:var(--slab);text-wrap:balance;margin:0}
+        h3{font-size:1.05rem;font-weight:600}
+        p{margin:0}
+        a{color:var(--m)}
+        .eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+        .en{color:var(--muted)}
+        .bn{font-family:var(--bn);font-size:1.06em}
+
+        header.mast{border-bottom:1px solid var(--line);background:var(--surface)}
+        .mast-in{max-width:1000px;margin:0 auto;padding:44px 24px 34px;
+            display:grid;gap:24px;grid-template-columns:minmax(0,1fr) auto;align-items:end}
+        .mast h1{font-size:clamp(2.2rem,6vw,3.4rem);font-weight:700;line-height:1.03;letter-spacing:-.025em}
+        .mast h1 em{font-style:normal;color:var(--m)}
+        .mast .sub{margin-top:12px;max-width:56ch;color:var(--ink-2);font-size:1.02rem}
+        .deckcount{text-align:right;font-family:var(--slab)}
+        .deckcount b{display:block;font-size:2.4rem;line-height:1;font-variant-numeric:tabular-nums}
+        .deckcount span{font-family:var(--sans);font-size:.75rem;letter-spacing:.12em;
+            text-transform:uppercase;color:var(--muted);font-weight:700}
+        .homelink{display:inline-block;margin-bottom:10px;font-size:.86rem;font-weight:600;
+            color:var(--muted);text-decoration:none}
+        .homelink:hover{color:var(--ink)}
+
+        .controls{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+        .controls-in{max-width:1000px;margin:0 auto;padding:12px 24px;
+            display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+        .fieldset{display:flex;align-items:center;gap:8px}
+        .fieldset > label{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+        .chips{display:flex;gap:4px}
+        .chip{font-family:var(--sans);font-size:.85rem;font-weight:600;padding:5px 12px;border-radius:99px;
+            border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-2);cursor:pointer;white-space:nowrap}
+        .chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+        .spacer{flex:1 1 auto}
+        .linky{background:none;border:none;color:var(--muted);font-family:var(--sans);font-size:.84rem;
+            font-weight:600;cursor:pointer;padding:4px;text-decoration:underline;text-underline-offset:3px}
+        .linky:hover{color:var(--ink)}
+
+        main{padding-top:32px}
+        #quiz{background:var(--surface);border:1px solid var(--line-strong);border-radius:14px;
+            padding:28px;box-shadow:var(--shadow)}
+        .q-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;
+            padding-bottom:14px;border-bottom:1px solid var(--line)}
+        .stats{display:flex;gap:20px;font-family:var(--mono);font-size:.82rem;color:var(--muted);
+            font-variant-numeric:tabular-nums}
+        .stats b{color:var(--ink);font-weight:600}
+        .stats .streak.hot{color:var(--f)}
+        .q-word{font-family:var(--slab);font-size:clamp(2.1rem,6.5vw,3.2rem);font-weight:600;
+            margin:26px 0 0;letter-spacing:-.015em;line-height:1.1;text-wrap:balance}
+        .q-sub{color:var(--muted);font-size:.92rem;min-height:1.4em;font-family:var(--mono)}
+
+        .options{display:grid;gap:10px;margin-top:24px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+        .opt{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline;text-align:left;
+            font-family:var(--sans);font-size:1rem;padding:13px 16px;border-radius:9px;cursor:pointer;
+            border:1.5px solid var(--line-strong);background:var(--surface);color:var(--ink);
+            transition:transform .08s ease, background .15s ease, border-color .15s ease}
+        .opt .num{font-family:var(--mono);font-size:.72rem;font-weight:600;color:var(--muted);
+            border:1px solid var(--line);border-radius:4px;padding:1px 5px;line-height:1.3}
+        .opt .txt{display:block}
+        .opt .gloss{display:block;font-weight:600}
+        .opt .bnl{display:block;font-family:var(--bn);font-size:1.04rem;line-height:1.5;color:var(--muted);margin-top:1px}
+        .opt:hover:not(:disabled){border-color:var(--m);background:var(--m-soft);transform:translateY(-1px)}
+        .opt.right{border-color:var(--n);background:var(--n-soft)}
+        .opt.right .gloss{color:var(--n)}
+        .opt.wrong{border-color:var(--f);background:var(--f-soft)}
+        .opt.wrong .gloss{color:var(--f)}
+        .opt:disabled{cursor:default}
+        .opt.dim{opacity:.5}
+
+        .answer{margin-top:22px;display:grid;gap:10px;min-height:3.4em}
+        .verdict{font-family:var(--slab);font-size:1.05rem;font-weight:600}
+        .verdict.ok{color:var(--n)} .verdict.no{color:var(--f)}
+        .recap{border-left:3px solid var(--line-strong);padding:2px 0 2px 14px;color:var(--ink-2);font-size:.96rem}
+        .recap.has{border-left-color:var(--m)}
+        .recap b{font-family:var(--slab)}
+        .q-foot{margin-top:22px;padding-top:16px;border-top:1px solid var(--line);
+            display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+        .btn{font-family:var(--sans);font-weight:600;font-size:.92rem;padding:9px 20px;border-radius:8px;
+            border:1px solid var(--line-strong);background:var(--surface-2);color:var(--ink);cursor:pointer}
+        .btn:hover{border-color:var(--ink-2)}
+        .btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+        .hint{font-size:.82rem;color:var(--muted)}
+        .hint kbd{font-family:var(--mono);font-size:.78rem;background:var(--surface-2);
+            border:1px solid var(--line);border-radius:4px;padding:1px 5px}
+
+        .grid2{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin-top:28px}
+        .panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;
+            padding:20px 22px;box-shadow:var(--shadow)}
+        .panel h3{margin-bottom:14px}
+        .bar{display:flex;height:10px;border-radius:99px;overflow:hidden;background:var(--surface-2);margin-bottom:12px}
+        .bar span{display:block;height:100%}
+        .legend{display:flex;flex-direction:column;gap:7px;font-size:.92rem}
+        .legend div{display:flex;align-items:center;gap:9px}
+        .legend i{width:9px;height:9px;border-radius:2px;flex:none}
+        .legend b{margin-left:auto;font-family:var(--mono);font-size:.86rem;font-variant-numeric:tabular-nums}
+        .weaklist{display:flex;flex-direction:column;gap:6px;max-height:240px;overflow-y:auto}
+        .weakrow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:baseline;
+            font-size:.94rem;padding:4px 0;border-bottom:1px solid var(--line)}
+        .weakrow:last-child{border-bottom:none}
+        .weakrow .de{font-family:var(--slab);font-weight:600}
+        .weakrow small{font-family:var(--mono);font-size:.78rem;color:var(--f)}
+        .empty{color:var(--muted);font-size:.94rem}
+
+        footer.end{margin-top:40px;border-top:1px solid var(--line-strong);padding-top:18px;
+            color:var(--muted);font-size:.86rem;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+        :focus-visible{outline:2px solid var(--m);outline-offset:2px;border-radius:4px}
+        @media (max-width:720px){
+            .mast-in{grid-template-columns:1fr;padding-top:34px}
+            .deckcount{text-align:left}
+            body{font-size:16px}
+            .options{grid-template-columns:1fr}
+        }
+        @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+    </style>
+</head>
+<body>
+<header class="mast">
+    <div class="mast-in">
+        <div>
+            <a class="homelink" href="index.html">← Übersicht</a>
+            <p class="eyebrow">Goethe-Zertifikat A1 · Wortliste</p>
+            <h1>Wortschatz <em>A1</em></h1>
+            <p class="sub">German word, four meanings — English with the Bengali in brackets. Distractors are drawn from the same word class, so a noun is never given away by a list of verbs.</p>
+        </div>
+        <div class="deckcount"><b id="deckTotal">0</b><span>Wörter</span></div>
+    </div>
+</header>
+
+<div class="controls">
+    <div class="controls-in">
+        <div class="fieldset">
+            <label>Wortart</label>
+            <div class="chips" id="kind">
+                <button type="button" class="chip" data-k="all" aria-pressed="true">Alle</button>
+                <button type="button" class="chip" data-k="noun" aria-pressed="false">Nomen</button>
+                <button type="button" class="chip" data-k="verb" aria-pressed="false">Verben</button>
+                <button type="button" class="chip" data-k="other" aria-pressed="false">Sonstige</button>
+            </div>
+        </div>
+        <div class="fieldset">
+            <label>Liste</label>
+            <div class="chips" id="part">
+                <button type="button" class="chip" data-p="all" aria-pressed="true">A–Z</button>
+                <button type="button" class="chip" data-p="0" aria-pressed="false">A–E</button>
+                <button type="button" class="chip" data-p="1" aria-pressed="false">F–Z</button>
+            </div>
+        </div>
+        <div class="fieldset">
+            <div class="chips">
+                <button type="button" class="chip" id="onlyWeak" aria-pressed="false">Nur meine Fehler</button>
+            </div>
+        </div>
+        <div class="spacer"></div>
+        <button type="button" class="linky" id="reset">Fortschritt löschen</button>
+    </div>
+</div>
+
+<div class="wrap">
+    <main>
+        <div id="quiz">
+            <div class="q-top">
+                <p class="eyebrow">Was bedeutet das Wort?</p>
+                <div class="stats">
+                    <span>Runde <b id="sScore">0/0</b></span>
+                    <span>Quote <b id="sPct">–</b></span>
+                    <span class="streak" id="sStreakWrap">Serie <b id="sStreak">0</b></span>
+                    <span>Pool <b id="sPool">0</b></span>
+                </div>
+            </div>
+
+            <p class="q-word" id="word">…</p>
+            <p class="q-sub" id="wordSub"></p>
+
+            <div class="options" id="options"></div>
+
+            <div class="answer">
+                <p class="verdict" id="verdict"></p>
+                <p class="recap" id="recap">Pick a meaning — the full entry appears here.</p>
+            </div>
+
+            <div class="q-foot">
+                <button type="button" class="btn primary" id="next">Weiter →</button>
+                <span class="hint"><kbd>1</kbd>–<kbd>4</kbd> to answer · <kbd>Enter</kbd> for the next word</span>
+            </div>
+        </div>
+
+        <div class="grid2">
+            <div class="panel">
+                <h3>Fortschritt</h3>
+                <div class="bar">
+                    <span id="barMast" style="width:0%;background:var(--n)"></span>
+                    <span id="barLearn" style="width:0%;background:var(--m)"></span>
+                    <span id="barWeak" style="width:0%;background:var(--f)"></span>
+                </div>
+                <div class="legend">
+                    <div><i style="background:var(--n)"></i> Sitzt <span class="en">— 3× richtig in Folge</span> <b id="cMast">0</b></div>
+                    <div><i style="background:var(--m)"></i> In Arbeit <b id="cLearn">0</b></div>
+                    <div><i style="background:var(--f)"></i> Wackelig <span class="en">— zuletzt falsch</span> <b id="cWeak">0</b></div>
+                    <div><i style="background:var(--surface-2)"></i> Noch nicht gesehen <b id="cNew">0</b></div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>Meine Problemwörter</h3>
+                <div class="weaklist" id="weaklist"><p class="empty">Nothing yet — misses collect here with their meaning.</p></div>
+                <div style="margin-top:14px"><button type="button" class="btn" id="exportBtn">Als CSV exportieren</button></div>
+            </div>
+        </div>
+
+        <footer class="end">
+            <span><span id="footCount">0</span> Wörter aus der Goethe-A1-Wortliste · Englisch + বাংলা</span>
+            <span><a href="artikelTest.html">Artikel-Trainer →</a></span>
+        </footer>
+    </main>
+</div>
+
+<script>
+    (function(){
+        "use strict";
+        var WORDS = [{"d":"ab","s":"","e":"from / starting from","b":"থেকে","k":"other","f":0},{"d":"aber","s":"","e":"but","b":"কিন্তু","k":"other","f":0},{"d":"abfahren","s":"","e":"to depart","b":"প্রস্থান করা","k":"verb","f":0},{"d":"die Abfahrt","s":"","e":"departure","b":"প্রস্থান","k":"noun","f":0},{"d":"abgeben","s":"","e":"to hand in / drop off","b":"জমা দেওয়া","k":"verb","f":0},{"d":"abholen","s":"","e":"to pick up","b":"নিয়ে আসা / সংগ্রহ করা","k":"verb","f":0},{"d":"der Absender","s":"","e":"sender","b":"প্রেরক","k":"noun","f":0},{"d":"Achtung","s":"","e":"attention / caution","b":"মনোযোগ / সাবধান","k":"other","f":0},{"d":"die Adresse","s":"-n","e":"address","b":"ঠিকানা","k":"noun","f":0},{"d":"all-","s":"","e":"all","b":"সব","k":"other","f":0},{"d":"allein","s":"","e":"alone","b":"একা","k":"other","f":0},{"d":"also","s":"","e":"so / therefore","b":"সুতরাং / তাই","k":"other","f":0},{"d":"alt","s":"","e":"old","b":"পুরানো / বৃদ্ধ","k":"other","f":0},{"d":"das Alter","s":"","e":"age","b":"বয়স","k":"noun","f":0},{"d":"an","s":"","e":"at / on","b":"তে / উপরে","k":"other","f":0},{"d":"anbieten","s":"","e":"to offer","b":"প্রস্তাব দেওয়া","k":"verb","f":0},{"d":"das Angebot","s":"-e","e":"offer","b":"প্রস্তাব / অফার","k":"noun","f":0},{"d":"ander-","s":"","e":"other","b":"অন্য","k":"other","f":0},{"d":"anfangen","s":"","e":"to begin / start","b":"শুরু করা","k":"verb","f":0},{"d":"der Anfang","s":"","e":"beginning / start","b":"শুরু","k":"noun","f":0},{"d":"anklicken","s":"","e":"to click on","b":"ক্লিক করা","k":"verb","f":0},{"d":"ankommen","s":"","e":"to arrive","b":"পৌঁছানো","k":"verb","f":0},{"d":"die Ankunft","s":"","e":"arrival","b":"আগমন","k":"noun","f":0},{"d":"ankreuzen","s":"","e":"to check / tick","b":"টিক দেওয়া","k":"verb","f":0},{"d":"anmachen","s":"","e":"to turn on","b":"চালু করা","k":"verb","f":0},{"d":"die Anmeldung","s":"","e":"registration","b":"নিবন্ধন","k":"noun","f":0},{"d":"die Anrede","s":"","e":"salutation","b":"সম্বোধন","k":"noun","f":0},{"d":"anrufen","s":"","e":"to call (phone)","b":"ফোন করা","k":"verb","f":0},{"d":"der Anruf","s":"-e","e":"phone call","b":"ফোন কল","k":"noun","f":0},{"d":"der Anrufbeantworter","s":"","e":"answering machine","b":"আনসারিং মেশিন","k":"noun","f":0},{"d":"die Ansage","s":"-n","e":"announcement","b":"ঘোষণা","k":"noun","f":0},{"d":"der Anschluss","s":"","e":"connection","b":"সংযোগ","k":"noun","f":0},{"d":"an sein","s":"","e":"to be on","b":"চালু থাকা","k":"verb","f":0},{"d":"antworten","s":"","e":"to answer","b":"উত্তর দেওয়া","k":"verb","f":0},{"d":"die Antwort","s":"-en","e":"answer","b":"উত্তর","k":"noun","f":0},{"d":"die Anzeige","s":"-n","e":"advertisement","b":"বিজ্ঞাপন","k":"noun","f":0},{"d":"das Apartment","s":"-s","e":"apartment","b":"এপার্টমেন্ট","k":"noun","f":0},{"d":"der Apfel","s":"-Ä","e":"apple","b":"আপেল","k":"noun","f":0},{"d":"der Appetit","s":"","e":"appetite","b":"ক্ষুধা","k":"noun","f":0},{"d":"arbeiten","s":"","e":"to work","b":"কাজ করা","k":"verb","f":0},{"d":"die Arbeit","s":"-en","e":"work","b":"কাজ","k":"noun","f":0},{"d":"arbeitslos","s":"","e":"unemployed","b":"বেকার","k":"other","f":0},{"d":"der Arbeitsplatz","s":"-e","e":"workplace","b":"কর্মস্থল","k":"noun","f":0},{"d":"der Arm","s":"-e","e":"arm","b":"হাত / বাহু","k":"noun","f":0},{"d":"der Arzt","s":"-Ä,e","e":"doctor","b":"ডাক্তার","k":"noun","f":0},{"d":"auch","s":"","e":"also / too","b":"ও / আরও","k":"other","f":0},{"d":"auf","s":"","e":"on / upon","b":"উপরে","k":"other","f":0},{"d":"die Aufgabe","s":"-n","e":"task / assignment","b":"কাজ","k":"noun","f":0},{"d":"aufhören","s":"","e":"to stop","b":"থামা","k":"verb","f":0},{"d":"auf sein","s":"","e":"to be open","b":"খোলা থাকা","k":"verb","f":0},{"d":"aufstehen","s":"","e":"to stand up / get up","b":"ওঠা / দাড়ানো","k":"verb","f":0},{"d":"der Aufzug","s":"-Ü,e","e":"elevator / lift","b":"লিফট","k":"noun","f":0},{"d":"das Auge","s":"-n","e":"eye","b":"চোখ","k":"noun","f":0},{"d":"aus","s":"","e":"from / out of","b":"থেকে / বাইরে","k":"other","f":0},{"d":"der Ausflug","s":"","e":"excursion / trip","b":"ভ্রমণ","k":"noun","f":0},{"d":"ausfüllen","s":"","e":"to fill out","b":"পূরণ করা","k":"verb","f":0},{"d":"der Ausgang","s":"","e":"exit","b":"প্রস্থান (বাইরে যাওয়ার পথ)","k":"noun","f":0},{"d":"die Auskunft","s":"-Ü,e","e":"information","b":"তথ্য","k":"noun","f":0},{"d":"das Ausland","s":"","e":"abroad / foreign country","b":"বিদেশ","k":"noun","f":0},{"d":"der Ausländer","s":"-","e":"foreigner","b":"বিদেশী","k":"noun","f":0},{"d":"ausländisch","s":"","e":"foreign","b":"বিদেশী (বিশেষণ)","k":"other","f":0},{"d":"ausmachen","s":"","e":"to turn off","b":"বন্ধ করা","k":"verb","f":0},{"d":"die Aussage","s":"-n","e":"statement","b":"বিবৃতি","k":"noun","f":0},{"d":"aussehen","s":"","e":"to look / appear","b":"দেখতে কেমন","k":"verb","f":0},{"d":"aus sein","s":"","e":"to be over / off","b":"বন্ধ থাকা / শেষ হওয়া","k":"verb","f":0},{"d":"aussteigen","s":"","e":"to get off / out","b":"নামা (গাড়ি থেকে)","k":"verb","f":0},{"d":"der Ausweis","s":"","e":"ID card","b":"পরিচয়পত্র","k":"noun","f":0},{"d":"das Auto","s":"-s","e":"car","b":"গাড়ি","k":"noun","f":0},{"d":"die Autobahn","s":"-en","e":"highway","b":"হাইওয়ে","k":"noun","f":0},{"d":"der Automat","s":"","e":"vending machine / ATM","b":"স্বয়ংক্রিয় মেশিন","k":"noun","f":0},{"d":"automatisch","s":"","e":"automatic","b":"স্বয়ংক্রিয়","k":"other","f":0},{"d":"das Baby","s":"-s","e":"baby","b":"শিশু","k":"noun","f":0},{"d":"die Bäckerei","s":"","e":"bakery","b":"বেকারি","k":"noun","f":0},{"d":"das Bad","s":"","e":"bath / bathroom","b":"গোসলখানা","k":"noun","f":0},{"d":"baden","s":"","e":"to bathe","b":"গোসল করা","k":"verb","f":0},{"d":"die Bahn","s":"","e":"train / railway","b":"ট্রেন / রেল","k":"noun","f":0},{"d":"der Bahnhof","s":"","e":"train station","b":"রেলওয়ে স্টেশন","k":"noun","f":0},{"d":"der Bahnsteig","s":"","e":"platform","b":"প্ল্যাটফর্ম","k":"noun","f":0},{"d":"bald","s":"","e":"soon","b":"শীঘ্রই","k":"other","f":0},{"d":"der Balkon","s":"","e":"balcony","b":"বারান্দা","k":"noun","f":0},{"d":"die Banane","s":"-n","e":"banana","b":"কলা","k":"noun","f":0},{"d":"die Bank","s":"","e":"bank / bench","b":"ব্যাংক / বেঞ্চ","k":"noun","f":0},{"d":"bar","s":"","e":"cash","b":"নগদ","k":"other","f":0},{"d":"der Bauch","s":"","e":"stomach / belly","b":"পেট","k":"noun","f":0},{"d":"der Baum","s":"-Ä,e","e":"tree","b":"গাছ","k":"noun","f":0},{"d":"der Beamte","s":"-n","e":"official / civil servant","b":"কর্মকর্তা","k":"noun","f":0},{"d":"bedeuten","s":"","e":"to mean","b":"অর্থ হওয়া","k":"verb","f":0},{"d":"beginnen","s":"","e":"to begin","b":"শুরু করা","k":"verb","f":0},{"d":"bei","s":"","e":"at / near / with","b":"কাছে / সাথে","k":"other","f":0},{"d":"beide","s":"","e":"both","b":"উভয়ে","k":"other","f":0},{"d":"das Bein","s":"-e","e":"leg","b":"পা","k":"noun","f":0},{"d":"das Beispiel","s":"-e","e":"example","b":"উদাহরণ","k":"noun","f":0},{"d":"zum Beispiel / z. B.","s":"","e":"for example","b":"উদাহরণস্বরূপ","k":"other","f":0},{"d":"bekannt","s":"","e":"known / famous","b":"পরিচিত / বিখ্যাত","k":"other","f":0},{"d":"der/die Bekannte","s":"-n","e":"acquaintance","b":"পরিচিত ব্যক্তি","k":"other","f":0},{"d":"bekommen","s":"","e":"to get / receive","b":"পাওয়া","k":"verb","f":0},{"d":"benutzen","s":"","e":"to use","b":"ব্যবহার করা","k":"verb","f":0},{"d":"der Beruf","s":"-e","e":"profession","b":"পেশা","k":"noun","f":0},{"d":"besetzt","s":"","e":"occupied / busy","b":"ব্যস্ত / দখলকৃত","k":"other","f":0},{"d":"besichtigen","s":"","e":"to visit / inspect","b":"পরিদর্শন করা","k":"verb","f":0},{"d":"besser","s":"","e":"better","b":"ভালো (অধিকতর)","k":"other","f":0},{"d":"best-","s":"","e":"best","b":"সেরা","k":"other","f":0},{"d":"bestellen","s":"","e":"to order","b":"অর্ডার করা","k":"verb","f":0},{"d":"besuchen","s":"","e":"to visit","b":"দেখা করতে যাওয়া","k":"verb","f":0},{"d":"das Bett","s":"-en","e":"bed","b":"বিছানা","k":"noun","f":0},{"d":"bezahlen","s":"","e":"to pay","b":"মূল্য পরিশোধ করা","k":"verb","f":0},{"d":"das Bier","s":"","e":"beer","b":"বিয়ার","k":"noun","f":0},{"d":"das Bild","s":"-er","e":"picture","b":"ছবি","k":"noun","f":0},{"d":"billig","s":"","e":"cheap","b":"সস্তা","k":"other","f":0},{"d":"die Birne","s":"-n","e":"pear","b":"নাশপাতি","k":"noun","f":0},{"d":"bis","s":"","e":"until / to","b":"পর্যন্ত","k":"other","f":0},{"d":"bisschen","s":"","e":"a little","b":"একটু","k":"other","f":0},{"d":"bitte","s":"","e":"please / you're welcome","b":"দয়া করে / স্বাগত","k":"other","f":0},{"d":"die Bitte","s":"-n","e":"request","b":"অনুরোধ","k":"noun","f":0},{"d":"bitten","s":"","e":"to ask / request","b":"অনুরোধ করা","k":"verb","f":0},{"d":"bitter","s":"","e":"bitter","b":"তেতো","k":"other","f":0},{"d":"bleiben","s":"","e":"to stay / remain","b":"থাকা / অবস্থান করা","k":"verb","f":0},{"d":"der Bleistift","s":"-e","e":"pencil","b":"পেন্সিল","k":"noun","f":0},{"d":"der Blick","s":"","e":"view / look","b":"দৃশ্য / দৃষ্টি","k":"noun","f":0},{"d":"die Blume","s":"-n","e":"flower","b":"ফুল","k":"noun","f":0},{"d":"der Bogen","s":"","e":"sheet / bow","b":"কাগজ / ধনুক","k":"noun","f":0},{"d":"böse","s":"","e":"angry / bad","b":"রাগান্বিত / খারাপ","k":"other","f":0},{"d":"brauchen","s":"","e":"to need","b":"প্রয়োজন","k":"verb","f":0},{"d":"breit","s":"","e":"wide / broad","b":"প্রশস্ত","k":"other","f":0},{"d":"der Brief","s":"-e","e":"letter","b":"চিঠি","k":"noun","f":0},{"d":"die Briefmarke","s":"-n","e":"postage stamp","b":"ডাকটিকিট","k":"noun","f":0},{"d":"bringen","s":"","e":"to bring","b":"আনা","k":"verb","f":0},{"d":"das Brot","s":"-e","e":"bread","b":"রুটি","k":"noun","f":0},{"d":"das Brötchen","s":"-","e":"bread roll","b":"ছোট রুটি","k":"noun","f":0},{"d":"der Bruder","s":"-Ü","e":"brother","b":"ভাই","k":"noun","f":0},{"d":"das Buch","s":"-Ü,er","e":"book","b":"বই","k":"noun","f":0},{"d":"der Buchstabe","s":"-n","e":"letter (alphabet)","b":"অক্ষর","k":"noun","f":0},{"d":"buchstabieren","s":"","e":"to spell","b":"বানান করা","k":"verb","f":0},{"d":"der Bus","s":"-se","e":"bus","b":"বাস","k":"noun","f":0},{"d":"die Butter","s":"","e":"butter","b":"মাখন","k":"noun","f":0},{"d":"das Café","s":"-s","e":"cafe","b":"ক্যাফে","k":"noun","f":0},{"d":"die CD","s":"-s","e":"CD","b":"সিডি","k":"noun","f":0},{"d":"der Chef","s":"","e":"boss","b":"বস / প্রধান","k":"noun","f":0},{"d":"circa / ca.","s":"","e":"approximately / about","b":"প্রায় / কাছাকাছি","k":"other","f":0},{"d":"der Computer","s":"-","e":"computer","b":"কম্পিউটার","k":"noun","f":0},{"d":"da","s":"","e":"there / here","b":"সেখানে / এখানে","k":"other","f":0},{"d":"die Dame","s":"-n","e":"lady","b":"ভদ্রমহিলা","k":"noun","f":0},{"d":"daneben","s":"","e":"next to it","b":"এর পাশে","k":"other","f":0},{"d":"danken","s":"","e":"to thank","b":"ধন্যবাদ জানানো","k":"verb","f":0},{"d":"der Dank","s":"","e":"thanks","b":"ধন্যবাদ","k":"noun","f":0},{"d":"danke","s":"","e":"thank you","b":"ধন্যবাদ","k":"other","f":0},{"d":"dann","s":"","e":"then","b":"তারপর","k":"other","f":0},{"d":"das Datum","s":"","e":"date","b":"তারিখ","k":"noun","f":0},{"d":"dauern","s":"","e":"to last / take (time)","b":"সময় লাগা","k":"verb","f":0},{"d":"dein-","s":"","e":"your","b":"তোমার","k":"other","f":0},{"d":"denn","s":"","e":"because","b":"কারণ","k":"other","f":0},{"d":"der","s":"die, das","e":"the / that","b":"টি / এটি","k":"noun","f":0},{"d":"dich","s":"","e":"you (accusative)","b":"তোমাকে","k":"other","f":0},{"d":"dies-","s":"","e":"this","b":"এই","k":"other","f":0},{"d":"dir","s":"","e":"you (dative)","b":"তোমাকে / তোমার জন্য","k":"other","f":0},{"d":"die Disco","s":"","e":"disco","b":"ডিস্কো","k":"noun","f":0},{"d":"der Doktor","s":"","e":"doctor","b":"ডাক্তার","k":"noun","f":0},{"d":"das Doppelzimmer","s":"","e":"double room","b":"দ্বেত কক্ষ","k":"noun","f":0},{"d":"das Dorf","s":"-Ö,er","e":"village","b":"গ্রাম","k":"noun","f":0},{"d":"dort","s":"her, hin","e":"there, here, to there","b":"সেখানে, এখানে, ওদিকে","k":"other","f":0},{"d":"draußen","s":"","e":"outside","b":"বাইরে","k":"other","f":0},{"d":"drucken","s":"","e":"to print","b":"প্রিন্ট করা","k":"verb","f":0},{"d":"der Drucker","s":"-","e":"printer","b":"প্রিন্টার","k":"noun","f":0},{"d":"drücken","s":"","e":"to press / push","b":"চাপ দেওয়া","k":"verb","f":0},{"d":"durch","s":"","e":"through","b":"মধ্য দিয়ে","k":"other","f":0},{"d":"die Durchsage","s":"-n","e":"announcement","b":"ঘোষণা","k":"noun","f":0},{"d":"dürfen","s":"","e":"to be allowed to / may","b":"অনুমতি থাকা","k":"verb","f":0},{"d":"der Durst","s":"","e":"thirst","b":"তৃষ্ঞা","k":"noun","f":0},{"d":"die Dusche","s":"","e":"shower","b":"শাওয়ার","k":"noun","f":0},{"d":"die Ecke","s":"-n","e":"corner","b":"কোণ","k":"noun","f":0},{"d":"die Ehefrau","s":"-en / der","e":"wife / husband","b":"স্বামী","k":"noun","f":0},{"d":"das Ei","s":"-er","e":"egg","b":"ডিম","k":"noun","f":0},{"d":"eilig","s":"","e":"in a hurry","b":"তাড়াহুড়ো","k":"other","f":0},{"d":"ein-","s":"","e":"a / one","b":"একটি / এক","k":"other","f":0},{"d":"einfach","s":"","e":"simple / easy / single","b":"সহজ / সাধারণ / একমুখী","k":"other","f":0},{"d":"der Eingang","s":"","e":"entrance","b":"প্রবেশদ্বার","k":"noun","f":0},{"d":"einkaufen","s":"","e":"to shop","b":"কেনাকাটা করা","k":"verb","f":0},{"d":"einladen","s":"","e":"to invite","b":"আমন্ত্রণ জানানো","k":"verb","f":0},{"d":"die Einladung","s":"","e":"invitation","b":"আমন্ত্রণ","k":"noun","f":0},{"d":"einmal","s":"","e":"once","b":"একবার","k":"other","f":0},{"d":"einsteigen","s":"","e":"to get in / board","b":"ওঠা (গাড়িতে)","k":"verb","f":0},{"d":"der Eintritt","s":"","e":"entry / admission","b":"প্রবেশ / প্রবেশমূল্য","k":"noun","f":0},{"d":"das Einzelzimmer","s":"","e":"single room","b":"একক কক্ষ","k":"noun","f":0},{"d":"die Eltern (pl.)","s":"","e":"parents","b":"পিতামাতা","k":"noun","f":0},{"d":"die E-Mail","s":"-s","e":"email","b":"ইমেইল","k":"noun","f":0},{"d":"der Empfänger","s":"-","e":"recipient / receiver","b":"প্রাপক","k":"noun","f":0},{"d":"empfehlen","s":"","e":"to recommend","b":"সুপারিশ করা","k":"verb","f":0},{"d":"enden","s":"","e":"to end","b":"শেষ হওয়া","k":"verb","f":0},{"d":"das Ende","s":"","e":"end","b":"শেষ","k":"noun","f":0},{"d":"entschuldigen","s":"","e":"to apologize / excuse","b":"ক্ষমা চাওয়া","k":"verb","f":0},{"d":"die Entschuldigung","s":"","e":"apology / excuse me","b":"ক্ষমা / মাফ করবেন","k":"noun","f":0},{"d":"er","s":"","e":"he","b":"সে (পুরুষ)","k":"other","f":0},{"d":"das Ergebnis","s":"-se","e":"result","b":"ফলাফল","k":"noun","f":0},{"d":"erklären","s":"","e":"to explain","b":"ব্যাখ্যা করা","k":"verb","f":0},{"d":"erlauben","s":"","e":"to allow","b":"অনুমতি দেওয়া","k":"verb","f":0},{"d":"der Erwachsene","s":"-n","e":"adult","b":"প্রাপ্তবয়স্ক","k":"noun","f":0},{"d":"erzählen","s":"","e":"to tell / narrate","b":"বলা / গল্প করা","k":"verb","f":0},{"d":"es","s":"","e":"it","b":"ইহা","k":"other","f":0},{"d":"essen","s":"","e":"to eat","b":"খাওয়া","k":"verb","f":0},{"d":"das Essen","s":"","e":"food / meal","b":"খাবার","k":"noun","f":0},{"d":"euer","s":"","e":"your (plural)","b":"তোমাদের","k":"other","f":0},{"d":"fahren","s":"","e":"to drive / travel / ride","b":"চালানো / ভ্রমণ করা","k":"verb","f":1},{"d":"der Fahrer","s":"","e":"driver","b":"চালক","k":"noun","f":1},{"d":"die Fahrkarte","s":"-n","e":"ticket","b":"টিকিট","k":"noun","f":1},{"d":"das Fahrrad","s":"-Ä,er","e":"bicycle","b":"সাইকেল","k":"noun","f":1},{"d":"falsch","s":"","e":"wrong","b":"ভুল","k":"other","f":1},{"d":"die Familie","s":"-n","e":"family","b":"পরিবার","k":"noun","f":1},{"d":"der Familienname","s":"","e":"last name / surname","b":"বংশগত নাম","k":"noun","f":1},{"d":"der Familienstand","s":"","e":"marital status","b":"বৈবাহিক অবস্থা","k":"noun","f":1},{"d":"die Farbe","s":"-n","e":"color","b":"রঙ","k":"noun","f":1},{"d":"das Fax","s":"-e","e":"fax","b":"ফ্যাক্স","k":"noun","f":1},{"d":"Feier-","s":"","e":"celebration / holiday","b":"উৎসব / ছুটির দিন","k":"other","f":1},{"d":"feiern","s":"","e":"to celebrate","b":"উদযাপন করা","k":"verb","f":1},{"d":"fehlen","s":"","e":"to be missing / lack","b":"অনুপস্থিত থাকা","k":"verb","f":1},{"d":"der Fehler","s":"-","e":"mistake","b":"ভুল","k":"noun","f":1},{"d":"fernsehen","s":"","e":"to watch TV","b":"টিভি দেখা","k":"verb","f":1},{"d":"fertig","s":"","e":"ready / finished","b":"প্রস্তুত / শেষ","k":"other","f":1},{"d":"das Feuer","s":"","e":"fire","b":"আগুন","k":"noun","f":1},{"d":"das Fieber","s":"","e":"fever","b":"জ্বর","k":"noun","f":1},{"d":"der Film","s":"-e","e":"film / movie","b":"ছায়াছবি","k":"noun","f":1},{"d":"finden","s":"","e":"to find","b":"খুঁজে পাওয়া","k":"verb","f":1},{"d":"die Firma","s":"","e":"company","b":"কোম্পানি","k":"noun","f":1},{"d":"der Fisch","s":"-e","e":"fish","b":"মাছ","k":"noun","f":1},{"d":"die Flasche","s":"-n","e":"bottle","b":"বোতল","k":"noun","f":1},{"d":"das Fleisch","s":"","e":"meat","b":"মাংস","k":"noun","f":1},{"d":"fliegen","s":"","e":"to fly","b":"ওড়া","k":"verb","f":1},{"d":"abfliegen","s":"","e":"to take off","b":"উড্ডয়ন করা","k":"verb","f":1},{"d":"der Abflug","s":"","e":"departure / take-off","b":"উড্ডয়ন","k":"noun","f":1},{"d":"der Flughafen","s":"","e":"airport","b":"বিমানবন্দর","k":"noun","f":1},{"d":"das Flugzeug","s":"","e":"airplane","b":"বিমান","k":"noun","f":1},{"d":"das Formular","s":"-e","e":"form","b":"ফর্ম","k":"noun","f":1},{"d":"das Foto","s":"-s","e":"photo","b":"ছবি","k":"noun","f":1},{"d":"fragen","s":"","e":"to ask","b":"জিজ্ঞাসা করা","k":"verb","f":1},{"d":"die Frage","s":"-n","e":"question","b":"প্রশ্ন","k":"noun","f":1},{"d":"die Frau","s":"-en","e":"woman / wife / Mrs.","b":"নারী","k":"noun","f":1},{"d":"frei","s":"","e":"free / available","b":"মুক্ত / খালি","k":"other","f":1},{"d":"die Freizeit","s":"","e":"free time","b":"অবসর সময়","k":"noun","f":1},{"d":"fremd","s":"","e":"foreign / strange","b":"অপরিচিত / বিদেশী","k":"other","f":1},{"d":"der Freund","s":"-e","e":"friend","b":"বন্ধু","k":"noun","f":1},{"d":"früher","s":"","e":"earlier / past","b":"আগে / অতীতে","k":"other","f":1},{"d":"frühstücken","s":"","e":"to eat breakfast","b":"সকালের নাস্তা করা","k":"verb","f":1},{"d":"das Frühstück","s":"","e":"breakfast","b":"সকালের নাস্তা","k":"noun","f":1},{"d":"die Führung","s":"","e":"guided tour / leadership","b":"পরিচালিত ভ্রমণ","k":"noun","f":1},{"d":"für","s":"","e":"for","b":"জন্য","k":"other","f":1},{"d":"der Fuß","s":"-Ü,e","e":"foot","b":"পা","k":"noun","f":1},{"d":"der Fußball","s":"","e":"football / soccer","b":"ফুটবল","k":"noun","f":1},{"d":"der Garten","s":"","e":"garden","b":"বাগান","k":"noun","f":1},{"d":"der Gast","s":"-Ä,e","e":"guest","b":"অতিথি","k":"noun","f":1},{"d":"geben","s":"","e":"to give","b":"দেওয়া","k":"verb","f":1},{"d":"geboren","s":"","e":"born","b":"জন্ম","k":"other","f":1},{"d":"das Geburtsjahr","s":"","e":"year of birth","b":"জন্মসাল","k":"noun","f":1},{"d":"der Geburtsort","s":"","e":"place of birth","b":"জন্মস্থান","k":"noun","f":1},{"d":"der Geburtstag","s":"","e":"birthday","b":"জন্মদিন","k":"noun","f":1},{"d":"gefallen","s":"","e":"to like / please","b":"পছন্দ হওয়া","k":"verb","f":1},{"d":"gegen","s":"","e":"against / around","b":"বিরুদ্ধে / কাছাকাছি","k":"other","f":1},{"d":"gehen","s":"","e":"to go","b":"যাওয়া","k":"verb","f":1},{"d":"gehören","s":"","e":"to belong","b":"অন্তর্গত হওয়া","k":"verb","f":1},{"d":"das Geld","s":"","e":"money","b":"টাকা","k":"noun","f":1},{"d":"das Gemüse","s":"","e":"vegetables","b":"শাকসবজি","k":"noun","f":1},{"d":"das Gepäck","s":"","e":"luggage","b":"লাগেজ / মালপত্র","k":"noun","f":1},{"d":"gerade","s":"","e":"just / straight","b":"এইমাত্র / সোজা","k":"other","f":1},{"d":"geradeaus","s":"","e":"straight ahead","b":"সোজা সামনে","k":"other","f":1},{"d":"gern(e)","s":"","e":"gladly / like to","b":"সানন্দে","k":"other","f":1},{"d":"das Geschäft","s":"-e","e":"shop / business","b":"দোকান / ব্যবসা","k":"noun","f":1},{"d":"das Geschenk","s":"-e","e":"gift","b":"উপহার","k":"noun","f":1},{"d":"die Geschwister (pl.)","s":"","e":"siblings","b":"ভাইবোন","k":"noun","f":1},{"d":"das Gespräch","s":"-e","e":"conversation","b":"কথোপকথন","k":"noun","f":1},{"d":"gestern","s":"","e":"yesterday","b":"গতকাল","k":"other","f":1},{"d":"gestorben","s":"","e":"died","b":"মৃত","k":"other","f":1},{"d":"das Getränk","s":"-e","e":"beverage / drink","b":"পানীয়","k":"noun","f":1},{"d":"das Gewicht","s":"","e":"weight","b":"ওজন","k":"noun","f":1},{"d":"gewinnen","s":"","e":"to win","b":"জেতা","k":"verb","f":1},{"d":"das Glas","s":"-Ä,er","e":"glass","b":"গ্লাস","k":"noun","f":1},{"d":"glauben","s":"","e":"to believe / think","b":"বিশ্বাস করা / মনে করা","k":"verb","f":1},{"d":"gleich","s":"","e":"equal / right away","b":"সমান / এক্ষুনি","k":"other","f":1},{"d":"das Gleis","s":"-e","e":"platform / track","b":"রেললাইন / প্ল্যাটফর্ম","k":"noun","f":1},{"d":"das Glück","s":"","e":"luck / happiness","b":"ভাগ্য / সুখ","k":"noun","f":1},{"d":"glücklich","s":"","e":"happy","b":"সুখী","k":"other","f":1},{"d":"der Glückwunsch","s":"","e":"congratulation","b":"অভিনন্দন","k":"noun","f":1},{"d":"Grad (Celsius)","s":"","e":"degree","b":"ডিগ্রি","k":"other","f":1},{"d":"gratulieren","s":"","e":"to congratulate","b":"অভিনন্দন জানানো","k":"verb","f":1},{"d":"grillen","s":"","e":"to grill / barbecue","b":"গ্রিল করা","k":"verb","f":1},{"d":"groß","s":"","e":"big / tall","b":"বড় / লম্বা","k":"other","f":1},{"d":"die Größe","s":"","e":"size","b":"আকার","k":"noun","f":1},{"d":"die Großeltern (pl.)","s":"","e":"grandparents","b":"দাদা-দাদি / নানা-নানি","k":"noun","f":1},{"d":"die Großmutter","s":"","e":"grandmother","b":"দাদি / নানি","k":"noun","f":1},{"d":"der Großvater","s":"","e":"grandfather","b":"দাদা / নানা","k":"noun","f":1},{"d":"die Gruppe","s":"-n","e":"group","b":"দল","k":"noun","f":1},{"d":"der Gruß","s":"-Ü,e","e":"greeting","b":"শুভেচ্ছা","k":"noun","f":1},{"d":"gültig","s":"","e":"valid","b":"বৈধ","k":"other","f":1},{"d":"günstig","s":"","e":"favorable / cheap","b":"সাশ্রয়ী / অনুকূল","k":"other","f":1},{"d":"gut","s":"","e":"good / well","b":"ভালো","k":"other","f":1},{"d":"das Haar","s":"-e","e":"hair","b":"চুল","k":"noun","f":1},{"d":"haben","s":"","e":"to have","b":"থাকা","k":"verb","f":1},{"d":"das Hähnchen","s":"-","e":"chicken","b":"মুরগি","k":"noun","f":1},{"d":"die Halbpension","s":"","e":"half board","b":"অর্ধেক থাকা-খাওয়া","k":"noun","f":1},{"d":"die Halle","s":"","e":"hall","b":"হলঘর","k":"noun","f":1},{"d":"hallo","s":"","e":"hello","b":"হ্যালো","k":"other","f":1},{"d":"halten","s":"","e":"to hold / stop","b":"ধরা / থামা","k":"verb","f":1},{"d":"die Haltestelle","s":"","e":"stop / station","b":"স্টপেজ / স্টেশন","k":"noun","f":1},{"d":"die Hand","s":"-Ä,e","e":"hand","b":"হাত","k":"noun","f":1},{"d":"das Handy","s":"-s","e":"cell phone","b":"মোবাইল ফোন","k":"noun","f":1},{"d":"das Haus","s":"-Ä,er","e":"house","b":"বাড়ি","k":"noun","f":1},{"d":"die Hausaufgabe","s":"-n","e":"homework","b":"বাড়ির কাজ","k":"noun","f":1},{"d":"die Hausfrau / der","s":"","e":"housewife / househusband","b":"গৃহিণী / গৃহকর্তা","k":"noun","f":1},{"d":"die Heimat","s":"","e":"homeland","b":"মাতৃভূমি","k":"noun","f":1},{"d":"heiraten","s":"","e":"to marry","b":"বিয়ে করা","k":"verb","f":1},{"d":"heißen","s":"","e":"to be called","b":"নাম হওয়া","k":"verb","f":1},{"d":"helfen","s":"","e":"to help","b":"সাহায্য করা","k":"verb","f":1},{"d":"hell","s":"","e":"bright / light","b":"হালকা","k":"other","f":1},{"d":"der Herd","s":"","e":"stove","b":"চুলা","k":"noun","f":1},{"d":"der Herr","s":"-en","e":"gentleman / Mr.","b":"জনাব / ভদ্রলোক","k":"noun","f":1},{"d":"herzlich","s":"","e":"cordial / hearty","b":"আন্তরিক","k":"other","f":1},{"d":"heute","s":"","e":"today","b":"আজ","k":"other","f":1},{"d":"hier","s":"","e":"here","b":"এখানে","k":"other","f":1},{"d":"die Hilfe","s":"","e":"help","b":"সাহায্য","k":"noun","f":1},{"d":"hinten","s":"","e":"behind / in the back","b":"পেছনে","k":"other","f":1},{"d":"das Hobby","s":"-s","e":"hobby","b":"শখ","k":"noun","f":1},{"d":"hoch","s":"","e":"high","b":"উচু","k":"other","f":1},{"d":"die Hochzeit","s":"","e":"wedding","b":"বিয়ে","k":"noun","f":1},{"d":"holen","s":"","e":"to fetch / get","b":"নিয়ে আসা","k":"verb","f":1},{"d":"hören","s":"","e":"to hear","b":"শোনা","k":"verb","f":1},{"d":"das Hotel","s":"-s","e":"hotel","b":"হোটেল","k":"noun","f":1},{"d":"der Hund","s":"-e","e":"dog","b":"কুকুর","k":"noun","f":1},{"d":"der Hunger","s":"","e":"hunger","b":"ক্ষুধা","k":"noun","f":1},{"d":"ich","s":"","e":"I","b":"আমি","k":"other","f":1},{"d":"ihr/ihm/ihn","s":"","e":"her / him","b":"তাকে","k":"other","f":1},{"d":"immer","s":"","e":"always","b":"সব সময়","k":"other","f":1},{"d":"in","s":"","e":"in / into","b":"ভিতরে / তে","k":"other","f":1},{"d":"die Information","s":"-en","e":"information","b":"তথ্য","k":"noun","f":1},{"d":"international","s":"","e":"international","b":"আন্তর্জাতিক","k":"other","f":1},{"d":"das Internet","s":"","e":"internet","b":"ইন্টারনেট","k":"noun","f":1},{"d":"ja","s":"","e":"yes","b":"হ্যা","k":"other","f":1},{"d":"die Jacke","s":"-n","e":"jacket","b":"জ্যাকেট","k":"noun","f":1},{"d":"jed-","s":"","e":"every / each","b":"প্রতিটি","k":"other","f":1},{"d":"jetzt","s":"","e":"now","b":"এখন","k":"other","f":1},{"d":"der Job","s":"-s","e":"job","b":"চাকরি","k":"noun","f":1},{"d":"der Jugendliche","s":"-n","e":"youth / teenager","b":"কিশোর / কিশোরী","k":"noun","f":1},{"d":"jung","s":"","e":"young","b":"তরুণ","k":"other","f":1},{"d":"der Junge","s":"-n","e":"boy","b":"ছেলে","k":"noun","f":1},{"d":"der Kaffee","s":"","e":"coffee","b":"কফি","k":"noun","f":1},{"d":"kaputt","s":"","e":"broken","b":"ভাঙা","k":"other","f":1},{"d":"die Karte","s":"-n","e":"card / ticket / map","b":"কার্ড / টিকিট / মানচিত্র","k":"noun","f":1},{"d":"die (Kredit)-Karte","s":"-n","e":"credit card","b":"ক্রেডিট কার্ড","k":"noun","f":1},{"d":"die Kartoffel","s":"-n","e":"potato","b":"আলু","k":"noun","f":1},{"d":"die Kasse","s":"","e":"cash register","b":"ক্যাশ বাক্স","k":"noun","f":1},{"d":"kaufen","s":"","e":"to buy","b":"কেনা","k":"verb","f":1},{"d":"kein","s":"","e":"no / none","b":"কোনোটি না","k":"other","f":1},{"d":"kennen","s":"","e":"to know","b":"চেনা","k":"verb","f":1},{"d":"kennenlernen","s":"","e":"to get to know","b":"পরিচিত হওয়া","k":"verb","f":1},{"d":"das Kind","s":"-er","e":"child","b":"শিশু","k":"noun","f":1},{"d":"der Kindergarten","s":"","e":"kindergarten","b":"কিন্ডারগার্টেন","k":"noun","f":1},{"d":"das Kino","s":"-s","e":"cinema","b":"সিনেমা","k":"noun","f":1},{"d":"der Kiosk","s":"","e":"kiosk","b":"কিয়স্ক / ছোট দোকান","k":"noun","f":1},{"d":"klar","s":"","e":"clear / sure","b":"পরিঙ্কার / নিশ্চিত","k":"other","f":1},{"d":"die Klasse","s":"","e":"class","b":"ক্লাস","k":"noun","f":1},{"d":"die Kleidung","s":"","e":"clothing","b":"পোশাক","k":"noun","f":1},{"d":"klein","s":"","e":"small","b":"ছোট","k":"other","f":1},{"d":"kochen","s":"","e":"to cook","b":"রান্না করা","k":"verb","f":1},{"d":"der Koffer","s":"-","e":"suitcase","b":"স্যুটকেস","k":"noun","f":1},{"d":"der Kollege","s":"-n","e":"colleague","b":"সহকর্মী","k":"noun","f":1},{"d":"kommen","s":"","e":"to come","b":"আসা","k":"verb","f":1},{"d":"können","s":"","e":"can / to be able to","b":"পারা","k":"other","f":1},{"d":"das Konto","s":"","e":"account","b":"হিসাব / আাকাউন্ট","k":"noun","f":1},{"d":"der Kopf","s":"","e":"head","b":"মাথা","k":"noun","f":1},{"d":"kosten","s":"","e":"to cost","b":"মূল্য হওয়া","k":"verb","f":1},{"d":"krank","s":"","e":"sick","b":"অসুস্থ","k":"other","f":1},{"d":"kriegen","s":"","e":"to get / receive","b":"পাওয়া","k":"verb","f":1},{"d":"die Küche","s":"","e":"kitchen","b":"রান্নাঘর","k":"noun","f":1},{"d":"der Kuchen","s":"","e":"cake","b":"কেক","k":"noun","f":1},{"d":"der Kugelschreiber","s":"","e":"ballpoint pen","b":"কলম","k":"noun","f":1},{"d":"der Kühlschrank","s":"","e":"refrigerator","b":"ফ্রিজ","k":"noun","f":1},{"d":"kulturell","s":"","e":"cultural","b":"সাংস্কৃতিক","k":"other","f":1},{"d":"sich kümmern","s":"","e":"to take care of","b":"যত্ব নেওয়া / খেয়াল রাখা","k":"verb","f":1},{"d":"der Kunde","s":"-n","e":"customer","b":"গ্রাহক","k":"noun","f":1},{"d":"der Kurs","s":"-e","e":"course","b":"কোর্স","k":"noun","f":1},{"d":"kurz","s":"","e":"short","b":"ছোট / সংক্ষিপ্ত","k":"other","f":1},{"d":"lachen","s":"","e":"to laugh","b":"হাসা","k":"verb","f":1},{"d":"der Laden","s":"-Ä","e":"shop","b":"দোকান","k":"noun","f":1},{"d":"das Land","s":"-Ä,er","e":"country / land","b":"দেশ / জমি","k":"noun","f":1},{"d":"lang","s":"","e":"long","b":"লম্বা / দীর্ঘ","k":"other","f":1},{"d":"lange","s":"","e":"for a long time","b":"দীর্ঘ সময় ধরে","k":"other","f":1},{"d":"langsam","s":"","e":"slow","b":"ধীর","k":"other","f":1},{"d":"laufen","s":"","e":"to run / walk","b":"দৌড়ানো / হাটা","k":"verb","f":1},{"d":"laut","s":"","e":"loud","b":"শব্দপূর্ণ / জোরে","k":"other","f":1},{"d":"leben","s":"","e":"to live","b":"বাস করা","k":"verb","f":1},{"d":"das Leben","s":"","e":"life","b":"জীবন","k":"noun","f":1},{"d":"die Lebensmittel (pl.)","s":"","e":"groceries / food","b":"মুদিখানা / খাবার","k":"noun","f":1},{"d":"ledig","s":"","e":"single / unmarried","b":"অবিবাহিত","k":"other","f":1},{"d":"legen","s":"","e":"to lay / put","b":"রাখা / শোয়ানো","k":"verb","f":1},{"d":"der Lehrer","s":"-","e":"teacher","b":"শিক্ষক","k":"noun","f":1},{"d":"leicht","s":"","e":"light / easy","b":"হালকা / সহজ","k":"other","f":1},{"d":"leider","s":"","e":"unfortunately","b":"দুর্ভাগ্যবশত","k":"other","f":1},{"d":"leise","s":"","e":"quiet / soft","b":"আস্তে","k":"other","f":1},{"d":"lernen","s":"","e":"to learn","b":"শেখা","k":"verb","f":1},{"d":"lesen","s":"","e":"to read","b":"পড়া","k":"verb","f":1},{"d":"letzt-","s":"","e":"last","b":"শেষ","k":"other","f":1},{"d":"die Leute (pl.)","s":"","e":"people","b":"মানুষজন","k":"noun","f":1},{"d":"das Licht","s":"","e":"light","b":"আলো","k":"noun","f":1},{"d":"lieb-","s":"","e":"dear","b":"প্রিয়","k":"other","f":1},{"d":"lieben","s":"","e":"to love","b":"ভালোবাসা","k":"verb","f":1},{"d":"lieber","s":"","e":"rather / prefer","b":"বরং / পছন্দ করা","k":"other","f":1},{"d":"Lieblings-","s":"","e":"favorite","b":"প্রিয়","k":"other","f":1},{"d":"das Lied","s":"-er","e":"song","b":"গান","k":"noun","f":1},{"d":"liegen","s":"","e":"to lie / be situated","b":"শয়ন করা / অবস্থিত হওয়া","k":"verb","f":1},{"d":"links","s":"","e":"left","b":"বাম দিকে","k":"other","f":1},{"d":"der Lkw","s":"-s","e":"truck","b":"ট্রাক","k":"noun","f":1},{"d":"das Lokal","s":"","e":"pub / restaurant","b":"রেস্তোরা","k":"noun","f":1},{"d":"die Lösung","s":"-en","e":"solution","b":"সমাধান","k":"noun","f":1},{"d":"lustig","s":"","e":"funny","b":"মজার","k":"other","f":1},{"d":"machen","s":"","e":"to do / make","b":"করা / তৈরি করা","k":"verb","f":1},{"d":"das Mädchen","s":"-","e":"girl","b":"মেয়ে","k":"noun","f":1},{"d":"man","s":"","e":"one / they / people","b":"কেউ / মানুষ","k":"other","f":1},{"d":"der Mann","s":"-Ä,er","e":"man / husband","b":"মানুষ / স্বামী","k":"noun","f":1},{"d":"männlich","s":"","e":"male","b":"পুরুষ","k":"other","f":1},{"d":"die Maschine","s":"-n","e":"machine","b":"যন্ত্র","k":"noun","f":1},{"d":"das Meer","s":"","e":"sea / ocean","b":"সমুদ্র","k":"noun","f":1},{"d":"mehr","s":"","e":"more","b":"আরও","k":"other","f":1},{"d":"mein","s":"","e":"my","b":"আমার","k":"other","f":1},{"d":"meist-","s":"","e":"most","b":"বেশিরভাগ","k":"other","f":1},{"d":"der Mensch","s":"-en","e":"human being / person","b":"মানুষ","k":"noun","f":1},{"d":"mieten","s":"","e":"to rent","b":"ভাড়া নেওয়া","k":"verb","f":1},{"d":"die Miete","s":"","e":"rent","b":"ভাড়া","k":"noun","f":1},{"d":"die Milch","s":"","e":"milk","b":"দুধ","k":"noun","f":1},{"d":"mit","s":"","e":"with","b":"সাথে","k":"other","f":1},{"d":"mitbringen","s":"","e":"to bring along","b":"সাথে করে নিয়ে আসা","k":"verb","f":1},{"d":"mitkommen","s":"","e":"to come along","b":"সাথে আসা","k":"verb","f":1},{"d":"mitmachen","s":"","e":"to participate","b":"অংশগ্রহণ করা","k":"verb","f":1},{"d":"mitnehmen","s":"","e":"to take along","b":"সাথে নিয়ে যাওয়া","k":"verb","f":1},{"d":"die Mitte","s":"","e":"middle / center","b":"মধ্যখান","k":"noun","f":1},{"d":"die Möbel (pl.)","s":"","e":"furniture","b":"আসবাবপত্র","k":"noun","f":1},{"d":"möchten","s":"","e":"would like to","b":"চাইতে","k":"other","f":1},{"d":"mögen","s":"","e":"to like","b":"পছন্দ করা","k":"verb","f":1},{"d":"möglich","s":"","e":"possible","b":"সম্ভব","k":"other","f":1},{"d":"der Moment","s":"","e":"moment","b":"মুহূর্ত","k":"noun","f":1},{"d":"morgen","s":"","e":"tomorrow / morning","b":"আগামীকাল / সকাল","k":"other","f":1},{"d":"müde","s":"","e":"tired","b":"ক্লান্ত","k":"other","f":1},{"d":"der Mund","s":"","e":"mouth","b":"মুখ","k":"noun","f":1},{"d":"müssen","s":"","e":"must / to have to","b":"করতে হবে / বাধ্যবাধকতা","k":"other","f":1},{"d":"die Mutter","s":"-Ü","e":"mother","b":"মা","k":"noun","f":1},{"d":"nach","s":"","e":"after / to","b":"দিকে","k":"other","f":1},{"d":"nächst-","s":"","e":"next","b":"পরবর্তী","k":"other","f":1},{"d":"der Name","s":"-n","e":"name","b":"নাম","k":"noun","f":1},{"d":"nehmen","s":"","e":"to take","b":"নেওয়া","k":"verb","f":1},{"d":"nein","s":"","e":"no","b":"না","k":"other","f":1},{"d":"neu","s":"","e":"new","b":"নতুন","k":"other","f":1},{"d":"nicht","s":"","e":"not","b":"না","k":"other","f":1},{"d":"nichts","s":"","e":"nothing","b":"কিছুই না","k":"other","f":1},{"d":"nie","s":"","e":"never","b":"কখনোই না","k":"other","f":1},{"d":"noch","s":"","e":"still / yet","b":"এখনও / আরও","k":"other","f":1},{"d":"normal","s":"","e":"normal","b":"স্বাভাবিক","k":"other","f":1},{"d":"die Nummer","s":"-n","e":"number","b":"নম্বর","k":"noun","f":1},{"d":"nur","s":"","e":"only","b":"শুধুমাত্র","k":"other","f":1},{"d":"oben","s":"","e":"above / upstairs","b":"উপরে","k":"other","f":1},{"d":"das Obst","s":"","e":"fruit","b":"ফল","k":"noun","f":1},{"d":"oder","s":"","e":"or","b":"অথবা","k":"other","f":1},{"d":"öffnen","s":"","e":"to open","b":"খোলা","k":"verb","f":1},{"d":"geöffnet","s":"","e":"open / opened","b":"খোলা","k":"other","f":1},{"d":"oft","s":"","e":"often","b":"প্রায়ই","k":"other","f":1},{"d":"ohne","s":"","e":"without","b":"ছাড়া","k":"other","f":1},{"d":"das Öl","s":"","e":"oil","b":"তেল","k":"noun","f":1},{"d":"die Oma","s":"-s","e":"grandma","b":"দাদি / নানি","k":"noun","f":1},{"d":"der Opa","s":"-s","e":"grandpa","b":"দাদা / নানা","k":"noun","f":1},{"d":"die Ordnung","s":"","e":"order / tidiness","b":"শৃঙ্খলা / গোছানো","k":"noun","f":1},{"d":"der Ort","s":"-e","e":"place","b":"স্থান","k":"noun","f":1},{"d":"das Papier","s":"","e":"paper","b":"কাগজ","k":"noun","f":1},{"d":"die Papiere (pl.)","s":"","e":"papers / documents","b":"কাগজপত্র","k":"noun","f":1},{"d":"der Partner / die Partnerin","s":"","e":"partner","b":"সঙ্গী / সঙ্গিনী","k":"noun","f":1},{"d":"die Party","s":"","e":"party","b":"পার্টি","k":"noun","f":1},{"d":"der Pass","s":"-Ä,e","e":"passport","b":"পাসপোর্ট","k":"noun","f":1},{"d":"die Pause","s":"-n","e":"pause / break","b":"বিরতি","k":"noun","f":1},{"d":"der Plan","s":"-Ä,e","e":"plan / map","b":"পরিকল্পনা / মানচিত্র","k":"noun","f":1},{"d":"der Platz","s":"-Ä,e","e":"place / square / seat","b":"স্থান / চত্বর / আসন","k":"noun","f":1},{"d":"die Polizei","s":"","e":"police","b":"পুলিশ","k":"noun","f":1},{"d":"die Pommes frites (pl.)","s":"","e":"french fries","b":"ফ্রেঞ্চ ফ্রাই","k":"noun","f":1},{"d":"die Post","s":"","e":"mail / post office","b":"ডাক / ডাকঘর","k":"noun","f":1},{"d":"die Postleitzahl","s":"","e":"zip code","b":"পোস্টাল কোড","k":"noun","f":1},{"d":"das Praktikum","s":"","e":"internship","b":"ইন্টার্নশিপ","k":"noun","f":1},{"d":"die Praxis","s":"","e":"practice / doctor's office","b":"অনুশীলন / ডাক্তারের চেম্বার","k":"noun","f":1},{"d":"der Preis","s":"-e","e":"price","b":"মূল্য","k":"noun","f":1},{"d":"das Problem","s":"-e","e":"problem","b":"সমস্যা","k":"noun","f":1},{"d":"der Prospekt","s":"-e","e":"brochure","b":"ব্বোশিওর","k":"noun","f":1},{"d":"die Prüfung","s":"","e":"exam","b":"পরীক্ষা","k":"noun","f":1},{"d":"pünktlich","s":"","e":"punctual / on time","b":"সময়মতো","k":"other","f":1},{"d":"Rad fahren","s":"","e":"to cycle","b":"সাইকেল চালানো","k":"verb","f":1},{"d":"rauchen","s":"","e":"to smoke","b":"ধূমপান করা","k":"verb","f":1},{"d":"der Raum","s":"-Ä,e","e":"room / space","b":"কক্ষ / স্থান","k":"noun","f":1},{"d":"die Rechnung","s":"-en","e":"bill / invoice","b":"বিল / রসিদ","k":"noun","f":1},{"d":"rechts","s":"","e":"right","b":"ডান দিকে","k":"other","f":1},{"d":"regnen","s":"","e":"to rain","b":"বৃষ্টি হওয়া","k":"verb","f":1},{"d":"der Regen","s":"","e":"rain","b":"বৃষ্টি","k":"noun","f":1},{"d":"der Reis","s":"","e":"rice","b":"ভাত / চাল","k":"noun","f":1},{"d":"reisen","s":"","e":"to travel","b":"ভ্রমণ করা","k":"verb","f":1},{"d":"die Reise","s":"","e":"journey / trip","b":"যাত্রা","k":"noun","f":1},{"d":"das Reisebüro","s":"-s","e":"travel agency","b":"ট্রাভিল এজেব্সি","k":"noun","f":1},{"d":"der Reiseführer","s":"","e":"travel guide","b":"ভ্রমণ নির্দেশিকা","k":"noun","f":1},{"d":"reparieren","s":"","e":"to repair","b":"মেরামত করা","k":"verb","f":1},{"d":"die Reparatur","s":"","e":"repair","b":"মেরামত","k":"noun","f":1},{"d":"das Restaurant","s":"-s","e":"restaurant","b":"রেস্তোরা","k":"noun","f":1},{"d":"die Rezeption","s":"","e":"reception","b":"অভ্যর্থনা","k":"noun","f":1},{"d":"richtig","s":"","e":"correct / right","b":"সঠিক","k":"other","f":1},{"d":"riechen","s":"","e":"to smell","b":"গন্ধ পাওয়া","k":"verb","f":1},{"d":"ruhig","s":"","e":"quiet / calm","b":"শান্ত","k":"other","f":1},{"d":"der Saft","s":"","e":"juice","b":"জুস / রস","k":"noun","f":1},{"d":"sagen","s":"","e":"to say","b":"বলা","k":"verb","f":1},{"d":"der Salat","s":"","e":"salad","b":"সালাদ","k":"noun","f":1},{"d":"das Salz","s":"","e":"salt","b":"লবণ","k":"noun","f":1},{"d":"der Satz","s":"-Ä,e","e":"sentence","b":"বাক্য","k":"noun","f":1},{"d":"die S-Bahn","s":"","e":"suburban train","b":"লোকাল ট্রেন","k":"noun","f":1},{"d":"der Schalter","s":"","e":"counter / switch","b":"কাউন্টার / সুইচ","k":"noun","f":1},{"d":"scheinen","s":"","e":"to shine / seem","b":"আলো দেওয়া / মনে হওয়া","k":"verb","f":1},{"d":"schicken","s":"","e":"to send","b":"পাঠানো","k":"verb","f":1},{"d":"das Schild","s":"-er","e":"sign","b":"সাইনবোর্ড","k":"noun","f":1},{"d":"der Schinken","s":"-","e":"ham","b":"হ্যাম / শুকরের মাংস","k":"noun","f":1},{"d":"schlafen","s":"","e":"to sleep","b":"ঘুমানো","k":"verb","f":1},{"d":"schlecht","s":"","e":"bad","b":"খারাপ","k":"other","f":1},{"d":"schließen","s":"","e":"to close","b":"বন্ধ করা","k":"verb","f":1},{"d":"geschlossen","s":"","e":"closed","b":"বন্ধ","k":"other","f":1},{"d":"der Schluss","s":"","e":"end / conclusion","b":"শেষ","k":"noun","f":1},{"d":"der Schlüssel","s":"-","e":"key","b":"চাবি","k":"noun","f":1},{"d":"schmecken","s":"","e":"to taste","b":"স্বাদ পাওয়া","k":"verb","f":1},{"d":"schnell","s":"","e":"fast / quick","b":"দ্রত","k":"other","f":1},{"d":"schon","s":"","e":"already","b":"ইতিমধ্যে","k":"other","f":1},{"d":"schön","s":"","e":"beautiful / nice","b":"সুন্দর","k":"other","f":1},{"d":"der Schrank","s":"-Ä,e","e":"cupboard / closet","b":"আলমারি","k":"noun","f":1},{"d":"schreiben","s":"","e":"to write","b":"লেখা","k":"verb","f":1},{"d":"der Schuh","s":"-e","e":"shoe","b":"জুতা","k":"noun","f":1},{"d":"die Schule","s":"","e":"school","b":"বিদ্যালয়","k":"noun","f":1},{"d":"der Schüler","s":"-","e":"student / pupil","b":"ছাত্র","k":"noun","f":1},{"d":"schwer","s":"","e":"heavy / difficult","b":"ভারী / কঠিন","k":"other","f":1},{"d":"die Schwester","s":"-n","e":"sister","b":"বোন","k":"noun","f":1},{"d":"schwimmen","s":"","e":"to swim","b":"সাতার কাটা","k":"verb","f":1},{"d":"das Schwimmbad","s":"","e":"swimming pool","b":"সুইমিং পুল","k":"noun","f":1},{"d":"der See","s":"","e":"lake","b":"হ্রদ","k":"noun","f":1},{"d":"sehen","s":"","e":"to see","b":"দেখা","k":"verb","f":1},{"d":"die Sehenswürdigkeit","s":"-en","e":"sight / attraction","b":"দর্শনীয় স্থান","k":"noun","f":1},{"d":"sehr","s":"","e":"very","b":"খুব","k":"other","f":1},{"d":"sein","s":"","e":"his / to be","b":"তার / হওয়া","k":"other","f":1},{"d":"weg sein","s":"","e":"to be gone","b":"চলে যাওয়া","k":"verb","f":1},{"d":"zu sein","s":"","e":"to be closed","b":"বন্ধ থাকা","k":"verb","f":1},{"d":"seit","s":"","e":"since / for","b":"থেকে / ধরে","k":"other","f":1},{"d":"selbstständig","s":"","e":"independent / self-employed","b":"স্বাধীন / স্বনির্ভর","k":"other","f":1},{"d":"sich","s":"","e":"oneself","b":"নিজেকে","k":"other","f":1},{"d":"sie","s":"","e":"she / they","b":"সে / তারা","k":"other","f":1},{"d":"Sie","s":"","e":"you (formal)","b":"আপনি","k":"other","f":1},{"d":"sitzen","s":"","e":"to sit","b":"বসা","k":"verb","f":1},{"d":"so","s":"","e":"so / thus","b":"তাই / এভাবে","k":"other","f":1},{"d":"das Sofa","s":"","e":"sofa","b":"সোফা","k":"noun","f":1},{"d":"sofort","s":"","e":"immediately","b":"অবিলম্বে","k":"other","f":1},{"d":"der Sohn","s":"-Ö,e","e":"son","b":"ছেলে / পুত্র","k":"noun","f":1},{"d":"sollen","s":"","e":"should / supposed to","b":"উচিত","k":"other","f":1},{"d":"die Sonne","s":"","e":"sun","b":"সূর্য","k":"noun","f":1},{"d":"spät","s":"","e":"late","b":"দেরি","k":"other","f":1},{"d":"später","s":"","e":"later","b":"পরে","k":"other","f":1},{"d":"die Speisekarte","s":"","e":"menu","b":"মেনু","k":"noun","f":1},{"d":"spielen","s":"","e":"to play","b":"খেলা","k":"verb","f":1},{"d":"der Sport","s":"","e":"sport","b":"খেলাধুলা","k":"noun","f":1},{"d":"die Sprache","s":"-n","e":"language","b":"ভাষা","k":"noun","f":1},{"d":"sprechen","s":"","e":"to speak","b":"কথা বলা","k":"verb","f":1},{"d":"die Stadt","s":"-Ä,e","e":"city / town","b":"শহর","k":"noun","f":1},{"d":"stehen","s":"","e":"to stand","b":"দাড়ানো","k":"verb","f":1},{"d":"die Stelle","s":"-n","e":"position / place","b":"অবস্থান / জায়গা","k":"noun","f":1},{"d":"stellen","s":"","e":"to place / put","b":"রাখা / স্থাপন করা","k":"verb","f":1},{"d":"der Stock","s":"","e":"floor / story","b":"তলা","k":"noun","f":1},{"d":"die Straße","s":"-n","e":"street","b":"রাস্তা","k":"noun","f":1},{"d":"die Straßenbahn","s":"","e":"tram","b":"ট্রাম","k":"noun","f":1},{"d":"studieren","s":"","e":"to study at university","b":"বিশ্ববিদ্যালয়ে পড়া","k":"verb","f":1},{"d":"das Studium","s":"","e":"university studies","b":"বিশ্ববিদ্যালয়ে পড়াশোনা","k":"noun","f":1},{"d":"der Student","s":"-en","e":"student","b":"ছাত্র","k":"noun","f":1},{"d":"die Stunde","s":"-n","e":"hour","b":"ঘণ্টা","k":"noun","f":1},{"d":"suchen","s":"","e":"to search / look for","b":"খোজা","k":"verb","f":1},{"d":"tanzen","s":"","e":"to dance","b":"নাচা","k":"verb","f":1},{"d":"die Tasche","s":"-n","e":"bag / pocket","b":"ব্যাগ / পকেট","k":"noun","f":1},{"d":"das Taxi","s":"-s","e":"taxi","b":"ট্যাক্সি","k":"noun","f":1},{"d":"der Tee","s":"","e":"tea","b":"চা","k":"noun","f":1},{"d":"der Teil","s":"-e","e":"part","b":"অংশ","k":"noun","f":1},{"d":"telefonieren","s":"","e":"to talk on the phone","b":"ফোনে কথা বলা","k":"verb","f":1},{"d":"das Telefon","s":"","e":"telephone","b":"টেলিফোন","k":"noun","f":1},{"d":"der Termin","s":"-e","e":"appointment","b":"সাক্ষাৎকারের সময়","k":"noun","f":1},{"d":"der Test","s":"","e":"test","b":"পরীক্ষা","k":"noun","f":1},{"d":"teuer","s":"","e":"expensive","b":"ব্যয়বহুল","k":"other","f":1},{"d":"der Text","s":"-e","e":"text","b":"পাঠ্য","k":"noun","f":1},{"d":"das Thema","s":"","e":"theme / topic","b":"বিষয়","k":"noun","f":1},{"d":"das Ticket","s":"-s","e":"ticket","b":"টিকিট","k":"noun","f":1},{"d":"der Tisch","s":"-e","e":"table","b":"টেবিল","k":"noun","f":1},{"d":"die Tochter","s":"-Ö","e":"daughter","b":"কন্যা","k":"noun","f":1},{"d":"die Toilette","s":"-n","e":"toilet","b":"টয়লেট","k":"noun","f":1},{"d":"die Tomate","s":"-n","e":"tomato","b":"টমেটো","k":"noun","f":1},{"d":"tot","s":"","e":"dead","b":"মৃত","k":"other","f":1},{"d":"die Treppe","s":"-n","e":"stairs","b":"সিঁড়ি","k":"noun","f":1},{"d":"trinken","s":"","e":"to drink","b":"পান করা","k":"verb","f":1},{"d":"tschüss","s":"","e":"bye","b":"বিদায়","k":"other","f":1},{"d":"tun","s":"","e":"to do","b":"করা","k":"verb","f":1},{"d":"über","s":"","e":"over / about","b":"উপরে / সম্পর্কে","k":"other","f":1},{"d":"übernachten","s":"","e":"to stay overnight","b":"রাত কাটানো","k":"verb","f":1},{"d":"überweisen","s":"","e":"to transfer money","b":"টাকা পাঠানো","k":"verb","f":1},{"d":"die Uhr","s":"","e":"clock / watch / o'clock","b":"ঘড়ি / সময়","k":"noun","f":1},{"d":"um","s":"","e":"around / at","b":"চারপাশে / সময়ে","k":"other","f":1},{"d":"umziehen","s":"","e":"to move house","b":"বাসা বদলানো","k":"verb","f":1},{"d":"und","s":"","e":"and","b":"এবং","k":"other","f":1},{"d":"unser-","s":"","e":"our","b":"আমাদের","k":"other","f":1},{"d":"unten","s":"","e":"below / downstairs","b":"নিচে","k":"other","f":1},{"d":"unter","s":"","e":"under / among","b":"নিচে / মধ্যে","k":"other","f":1},{"d":"der Unterricht","s":"","e":"lesson / class","b":"পাঠ / ক্লাস","k":"noun","f":1},{"d":"unterschreiben","s":"","e":"to sign","b":"স্বাক্ষর করা","k":"verb","f":1},{"d":"die Unterschrift","s":"","e":"signature","b":"স্বাক্ষর","k":"noun","f":1},{"d":"der Urlaub","s":"","e":"vacation / holiday","b":"ছুটি","k":"noun","f":1},{"d":"der Vater","s":"-Ä","e":"father","b":"পিতা","k":"noun","f":1},{"d":"verboten","s":"","e":"forbidden","b":"নিষিদ্ধ","k":"other","f":1},{"d":"verdienen","s":"","e":"to earn","b":"উপার্জন করা","k":"verb","f":1},{"d":"der Verein","s":"","e":"club / association","b":"ক্লাব / সংস্থা","k":"noun","f":1},{"d":"verheiratet","s":"","e":"married","b":"বিবাহিত","k":"other","f":1},{"d":"verkaufen","s":"","e":"to sell","b":"বিক্রিকরা","k":"verb","f":1},{"d":"der Verkäufer","s":"-","e":"seller / salesperson","b":"বিক্রেতা","k":"noun","f":1},{"d":"vermieten","s":"","e":"to rent out","b":"ভাড়া দেওয়া","k":"verb","f":1},{"d":"der Vermieter","s":"","e":"landlord","b":"বাড়ির মালিক","k":"noun","f":1},{"d":"verstehen","s":"","e":"to understand","b":"বোঝা","k":"verb","f":1},{"d":"der Verwandte","s":"-n","e":"relative","b":"আত্মীয়","k":"noun","f":1},{"d":"viel","s":"","e":"much / a lot","b":"অনেক","k":"other","f":1},{"d":"vielleicht","s":"","e":"perhaps / maybe","b":"হয়তো","k":"other","f":1},{"d":"von","s":"","e":"from / of","b":"থেকে / এর","k":"other","f":1},{"d":"vor","s":"","e":"in front of / before","b":"সামনে / আগে","k":"other","f":1},{"d":"der Vorname","s":"-n","e":"first name","b":"ডাকনাম","k":"noun","f":1},{"d":"die Vorsicht","s":"","e":"caution / care","b":"সতর্কতা","k":"noun","f":1},{"d":"die Vorwahl","s":"","e":"area code","b":"এরিয়া কোড","k":"noun","f":1},{"d":"wandern","s":"","e":"to hike","b":"হাইকিং করা","k":"verb","f":1},{"d":"wann","s":"","e":"when","b":"কখন","k":"other","f":1},{"d":"warten","s":"","e":"to wait","b":"অপেক্ষা করা","k":"verb","f":1},{"d":"warum","s":"","e":"why","b":"কেন","k":"other","f":1},{"d":"was","s":"","e":"what","b":"কী","k":"other","f":1},{"d":"was für ein","s":"","e":"what kind of","b":"কী ধরনের","k":"other","f":1},{"d":"das Wasser","s":"","e":"water","b":"পানি","k":"noun","f":1},{"d":"weh tun","s":"","e":"to hurt","b":"ব্যথা করা","k":"verb","f":1},{"d":"weiblich","s":"","e":"female","b":"নারী","k":"other","f":1},{"d":"der Wein","s":"","e":"wine","b":"মদ","k":"noun","f":1},{"d":"weit","s":"","e":"far","b":"দূরে","k":"other","f":1},{"d":"weiter","s":"","e":"further / continue","b":"আরও / চালিয়ে যাওয়া","k":"other","f":1},{"d":"welch-","s":"","e":"which","b":"কোনটি","k":"other","f":1},{"d":"die Welt","s":"","e":"world","b":"পৃথিবী","k":"noun","f":1},{"d":"wenig","s":"","e":"little / few","b":"অল্প","k":"other","f":1},{"d":"wer","s":"","e":"who","b":"কে","k":"other","f":1},{"d":"werden","s":"","e":"to become","b":"হওয়া","k":"verb","f":1},{"d":"das Wetter","s":"","e":"weather","b":"আবহাওয়া","k":"noun","f":1},{"d":"wichtig","s":"","e":"important","b":"গুরুত্বপূর্ণ","k":"other","f":1},{"d":"wie","s":"","e":"how / as / like","b":"কীভাবে / মতো","k":"other","f":1},{"d":"wiederholen","s":"","e":"to repeat","b":"পুনরাবৃত্তি করা","k":"verb","f":1},{"d":"das Wiederhören","s":"","e":"goodbye on phone","b":"ফোনে বিদায়","k":"noun","f":1},{"d":"das Wiedersehen","s":"","e":"goodbye","b":"বিদায়","k":"noun","f":1},{"d":"wie viel","s":"","e":"how much","b":"কত","k":"other","f":1},{"d":"willkommen","s":"","e":"welcome","b":"স্বাগতম","k":"other","f":1},{"d":"der Wind","s":"","e":"wind","b":"বাতাস","k":"noun","f":1},{"d":"wir","s":"","e":"we","b":"আমরা","k":"other","f":1},{"d":"wissen","s":"","e":"to know fact","b":"জানা","k":"verb","f":1},{"d":"wo","s":"","e":"where","b":"কোথায়","k":"other","f":1},{"d":"woher","s":"","e":"where from","b":"কোথা থেকে","k":"other","f":1},{"d":"wohin","s":"","e":"where to","b":"কোথায়","k":"other","f":1},{"d":"wohnen","s":"","e":"to live / reside","b":"বাস করা","k":"verb","f":1},{"d":"die Wohnung","s":"-en","e":"apartment / flat","b":"বাসা","k":"noun","f":1},{"d":"wollen","s":"","e":"to want","b":"চাওয়া","k":"verb","f":1},{"d":"das Wort","s":"-Ä,er/-e","e":"word","b":"শব্দ","k":"noun","f":1},{"d":"wunderbar","s":"","e":"wonderful","b":"চমৎকার","k":"other","f":1},{"d":"zahlen","s":"","e":"to pay","b":"মূল্য পরিশোধ করা","k":"verb","f":1},{"d":"die Zeit","s":"","e":"time","b":"সময়","k":"noun","f":1},{"d":"zurzeit","s":"","e":"currently","b":"বর্তমানে","k":"other","f":1},{"d":"die Zeitung","s":"-en","e":"newspaper","b":"সংবাদপত্র","k":"noun","f":1},{"d":"die Zigarette","s":"-n","e":"cigarette","b":"সিগারেট","k":"noun","f":1},{"d":"das Zimmer","s":"-","e":"room","b":"কক্ষ","k":"noun","f":1},{"d":"der Zoll","s":"","e":"customs","b":"কাস্টমস","k":"noun","f":1},{"d":"zu","s":"","e":"to / too / closed","b":"দিকে / খুব / বন্ধ","k":"verb","f":1},{"d":"zufrieden","s":"","e":"satisfied / content","b":"সন্তুষ্ট","k":"other","f":1},{"d":"der Zug","s":"-Ü,e","e":"train","b":"ট্রেন","k":"noun","f":1},{"d":"zurück","s":"","e":"back","b":"ফিরে","k":"other","f":1},{"d":"zusammen","s":"","e":"together","b":"একসাথে","k":"other","f":1},{"d":"zwischen","s":"","e":"between","b":"মাঝখানে","k":"other","f":1}];
+
+        var filters = {k:"all", p:"all", weak:false};
+        var pool = [], current = null, opts = [], answered = false, prev = null;
+        var session = {n:0, ok:0, streak:0};
+        var $ = function(id){ return document.getElementById(id); };
+
+        /* ---------- storage ---------- */
+        var KEY = "wortschatz-a1-v1";
+        var store = {};
+        try{ var raw = localStorage.getItem(KEY); if(raw) store = JSON.parse(raw) || {}; }catch(e){ store = {}; }
+        function saveStore(){ try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e){} }
+        function rec(d){ if(!store[d]) store[d] = {c:0, x:0, s:0}; return store[d]; }
+
+        /* ---------- pool ---------- */
+        function inFilters(w){
+            if(filters.k !== "all" && w.k !== filters.k) return false;
+            if(filters.p !== "all" && String(w.f) !== filters.p) return false;
+            if(filters.weak){ var r = store[w.d]; if(!r || r.x === 0) return false; }
+            return true;
+        }
+        function rebuildPool(){
+            pool = WORDS.filter(inFilters);
+            $("sPool").textContent = pool.length;
+        }
+        function weight(w){
+            var r = store[w.d];
+            if(!r) return 3;
+            if(r.s < 0) return 8;
+            if(r.s >= 3) return 1;
+            return 4 - r.s;
+        }
+        function pick(){
+            if(!pool.length) return null;
+            var total = 0, ws = [], i;
+            for(i=0;i<pool.length;i++){
+                var x = weight(pool[i]);
+                if(pool.length > 1 && prev && pool[i].d === prev) x = 0;
+                ws.push(x); total += x;
+            }
+            if(total <= 0) return pool[Math.floor(Math.random()*pool.length)];
+            var r = Math.random()*total;
+            for(i=0;i<pool.length;i++){ r -= ws[i]; if(r <= 0) return pool[i]; }
+            return pool[pool.length-1];
+        }
+
+        /* ---------- distractors ---------- */
+        var byKind = {};
+        function indexKinds(){
+            for(var i=0;i<WORDS.length;i++){
+                (byKind[WORDS[i].k] = byKind[WORDS[i].k] || []).push(WORDS[i]);
+            }
+        }
+        function distractors(answer){
+            var same = byKind[answer.k] || [];
+            var source = same.length >= 12 ? same : WORDS;
+            var out = [], guard = 0, used = {};
+            used[answer.e] = 1; used[answer.b] = 1;
+            while(out.length < 3 && guard++ < 400){
+                var c = source[Math.floor(Math.random()*source.length)];
+                if(used[c.e] || used[c.b] || c.d === answer.d) continue;
+                used[c.e] = 1; used[c.b] = 1;
+                out.push(c);
+            }
+            while(out.length < 3 && guard++ < 800){
+                var c2 = WORDS[Math.floor(Math.random()*WORDS.length)];
+                if(used[c2.e] || c2.d === answer.d) continue;
+                used[c2.e] = 1; out.push(c2);
+            }
+            return out;
+        }
+        function shuffle(a){
+            for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+            return a;
+        }
+
+        /* ---------- render ---------- */
+        function showWord(){
+            answered = false;
+            current = pick();
+            var box = $("options");
+            $("verdict").textContent = ""; $("verdict").className = "verdict";
+            $("recap").className = "recap";
+            $("recap").textContent = "Pick a meaning — the full entry appears here.";
+
+            if(!current){
+                $("word").textContent = "Kein Wort im Filter";
+                $("wordSub").textContent = "Loosen the filters above to keep going.";
+                box.innerHTML = "";
+                return;
+            }
+            $("word").textContent = current.d;
+            $("wordSub").textContent = current.s ? "Plural: " + current.s : "";
+            opts = shuffle(distractors(current).concat([current]));
+
+            var html = "";
+            for(var i=0;i<opts.length;i++){
+                html += '<button type="button" class="opt" data-i="' + i + '">' +
+                    '<span class="num">' + (i+1) + '</span><span class="txt">' +
+                    '<span class="gloss">' + esc(opts[i].e) + '</span>' +
+                    '<span class="bnl">(' + esc(opts[i].b) + ')</span>' +
+                    '</span></button>';
+            }
+            box.innerHTML = html;
+            Array.prototype.slice.call(box.querySelectorAll(".opt")).forEach(function(b){
+                b.addEventListener("click", function(){ choose(parseInt(b.getAttribute("data-i"),10)); });
+            });
+        }
+        function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+        function choose(i){
+            if(answered || !current) return;
+            answered = true;
+            var ok = opts[i] === current, r = rec(current.d);
+            session.n++;
+            if(ok){ session.ok++; session.streak++; r.c++; r.s = (r.s < 0 ? 1 : r.s + 1); }
+            else  { session.streak = 0; r.x++; r.s = -1; }
+            saveStore();
+
+            var btns = Array.prototype.slice.call($("options").querySelectorAll(".opt"));
+            btns.forEach(function(b, j){
+                b.disabled = true;
+                if(opts[j] === current) b.className = "opt right";
+                else if(j === i) b.className = "opt wrong";
+                else b.className = "opt dim";
+            });
+
+            $("verdict").className = "verdict " + (ok ? "ok" : "no");
+            $("verdict").textContent = ok ? "Richtig." : "Leider nicht.";
+            $("recap").className = "recap has";
+            $("recap").innerHTML = "<b>" + esc(current.d) + (current.s ? ", " + esc(current.s) : "") + "</b> — " +
+                esc(current.e) + ' <span class="bn">(' + esc(current.b) + ")</span>" +
+                ' <span class="en">· richtig ' + r.c + " · falsch " + r.x + "</span>";
+
+            prev = current.d;
+            updateStats(); renderProgress();
+        }
+
+        function updateStats(){
+            $("sScore").textContent = session.ok + "/" + session.n;
+            $("sPct").textContent = session.n ? Math.round(session.ok / session.n * 100) + "%" : "–";
+            $("sStreak").textContent = session.streak;
+            $("sStreakWrap").className = "streak" + (session.streak >= 5 ? " hot" : "");
+        }
+
+        function renderProgress(){
+            var mast=0, learn=0, weak=0, total=WORDS.length, i;
+            for(i=0;i<WORDS.length;i++){
+                var r = store[WORDS[i].d];
+                if(!r) continue;
+                if(r.s < 0) weak++; else if(r.s >= 3) mast++; else learn++;
+            }
+            var pct = function(x){ return (x/total*100).toFixed(2) + "%"; };
+            $("barMast").style.width = pct(mast);
+            $("barLearn").style.width = pct(learn);
+            $("barWeak").style.width = pct(weak);
+            $("cMast").textContent = mast; $("cLearn").textContent = learn;
+            $("cWeak").textContent = weak; $("cNew").textContent = total - mast - learn - weak;
+
+            var misses = [];
+            for(i=0;i<WORDS.length;i++){
+                var w = WORDS[i], rr = store[w.d];
+                if(rr && rr.x > 0) misses.push({w:w, x:rr.x});
+            }
+            misses.sort(function(a,b){ return b.x - a.x || a.w.d.localeCompare(b.w.d); });
+            var box = $("weaklist");
+            if(!misses.length){
+                box.innerHTML = '<p class="empty">Nothing yet — misses collect here with their meaning.</p>';
+                return;
+            }
+            var html = "";
+            for(i=0;i<misses.length && i<60;i++){
+                var m = misses[i];
+                html += '<div class="weakrow"><span><span class="de">' + esc(m.w.d) + '</span> <span class="en">· ' +
+                    esc(m.w.e) + '</span> <span class="bn en">(' + esc(m.w.b) + ')</span></span><small>' + m.x + '×</small></div>';
+            }
+            box.innerHTML = html;
+        }
+
+        /* ---------- export ---------- */
+        function buildCsv(){
+            var rows = ['"Wort","Plural","Englisch","Bangla","Wortart","falsch","richtig"'];
+            for(var i=0;i<WORDS.length;i++){
+                var w = WORDS[i], r = store[w.d];
+                if(!r || r.x === 0) continue;
+                rows.push('"' + w.d + '","' + w.s + '","' + w.e.replace(/"/g,'""') + '","' + w.b + '","' +
+                    w.k + '",' + r.x + ',' + r.c);
+            }
+            return rows.join("\n");
+        }
+        async function exportCsv(){
+            var csv = buildCsv();
+            if(csv.split("\n").length < 2){
+                $("exportBtn").textContent = "Noch keine Fehler";
+                setTimeout(function(){ $("exportBtn").textContent = "Als CSV exportieren"; }, 1600);
+                return;
+            }
+            var name = "wortschatz-fehler.csv";
+            try{
+                if(window.claude && window.claude.use){
+                    var dl = await window.claude.use("downloads");
+                    if(dl){ await dl.save({filename:name, data:csv}); return; }
+                }
+            }catch(e){}
+            try{
+                var blob = new Blob(["﻿" + csv], {type:"text/csv;charset=utf-8"});
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement("a");
+                a.href = url; a.download = name; document.body.appendChild(a); a.click();
+                document.body.removeChild(a); setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+            }catch(e2){
+                $("exportBtn").textContent = "Download hier nicht möglich";
+                setTimeout(function(){ $("exportBtn").textContent = "Als CSV exportieren"; }, 2200);
+            }
+        }
+
+        /* ---------- wiring ---------- */
+        $("next").addEventListener("click", showWord);
+        document.addEventListener("keydown", function(ev){
+            if(ev.target && /^(INPUT|SELECT|TEXTAREA)$/.test(ev.target.tagName)) return;
+            if(ev.key >= "1" && ev.key <= "4"){ choose(parseInt(ev.key,10)-1); ev.preventDefault(); }
+            else if((ev.key === "Enter" || ev.key === " ") && answered){ showWord(); ev.preventDefault(); }
+        });
+        function chipGroup(id, apply){
+            Array.prototype.slice.call(document.querySelectorAll("#" + id + " .chip")).forEach(function(c){
+                c.addEventListener("click", function(){
+                    Array.prototype.slice.call(document.querySelectorAll("#" + id + " .chip")).forEach(function(o){
+                        o.setAttribute("aria-pressed", o === c ? "true" : "false");
+                    });
+                    apply(c);
+                    rebuildPool(); showWord();
+                });
+            });
+        }
+        chipGroup("kind", function(c){ filters.k = c.getAttribute("data-k"); });
+        chipGroup("part", function(c){ filters.p = c.getAttribute("data-p"); });
+        $("onlyWeak").addEventListener("click", function(){
+            filters.weak = !filters.weak;
+            this.setAttribute("aria-pressed", filters.weak ? "true" : "false");
+            rebuildPool(); showWord();
+        });
+        $("reset").addEventListener("click", function(){
+            store = {}; saveStore(); session = {n:0, ok:0, streak:0};
+            updateStats(); renderProgress(); rebuildPool(); showWord();
+        });
+        $("exportBtn").addEventListener("click", exportCsv);
+
+        indexKinds();
+        $("deckTotal").textContent = WORDS.length;
+        $("footCount").textContent = WORDS.length;
+        rebuildPool(); updateStats(); renderProgress(); showWord();
+    })();
+</script>
+</body>
+</html>
