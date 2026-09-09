@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import {
     AppBar,
-    Box,
     Button,
     Drawer,
     IconButton,
     List,
     ListItemButton,
     ListItemText,
+    Menu,
+    MenuItem,
     Stack,
     Toolbar,
     Typography,
@@ -16,6 +17,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 
@@ -29,11 +31,12 @@ const sections = [
     { id: 'activities', label: 'Activities', code: '04' },
 ];
 
-// Outbound links to standalone static pages served from public/.
+// Standalone static pages served straight out of public/.
 // Deliberately kept OUT of `sections` so the scroll-spy and the
 // `atBottom` last-section fallback keep working untouched.
-const externalLinks = [
-    { label: 'German', code: '05', href: '/germanLessons/artikel/' },
+const germanLinks = [
+    { label: 'Der / Die / Das', href: '/germanLessons/artikel/' },
+    { label: 'Tests', href: '/germanLessons/test/' },
 ];
 
 // Single source of truth for how tall the nav is at the current viewport.
@@ -49,6 +52,7 @@ export const getNavHeight = () => {
 export default function Navigation() {
     const [active, setActive] = useState('home');
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const [menuAnchor, setMenuAnchor] = useState(null);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md')); // < 900px
 
@@ -74,6 +78,12 @@ export default function Navigation() {
         handleScroll();
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    // Close the dropdown if the viewport crosses into mobile while it's open,
+    // otherwise it stays anchored to a button that no longer renders.
+    useEffect(() => {
+        if (isMobile) setMenuAnchor(null);
+    }, [isMobile]);
 
     const scrollTo = (id) => {
         const el = document.getElementById(id);
@@ -139,7 +149,7 @@ export default function Navigation() {
 
                     {/* Desktop nav (md+) */}
                     {!isMobile && (
-                        <Stack direction="row" spacing={1}>
+                        <Stack direction="row" spacing={1} alignItems="center">
                             {sections.map((s) => {
                                 const isActive = active === s.id;
                                 return (
@@ -190,41 +200,94 @@ export default function Navigation() {
                                 );
                             })}
 
-                            {/* Outbound static pages — never "active", so no layoutId underline */}
-                            {externalLinks.map((l) => (
-                                <Button
-                                    key={l.href}
-                                    component="a"
-                                    href={l.href}
-                                    target="_blank"
-                                    rel="noopener"
+                            {/* German dropdown — outbound static pages.
+                                Never "active", so no layoutId underline here. */}
+                            <Button
+                                onClick={(e) => setMenuAnchor(e.currentTarget)}
+                                aria-haspopup="true"
+                                aria-expanded={Boolean(menuAnchor)}
+                                endIcon={
+                                    <ExpandMoreIcon
+                                        sx={{
+                                            fontSize: 16,
+                                            transition: 'transform 0.2s ease',
+                                            transform: menuAnchor ? 'rotate(180deg)' : 'none',
+                                        }}
+                                    />
+                                }
+                                sx={{
+                                    minWidth: 'auto',
+                                    px: 1.8,
+                                    py: 0.8,
+                                    color: menuAnchor ? 'primary.main' : 'text.primary',
+                                    fontSize: '0.92rem',
+                                    fontWeight: 500,
+                                    '&:hover': { color: 'primary.main', bgcolor: 'transparent' },
+                                }}
+                            >
+                                <Typography
+                                    component="span"
                                     sx={{
-                                        minWidth: 'auto',
-                                        px: 1.8,
-                                        py: 0.8,
-                                        color: 'text.primary',
-                                        position: 'relative',
-                                        fontSize: '0.92rem',
-                                        fontWeight: 500,
-                                        '&:hover': { color: 'primary.main', bgcolor: 'transparent' },
+                                        color: 'primary.main',
+                                        fontFamily: '"JetBrains Mono", monospace',
+                                        fontSize: '0.72rem',
+                                        mr: 0.8,
+                                        opacity: 0.7,
                                     }}
                                 >
-                                    <Typography
-                                        component="span"
+                                    05.
+                                </Typography>
+                                German
+                            </Button>
+
+                            <Menu
+                                anchorEl={menuAnchor}
+                                open={Boolean(menuAnchor)}
+                                onClose={() => setMenuAnchor(null)}
+                                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                                slotProps={{
+                                    paper: {
+                                        sx: {
+                                            mt: 1,
+                                            minWidth: 210,
+                                            bgcolor: 'rgba(10, 14, 23, 0.96)',
+                                            backdropFilter: 'blur(20px)',
+                                            WebkitBackdropFilter: 'blur(20px)',
+                                            backgroundImage: 'none',
+                                            border: '1px solid',
+                                            borderColor: 'divider',
+                                            borderRadius: 2,
+                                        },
+                                    },
+                                }}
+                            >
+                                {germanLinks.map((l) => (
+                                    <MenuItem
+                                        key={l.href}
+                                        component="a"
+                                        href={l.href}
+                                        target="_blank"
+                                        rel="noopener"
+                                        onClick={() => setMenuAnchor(null)}
                                         sx={{
-                                            color: 'primary.main',
-                                            fontFamily: '"JetBrains Mono", monospace',
-                                            fontSize: '0.72rem',
-                                            mr: 0.8,
-                                            opacity: 0.7,
+                                            fontSize: '0.88rem',
+                                            py: 1.2,
+                                            px: 2,
+                                            color: 'text.primary',
+                                            '&:hover': {
+                                                bgcolor: 'rgba(100, 255, 218, 0.08)',
+                                                color: 'primary.main',
+                                            },
                                         }}
                                     >
-                                        {l.code}.
-                                    </Typography>
-                                    {l.label}
-                                    <OpenInNewIcon sx={{ fontSize: 13, ml: 0.6, opacity: 0.55 }} />
-                                </Button>
-                            ))}
+                                        {l.label}
+                                        <OpenInNewIcon
+                                            sx={{ fontSize: 13, ml: 'auto', pl: 1.5, opacity: 0.5 }}
+                                        />
+                                    </MenuItem>
+                                ))}
+                            </Menu>
                         </Stack>
                     )}
 
@@ -326,8 +389,22 @@ export default function Navigation() {
                         );
                     })}
 
-                    {/* Outbound static pages */}
-                    {externalLinks.map((l) => (
+                    {/* Outbound static pages — flat group, no nested dropdown */}
+                    <Typography
+                        sx={{
+                            px: 3,
+                            pt: 2.5,
+                            pb: 0.5,
+                            color: 'primary.main',
+                            fontFamily: '"JetBrains Mono", monospace',
+                            fontSize: '0.72rem',
+                            opacity: 0.8,
+                        }}
+                    >
+                        05. German
+                    </Typography>
+
+                    {germanLinks.map((l) => (
                         <ListItemButton
                             key={l.href}
                             component="a"
@@ -336,30 +413,23 @@ export default function Navigation() {
                             rel="noopener"
                             onClick={() => setDrawerOpen(false)}
                             sx={{
-                                py: 1.5,
-                                px: 3,
+                                py: 1.4,
+                                pl: 5,
+                                pr: 3,
                                 borderLeft: '2px solid',
                                 borderColor: 'transparent',
                                 transition: 'all 0.2s ease',
                                 '&:hover': { bgcolor: 'rgba(100, 255, 218, 0.08)' },
                             }}
                         >
-                            <Typography
-                                component="span"
-                                sx={{
-                                    color: 'primary.main',
-                                    fontFamily: '"JetBrains Mono", monospace',
-                                    fontSize: '0.72rem',
-                                    mr: 1.5,
-                                    opacity: 0.8,
-                                }}
-                            >
-                                {l.code}.
-                            </Typography>
                             <ListItemText
                                 primary={l.label}
                                 primaryTypographyProps={{
-                                    sx: { color: 'text.primary', fontWeight: 500 },
+                                    sx: {
+                                        color: 'text.primary',
+                                        fontWeight: 500,
+                                        fontSize: '0.9rem',
+                                    },
                                 }}
                             />
                             <OpenInNewIcon sx={{ fontSize: 15, opacity: 0.5, ml: 1 }} />
