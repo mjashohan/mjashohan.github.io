@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        html{color-scheme:light dark}
+        body{margin:0}
+        img{max-width:100%}
+        [hidden]{display:none!important}
+    </style>
+    <title>Artikel-Trainer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+
+    <style>
+        :root{
+            --paper:#F4F6F8;
+            --surface:#FFFFFF;
+            --surface-2:#E9ECF1;
+            --ink:#131B25;
+            --ink-2:#3B4A5A;
+            --muted:#69788A;
+            --line:#D6DCE4;
+            --line-strong:#B4BECB;
+            --m:#1F5FA8;  --m-soft:#E3ECF8;
+            --f:#AC2E43;  --f-soft:#FAE5E8;
+            --n:#2A7752;  --n-soft:#E0F0E7;
+            --pl:#665594; --pl-soft:#ECE8F5;
+            --shadow:0 1px 2px rgba(19,27,37,.05), 0 8px 24px -16px rgba(19,27,37,.28);
+            --sans:"Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+            --slab:"Zilla Slab", Georgia, "Times New Roman", serif;
+            --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+        }
+        @media (prefers-color-scheme: dark){
+            :root:not([data-theme="light"]){
+                --paper:#0F141B; --surface:#161E27; --surface-2:#1E2833;
+                --ink:#E9EEF4; --ink-2:#BAC5D2; --muted:#8A98A9;
+                --line:#293441; --line-strong:#3A4756;
+                --m:#7FB4EE;  --m-soft:#15283C;
+                --f:#F0919E;  --f-soft:#391C24;
+                --n:#79CB9F;  --n-soft:#142D21;
+                --pl:#B3A4DE; --pl-soft:#231E36;
+                --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 28px -18px rgba(0,0,0,.9);
+            }
+        }
+        :root[data-theme="dark"]{
+            --paper:#0F141B; --surface:#161E27; --surface-2:#1E2833;
+            --ink:#E9EEF4; --ink-2:#BAC5D2; --muted:#8A98A9;
+            --line:#293441; --line-strong:#3A4756;
+            --m:#7FB4EE;  --m-soft:#15283C;
+            --f:#F0919E;  --f-soft:#391C24;
+            --n:#79CB9F;  --n-soft:#142D21;
+            --pl:#B3A4DE; --pl-soft:#231E36;
+            --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 28px -18px rgba(0,0,0,.9);
+        }
+
+        *{box-sizing:border-box}
+        body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+            font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+        .wrap{max-width:1000px;margin:0 auto;padding:0 24px 80px}
+        h1,h2,h3{font-family:var(--slab);text-wrap:balance;margin:0}
+        h2{font-size:1.5rem;font-weight:600;letter-spacing:-.01em}
+        h3{font-size:1.05rem;font-weight:600}
+        p{margin:0}
+        a{color:var(--m)}
+        .eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+        .mono{font-family:var(--mono)}
+        .en{color:var(--muted)}
+
+        header.mast{border-bottom:1px solid var(--line);background:var(--surface)}
+        .mast-in{max-width:1000px;margin:0 auto;padding:44px 24px 34px;
+            display:grid;gap:24px;grid-template-columns:minmax(0,1fr) auto;align-items:end}
+        .mast h1{font-size:clamp(2.2rem,6vw,3.4rem);font-weight:700;line-height:1.03;letter-spacing:-.025em}
+        .mast h1 .a1{color:var(--m)} .mast h1 .a2{color:var(--f)} .mast h1 .a3{color:var(--n)}
+        .mast .sub{margin-top:12px;max-width:54ch;color:var(--ink-2);font-size:1.02rem}
+        .homelink{display:inline-block;margin-bottom:10px;font-size:.86rem;font-weight:600;color:var(--muted);text-decoration:none}
+        .homelink:hover{color:var(--ink)}
+        .deckcount{text-align:right;font-family:var(--slab)}
+        .deckcount b{display:block;font-size:2.4rem;line-height:1;font-variant-numeric:tabular-nums}
+        .deckcount span{font-family:var(--sans);font-size:.75rem;letter-spacing:.12em;
+            text-transform:uppercase;color:var(--muted);font-weight:700}
+
+        /* ---- controls ---- */
+        .controls{background:var(--surface);border-bottom:1px solid var(--line);
+            position:sticky;top:0;z-index:20}
+        .controls-in{max-width:1000px;margin:0 auto;padding:12px 24px;
+            display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+        .fieldset{display:flex;align-items:center;gap:8px}
+        .fieldset > label{font-size:.72rem;font-weight:700;letter-spacing:.1em;
+            text-transform:uppercase;color:var(--muted)}
+        .chips{display:flex;gap:4px}
+        .chip{font-family:var(--sans);font-size:.85rem;font-weight:600;padding:5px 12px;
+            border-radius:99px;border:1px solid var(--line-strong);background:var(--surface);
+            color:var(--ink-2);cursor:pointer;white-space:nowrap}
+        .chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+        select{font-family:var(--sans);font-size:.88rem;padding:5px 10px;border-radius:7px;
+            border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);cursor:pointer}
+        .spacer{flex:1 1 auto}
+        .linky{background:none;border:none;color:var(--muted);font-family:var(--sans);
+            font-size:.84rem;font-weight:600;cursor:pointer;padding:4px;text-decoration:underline;
+            text-underline-offset:3px}
+        .linky:hover{color:var(--ink)}
+
+        /* ---- trainer card ---- */
+        main{padding-top:32px}
+        #trainer{background:var(--surface);border:1px solid var(--line-strong);border-radius:14px;
+            padding:28px;box-shadow:var(--shadow)}
+        .tr-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;
+            padding-bottom:14px;border-bottom:1px solid var(--line)}
+        .stats{display:flex;gap:20px;font-family:var(--mono);font-size:.82rem;color:var(--muted);
+            font-variant-numeric:tabular-nums}
+        .stats b{color:var(--ink);font-weight:600}
+        .stats .streak.hot{color:var(--f)}
+        .tr-word{font-family:var(--slab);font-size:clamp(2.2rem,7vw,3.4rem);font-weight:600;
+            margin:26px 0 2px;letter-spacing:-.015em;line-height:1.1;text-wrap:balance}
+        .tr-en{color:var(--muted);font-size:1rem;min-height:1.5em}
+        .tr-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+        .tr-btns button{font-family:var(--slab);font-size:1.4rem;font-weight:600;
+            padding:12px 30px;border-radius:9px;cursor:pointer;position:relative;
+            border:1.5px solid var(--line-strong);background:var(--surface);color:var(--ink-2);
+            transition:transform .08s ease, background .15s ease, color .15s ease, border-color .15s ease}
+        .tr-btns button kbd{position:absolute;top:4px;right:7px;font-family:var(--mono);
+            font-size:.6rem;font-weight:600;color:var(--muted);background:none}
+        .tr-btns button:hover:not(:disabled){transform:translateY(-1px)}
+        .tr-btns button[data-g="m"]:hover:not(:disabled){border-color:var(--m);color:var(--m);background:var(--m-soft)}
+        .tr-btns button[data-g="f"]:hover:not(:disabled){border-color:var(--f);color:var(--f);background:var(--f-soft)}
+        .tr-btns button[data-g="n"]:hover:not(:disabled){border-color:var(--n);color:var(--n);background:var(--n-soft)}
+        .tr-btns button.right{border-color:var(--n);background:var(--n-soft);color:var(--n)}
+        .tr-btns button.wrong{border-color:var(--f);background:var(--f-soft);color:var(--f)}
+        .tr-btns button:disabled{cursor:default}
+        .answer{margin-top:22px;display:grid;gap:12px;min-height:5.5em}
+        .verdict{font-family:var(--slab);font-size:1.05rem;font-weight:600}
+        .verdict.ok{color:var(--n)} .verdict.no{color:var(--f)}
+        .rule{border-left:3px solid var(--line-strong);padding:2px 0 2px 14px;color:var(--ink-2);font-size:.96rem}
+        .rule.has{border-left-color:var(--m)}
+        .rule code{font-family:var(--mono);font-size:.86rem;font-weight:600;
+            background:var(--surface-2);padding:1px 6px;border-radius:4px}
+        .meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.9rem;color:var(--muted)}
+        .meta .pl{font-family:var(--slab);color:var(--ink-2)}
+        .tr-foot{margin-top:22px;padding-top:16px;border-top:1px solid var(--line);
+            display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+        .btn{font-family:var(--sans);font-weight:600;font-size:.92rem;padding:9px 20px;border-radius:8px;
+            border:1px solid var(--line-strong);background:var(--surface-2);color:var(--ink);cursor:pointer}
+        .btn:hover{border-color:var(--ink-2)}
+        .btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+        .hint{font-size:.82rem;color:var(--muted)}
+        .hint kbd{font-family:var(--mono);font-size:.78rem;background:var(--surface-2);
+            border:1px solid var(--line);border-radius:4px;padding:1px 5px}
+
+        /* ---- progress ---- */
+        .grid2{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin-top:28px}
+        .panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;
+            padding:20px 22px;box-shadow:var(--shadow)}
+        .panel h3{margin-bottom:14px}
+        .bar{display:flex;height:10px;border-radius:99px;overflow:hidden;background:var(--surface-2);margin-bottom:12px}
+        .bar span{display:block;height:100%}
+        .bar .b-mast{background:var(--n)} .bar .b-learn{background:var(--m)} .bar .b-weak{background:var(--f)}
+        .legend{display:flex;flex-direction:column;gap:7px;font-size:.92rem}
+        .legend div{display:flex;align-items:center;gap:9px}
+        .legend i{width:9px;height:9px;border-radius:2px;flex:none}
+        .legend b{margin-left:auto;font-family:var(--mono);font-size:.86rem;font-variant-numeric:tabular-nums}
+        .weaklist{display:flex;flex-direction:column;gap:6px;max-height:230px;overflow-y:auto}
+        .weakrow{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:baseline;
+            font-size:.94rem;padding:3px 0;border-bottom:1px solid var(--line)}
+        .weakrow:last-child{border-bottom:none}
+        .weakrow .art{font-family:var(--slab);font-weight:600;min-width:2.2em}
+        .weakrow .art.m{color:var(--m)} .weakrow .art.f{color:var(--f)} .weakrow .art.n{color:var(--n)}
+        .weakrow small{font-family:var(--mono);font-size:.78rem;color:var(--f)}
+        .empty{color:var(--muted);font-size:.94rem}
+
+        footer.end{margin-top:40px;border-top:1px solid var(--line-strong);padding-top:18px;
+            color:var(--muted);font-size:.86rem;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+        :focus-visible{outline:2px solid var(--m);outline-offset:2px;border-radius:4px}
+        @media (max-width:720px){
+            .mast-in{grid-template-columns:1fr;padding-top:34px}
+            .deckcount{text-align:left}
+            body{font-size:16px}
+            .controls-in{gap:12px}
+        }
+        @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+    </style>
+</head>
+<body>
+<header class="mast">
+    <div class="mast-in">
+        <div>
+            <a class="homelink" href="index.html">← Übersicht</a>
+            <p class="eyebrow">Deutsche Artikel · A1 bis B1</p>
+            <h1><span class="a1">der</span> <span class="a2">die</span> <span class="a3">das</span> — Trainer</h1>
+            <p class="sub">Every answer names the rule that decides it, so a miss points at a pattern instead of a word to memorise. Progress is saved in this browser.</p>
+        </div>
+        <div class="deckcount"><b id="deckTotal">0</b><span>Nomen im Deck</span></div>
+    </div>
+</header>
+
+<div class="controls">
+    <div class="controls-in">
+        <div class="fieldset">
+            <label for="lvl">Niveau</label>
+            <div class="chips" id="lvl">
+                <button type="button" class="chip" data-lvl="all" aria-pressed="true">Alle</button>
+                <button type="button" class="chip" data-lvl="A" aria-pressed="false">A1–A2</button>
+                <button type="button" class="chip" data-lvl="B" aria-pressed="false">B1</button>
+            </div>
+        </div>
+        <div class="fieldset">
+            <label for="topic">Thema</label>
+            <select id="topic"><option value="all">Alle Themen</option></select>
+        </div>
+        <div class="fieldset">
+            <div class="chips">
+                <button type="button" class="chip" id="onlyWeak" aria-pressed="false">Nur meine Fehler</button>
+            </div>
+        </div>
+        <div class="spacer"></div>
+        <button type="button" class="linky" id="reset">Fortschritt löschen</button>
+    </div>
+</div>
+
+<div class="wrap">
+    <main>
+        <div id="trainer">
+            <div class="tr-top">
+                <p class="eyebrow">Welcher Artikel?</p>
+                <div class="stats">
+                    <span>Runde <b id="sScore">0/0</b></span>
+                    <span>Quote <b id="sPct">–</b></span>
+                    <span class="streak" id="sStreakWrap">Serie <b id="sStreak">0</b></span>
+                    <span>Pool <b id="sPool">0</b></span>
+                </div>
+            </div>
+
+            <p class="tr-word" id="word">…</p>
+            <p class="tr-en" id="wordEn"></p>
+
+            <div class="tr-btns">
+                <button type="button" data-g="m">der<kbd>1</kbd></button>
+                <button type="button" data-g="f">die<kbd>2</kbd></button>
+                <button type="button" data-g="n">das<kbd>3</kbd></button>
+            </div>
+
+            <div class="answer">
+                <p class="verdict" id="verdict"></p>
+                <p class="rule" id="rule">Choose an article — the rule behind the answer appears here.</p>
+                <p class="meta" id="meta"></p>
+            </div>
+
+            <div class="tr-foot">
+                <button type="button" class="btn primary" id="next">Weiter →</button>
+                <span class="hint"><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> to answer · <kbd>Enter</kbd> for the next word</span>
+            </div>
+        </div>
+
+        <div class="grid2">
+            <div class="panel">
+                <h3>Fortschritt</h3>
+                <div class="bar" id="bar">
+                    <span class="b-mast" id="barMast" style="width:0%"></span>
+                    <span class="b-learn" id="barLearn" style="width:0%"></span>
+                    <span class="b-weak" id="barWeak" style="width:0%"></span>
+                </div>
+                <div class="legend">
+                    <div><i style="background:var(--n)"></i> Sitzt <span class="en">— 3× richtig in Folge</span> <b id="cMast">0</b></div>
+                    <div><i style="background:var(--m)"></i> In Arbeit <b id="cLearn">0</b></div>
+                    <div><i style="background:var(--f)"></i> Wackelig <span class="en">— zuletzt falsch</span> <b id="cWeak">0</b></div>
+                    <div><i style="background:var(--surface-2)"></i> Noch nicht gesehen <b id="cNew">0</b></div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>Meine Problemwörter</h3>
+                <div class="weaklist" id="weaklist"><p class="empty">Nothing yet — misses collect here with their article.</p></div>
+                <div style="margin-top:14px"><button type="button" class="btn" id="exportBtn">Als CSV exportieren</button></div>
+            </div>
+        </div>
+
+        <footer class="end">
+            <span>Artikel-Trainer · <span id="footCount">0</span> Nomen aus dem A1–B1-Wortschatz</span>
+            <span><a href="vocabTest.html">Wortschatz A1 →</a></span>
+        </footer>
+    </main>
+</div>
+
+<script>
+    (function(){
+        "use strict";
+
+        var NOUNS = [{"w":"Mann","pl":"Männer","en":"man","t":"Menschen","l":"A","g":"m"},{"w":"Vater","pl":"Väter","en":"father","t":"Menschen","l":"A","g":"m"},{"w":"Sohn","pl":"Söhne","en":"son","t":"Menschen","l":"A","g":"m"},{"w":"Bruder","pl":"Brüder","en":"brother","t":"Menschen","l":"A","g":"m"},{"w":"Onkel","pl":"-","en":"uncle","t":"Menschen","l":"A","g":"m"},{"w":"Opa","pl":"Opas","en":"grandpa","t":"Menschen","l":"A","g":"m"},{"w":"Großvater","pl":"Großväter","en":"grandfather","t":"Menschen","l":"A","g":"m"},{"w":"Enkel","pl":"-","en":"grandson","t":"Menschen","l":"B","g":"m"},{"w":"Neffe","pl":"Neffen","en":"nephew","t":"Menschen","l":"B","g":"m"},{"w":"Junge","pl":"Jungen","en":"boy","t":"Menschen","l":"A","g":"m"},{"w":"Herr","pl":"Herren","en":"gentleman, Mr","t":"Menschen","l":"A","g":"m"},{"w":"Freund","pl":"Freunde","en":"friend","t":"Menschen","l":"A","g":"m"},{"w":"Nachbar","pl":"Nachbarn","en":"neighbour","t":"Menschen","l":"A","g":"m"},{"w":"Kollege","pl":"Kollegen","en":"colleague","t":"Menschen","l":"A","g":"m"},{"w":"Gast","pl":"Gäste","en":"guest","t":"Menschen","l":"A","g":"m"},{"w":"Mensch","pl":"Menschen","en":"human being, person","t":"Menschen","l":"A","g":"m"},{"w":"Kunde","pl":"Kunden","en":"customer","t":"Arbeit","l":"A","g":"m"},{"w":"Partner","pl":"-","en":"partner","t":"Menschen","l":"A","g":"m"},{"w":"Ehemann","pl":"Ehemänner","en":"husband","t":"Menschen","l":"A","g":"m"},{"w":"Verkäufer","pl":"-","en":"salesperson","t":"Arbeit","l":"A","g":"m"},{"w":"Lehrer","pl":"-","en":"teacher","t":"Bildung","l":"A","g":"m"},{"w":"Schüler","pl":"-","en":"pupil","t":"Bildung","l":"A","g":"m"},{"w":"Student","pl":"Studenten","en":"student","t":"Bildung","l":"A","g":"m"},{"w":"Arzt","pl":"Ärzte","en":"doctor","t":"Körper","l":"A","g":"m"},{"w":"Zahnarzt","pl":"Zahnärzte","en":"dentist","t":"Körper","l":"B","g":"m"},{"w":"Patient","pl":"Patienten","en":"patient","t":"Körper","l":"B","g":"m"},{"w":"Kellner","pl":"-","en":"waiter","t":"Arbeit","l":"A","g":"m"},{"w":"Koch","pl":"Köche","en":"cook, chef","t":"Arbeit","l":"A","g":"m"},{"w":"Bäcker","pl":"-","en":"baker","t":"Arbeit","l":"A","g":"m"},{"w":"Friseur","pl":"Friseure","en":"hairdresser","t":"Arbeit","l":"A","g":"m"},{"w":"Polizist","pl":"Polizisten","en":"police officer","t":"Stadt","l":"A","g":"m"},{"w":"Ingenieur","pl":"Ingenieure","en":"engineer","t":"Arbeit","l":"B","g":"m"},{"w":"Anwalt","pl":"Anwälte","en":"lawyer","t":"Arbeit","l":"B","g":"m"},{"w":"Künstler","pl":"-","en":"artist","t":"Freizeit","l":"B","g":"m"},{"w":"Autor","pl":"Autoren","en":"author","t":"Bildung","l":"B","g":"m"},{"w":"Journalist","pl":"Journalisten","en":"journalist","t":"Technik","l":"B","g":"m"},{"w":"Sportler","pl":"-","en":"athlete","t":"Freizeit","l":"B","g":"m"},{"w":"Fahrer","pl":"-","en":"driver","t":"Reisen","l":"A","g":"m"},{"w":"Besucher","pl":"-","en":"visitor","t":"Stadt","l":"B","g":"m"},{"w":"Zuschauer","pl":"-","en":"spectator, viewer","t":"Freizeit","l":"B","g":"m"},{"w":"Mitarbeiter","pl":"-","en":"employee, co-worker","t":"Arbeit","l":"B","g":"m"},{"w":"Chef","pl":"Chefs","en":"boss","t":"Arbeit","l":"A","g":"m"},{"w":"Praktikant","pl":"Praktikanten","en":"intern","t":"Arbeit","l":"B","g":"m"},{"w":"Bewohner","pl":"-","en":"resident","t":"Wohnen","l":"B","g":"m"},{"w":"Nutzer","pl":"-","en":"user","t":"Technik","l":"B","g":"m"},{"w":"Tourist","pl":"Touristen","en":"tourist","t":"Reisen","l":"A","g":"m"},{"w":"Rentner","pl":"-","en":"pensioner","t":"Arbeit","l":"B","g":"m"},{"w":"Meister","pl":"-","en":"master craftsman","t":"Arbeit","l":"B","g":"m"},{"w":"Sprecher","pl":"-","en":"speaker","t":"Technik","l":"B","g":"m"},{"w":"Teilnehmer","pl":"-","en":"participant","t":"Bildung","l":"B","g":"m"},{"w":"Vertreter","pl":"-","en":"representative","t":"Arbeit","l":"B","g":"m"},{"w":"Kopf","pl":"Köpfe","en":"head","t":"Körper","l":"A","g":"m"},{"w":"Arm","pl":"Arme","en":"arm","t":"Körper","l":"A","g":"m"},{"w":"Fuß","pl":"Füße","en":"foot","t":"Körper","l":"A","g":"m"},{"w":"Bauch","pl":"Bäuche","en":"belly, stomach","t":"Körper","l":"A","g":"m"},{"w":"Rücken","pl":"-","en":"back","t":"Körper","l":"A","g":"m"},{"w":"Hals","pl":"Hälse","en":"neck, throat","t":"Körper","l":"A","g":"m"},{"w":"Mund","pl":"Münder","en":"mouth","t":"Körper","l":"A","g":"m"},{"w":"Zahn","pl":"Zähne","en":"tooth","t":"Körper","l":"A","g":"m"},{"w":"Finger","pl":"-","en":"finger","t":"Körper","l":"A","g":"m"},{"w":"Daumen","pl":"-","en":"thumb","t":"Körper","l":"B","g":"m"},{"w":"Körper","pl":"-","en":"body","t":"Körper","l":"A","g":"m"},{"w":"Muskel","pl":"Muskeln","en":"muscle","t":"Körper","l":"B","g":"m"},{"w":"Knochen","pl":"-","en":"bone","t":"Körper","l":"B","g":"m"},{"w":"Husten","pl":"-","en":"cough","t":"Körper","l":"B","g":"m"},{"w":"Schnupfen","pl":"-","en":"runny nose, cold","t":"Körper","l":"B","g":"m"},{"w":"Schmerz","pl":"Schmerzen","en":"pain","t":"Körper","l":"B","g":"m"},{"w":"Notruf","pl":"Notrufe","en":"emergency call","t":"Stadt","l":"B","g":"m"},{"w":"Tisch","pl":"Tische","en":"table","t":"Wohnen","l":"A","g":"m"},{"w":"Stuhl","pl":"Stühle","en":"chair","t":"Wohnen","l":"A","g":"m"},{"w":"Schrank","pl":"Schränke","en":"cupboard, wardrobe","t":"Wohnen","l":"A","g":"m"},{"w":"Sessel","pl":"-","en":"armchair","t":"Wohnen","l":"A","g":"m"},{"w":"Teppich","pl":"Teppiche","en":"carpet","t":"Wohnen","l":"A","g":"m"},{"w":"Spiegel","pl":"-","en":"mirror","t":"Wohnen","l":"A","g":"m"},{"w":"Herd","pl":"Herde","en":"stove, cooker","t":"Wohnen","l":"A","g":"m"},{"w":"Kühlschrank","pl":"Kühlschränke","en":"fridge","t":"Wohnen","l":"A","g":"m"},{"w":"Ofen","pl":"Öfen","en":"oven","t":"Wohnen","l":"B","g":"m"},{"w":"Balkon","pl":"Balkone","en":"balcony","t":"Wohnen","l":"A","g":"m"},{"w":"Garten","pl":"Gärten","en":"garden","t":"Wohnen","l":"A","g":"m"},{"w":"Keller","pl":"-","en":"cellar, basement","t":"Wohnen","l":"A","g":"m"},{"w":"Flur","pl":"Flure","en":"hallway","t":"Wohnen","l":"A","g":"m"},{"w":"Raum","pl":"Räume","en":"room, space","t":"Wohnen","l":"A","g":"m"},{"w":"Boden","pl":"Böden","en":"floor, ground","t":"Wohnen","l":"A","g":"m"},{"w":"Schlüssel","pl":"-","en":"key","t":"Wohnen","l":"A","g":"m"},{"w":"Wecker","pl":"-","en":"alarm clock","t":"Wohnen","l":"A","g":"m"},{"w":"Vorhang","pl":"Vorhänge","en":"curtain","t":"Wohnen","l":"B","g":"m"},{"w":"Müll","pl":"","en":"rubbish, waste","t":"Wohnen","l":"A","g":"m"},{"w":"Staubsauger","pl":"-","en":"vacuum cleaner","t":"Wohnen","l":"B","g":"m"},{"w":"Mieter","pl":"-","en":"tenant","t":"Wohnen","l":"B","g":"m"},{"w":"Vermieter","pl":"-","en":"landlord","t":"Wohnen","l":"B","g":"m"},{"w":"Umzug","pl":"Umzüge","en":"move, relocation","t":"Wohnen","l":"B","g":"m"},{"w":"Haushalt","pl":"Haushalte","en":"household","t":"Wohnen","l":"B","g":"m"},{"w":"Wasserhahn","pl":"Wasserhähne","en":"tap, faucet","t":"Wohnen","l":"B","g":"m"},{"w":"Aufzug","pl":"Aufzüge","en":"lift, elevator","t":"Wohnen","l":"A","g":"m"},{"w":"Eingang","pl":"Eingänge","en":"entrance","t":"Stadt","l":"A","g":"m"},{"w":"Ausgang","pl":"Ausgänge","en":"exit","t":"Stadt","l":"A","g":"m"},{"w":"Apfel","pl":"Äpfel","en":"apple","t":"Essen","l":"A","g":"m"},{"w":"Salat","pl":"Salate","en":"salad, lettuce","t":"Essen","l":"A","g":"m"},{"w":"Käse","pl":"-","en":"cheese","t":"Essen","l":"A","g":"m"},{"w":"Kuchen","pl":"-","en":"cake","t":"Essen","l":"A","g":"m"},{"w":"Saft","pl":"Säfte","en":"juice","t":"Essen","l":"A","g":"m"},{"w":"Wein","pl":"Weine","en":"wine","t":"Essen","l":"A","g":"m"},{"w":"Tee","pl":"Tees","en":"tea","t":"Essen","l":"A","g":"m"},{"w":"Kaffee","pl":"Kaffees","en":"coffee","t":"Essen","l":"A","g":"m"},{"w":"Zucker","pl":"","en":"sugar","t":"Essen","l":"A","g":"m"},{"w":"Reis","pl":"","en":"rice","t":"Essen","l":"A","g":"m"},{"w":"Fisch","pl":"Fische","en":"fish","t":"Essen","l":"A","g":"m"},{"w":"Schinken","pl":"-","en":"ham","t":"Essen","l":"B","g":"m"},{"w":"Pilz","pl":"Pilze","en":"mushroom","t":"Essen","l":"B","g":"m"},{"w":"Pfeffer","pl":"","en":"pepper","t":"Essen","l":"B","g":"m"},{"w":"Löffel","pl":"-","en":"spoon","t":"Essen","l":"A","g":"m"},{"w":"Teller","pl":"-","en":"plate","t":"Essen","l":"A","g":"m"},{"w":"Becher","pl":"-","en":"cup, mug","t":"Essen","l":"A","g":"m"},{"w":"Topf","pl":"Töpfe","en":"pot","t":"Essen","l":"A","g":"m"},{"w":"Hunger","pl":"","en":"hunger","t":"Essen","l":"A","g":"m"},{"w":"Durst","pl":"","en":"thirst","t":"Essen","l":"A","g":"m"},{"w":"Geschmack","pl":"Geschmäcker","en":"taste, flavour","t":"Essen","l":"B","g":"m"},{"w":"Nachtisch","pl":"Nachtische","en":"dessert","t":"Essen","l":"A","g":"m"},{"w":"Imbiss","pl":"Imbisse","en":"snack bar","t":"Essen","l":"B","g":"m"},{"w":"Braten","pl":"-","en":"roast","t":"Essen","l":"B","g":"m"},{"w":"Keks","pl":"Kekse","en":"biscuit, cookie","t":"Essen","l":"A","g":"m"},{"w":"Honig","pl":"","en":"honey","t":"Essen","l":"B","g":"m"},{"w":"Essig","pl":"","en":"vinegar","t":"Essen","l":"B","g":"m"},{"w":"Vorschlag","pl":"Vorschläge","en":"suggestion","t":"Abstrakt","l":"B","g":"m"},{"w":"Rock","pl":"Röcke","en":"skirt","t":"Kleidung","l":"A","g":"m"},{"w":"Mantel","pl":"Mäntel","en":"coat","t":"Kleidung","l":"A","g":"m"},{"w":"Pullover","pl":"-","en":"jumper, sweater","t":"Kleidung","l":"A","g":"m"},{"w":"Schuh","pl":"Schuhe","en":"shoe","t":"Kleidung","l":"A","g":"m"},{"w":"Hut","pl":"Hüte","en":"hat","t":"Kleidung","l":"A","g":"m"},{"w":"Anzug","pl":"Anzüge","en":"suit","t":"Kleidung","l":"B","g":"m"},{"w":"Gürtel","pl":"-","en":"belt","t":"Kleidung","l":"B","g":"m"},{"w":"Schal","pl":"Schals","en":"scarf","t":"Kleidung","l":"B","g":"m"},{"w":"Handschuh","pl":"Handschuhe","en":"glove","t":"Kleidung","l":"A","g":"m"},{"w":"Knopf","pl":"Knöpfe","en":"button","t":"Kleidung","l":"B","g":"m"},{"w":"Ring","pl":"Ringe","en":"ring","t":"Kleidung","l":"A","g":"m"},{"w":"Stoff","pl":"Stoffe","en":"fabric, material","t":"Kleidung","l":"B","g":"m"},{"w":"Beruf","pl":"Berufe","en":"profession","t":"Arbeit","l":"A","g":"m"},{"w":"Job","pl":"Jobs","en":"job","t":"Arbeit","l":"A","g":"m"},{"w":"Arbeitsplatz","pl":"Arbeitsplätze","en":"workplace, position","t":"Arbeit","l":"B","g":"m"},{"w":"Betrieb","pl":"Betriebe","en":"company, operation","t":"Arbeit","l":"B","g":"m"},{"w":"Vertrag","pl":"Verträge","en":"contract","t":"Arbeit","l":"B","g":"m"},{"w":"Termin","pl":"Termine","en":"appointment","t":"Arbeit","l":"A","g":"m"},{"w":"Antrag","pl":"Anträge","en":"application, request","t":"Arbeit","l":"B","g":"m"},{"w":"Bericht","pl":"Berichte","en":"report","t":"Arbeit","l":"B","g":"m"},{"w":"Plan","pl":"Pläne","en":"plan","t":"Arbeit","l":"A","g":"m"},{"w":"Auftrag","pl":"Aufträge","en":"order, assignment","t":"Arbeit","l":"B","g":"m"},{"w":"Erfolg","pl":"Erfolge","en":"success","t":"Arbeit","l":"B","g":"m"},{"w":"Lohn","pl":"Löhne","en":"wage","t":"Arbeit","l":"B","g":"m"},{"w":"Urlaub","pl":"Urlaube","en":"holiday, leave","t":"Arbeit","l":"A","g":"m"},{"w":"Feierabend","pl":"Feierabende","en":"end of the working day","t":"Arbeit","l":"B","g":"m"},{"w":"Vorteil","pl":"Vorteile","en":"advantage","t":"Abstrakt","l":"B","g":"m"},{"w":"Nachteil","pl":"Nachteile","en":"disadvantage","t":"Abstrakt","l":"B","g":"m"},{"w":"Schaden","pl":"Schäden","en":"damage","t":"Abstrakt","l":"B","g":"m"},{"w":"Fehler","pl":"-","en":"mistake","t":"Abstrakt","l":"A","g":"m"},{"w":"Zweck","pl":"Zwecke","en":"purpose","t":"Abstrakt","l":"B","g":"m"},{"w":"Bereich","pl":"Bereiche","en":"area, field","t":"Abstrakt","l":"B","g":"m"},{"w":"Gewinn","pl":"Gewinne","en":"profit, prize","t":"Arbeit","l":"B","g":"m"},{"w":"Verlust","pl":"Verluste","en":"loss","t":"Arbeit","l":"B","g":"m"},{"w":"Preis","pl":"Preise","en":"price, prize","t":"Arbeit","l":"A","g":"m"},{"w":"Rabatt","pl":"Rabatte","en":"discount","t":"Arbeit","l":"B","g":"m"},{"w":"Betrag","pl":"Beträge","en":"amount, sum","t":"Arbeit","l":"B","g":"m"},{"w":"Euro","pl":"-","en":"euro","t":"Arbeit","l":"A","g":"m"},{"w":"Cent","pl":"-","en":"cent","t":"Arbeit","l":"A","g":"m"},{"w":"Schein","pl":"Scheine","en":"note, certificate","t":"Arbeit","l":"B","g":"m"},{"w":"Kredit","pl":"Kredite","en":"loan, credit","t":"Arbeit","l":"B","g":"m"},{"w":"Automat","pl":"Automaten","en":"vending machine","t":"Stadt","l":"B","g":"m"},{"w":"Stempel","pl":"-","en":"stamp","t":"Arbeit","l":"B","g":"m"},{"w":"Ausweis","pl":"Ausweise","en":"ID card","t":"Reisen","l":"A","g":"m"},{"w":"Antragsteller","pl":"-","en":"applicant","t":"Arbeit","l":"B","g":"m"},{"w":"Unterricht","pl":"","en":"lessons, class","t":"Bildung","l":"A","g":"m"},{"w":"Kurs","pl":"Kurse","en":"course","t":"Bildung","l":"A","g":"m"},{"w":"Test","pl":"Tests","en":"test","t":"Bildung","l":"A","g":"m"},{"w":"Aufsatz","pl":"Aufsätze","en":"essay","t":"Bildung","l":"B","g":"m"},{"w":"Satz","pl":"Sätze","en":"sentence","t":"Bildung","l":"A","g":"m"},{"w":"Text","pl":"Texte","en":"text","t":"Bildung","l":"A","g":"m"},{"w":"Artikel","pl":"-","en":"article","t":"Bildung","l":"A","g":"m"},{"w":"Stift","pl":"Stifte","en":"pen, pencil","t":"Bildung","l":"A","g":"m"},{"w":"Kugelschreiber","pl":"-","en":"ballpoint pen","t":"Bildung","l":"A","g":"m"},{"w":"Bleistift","pl":"Bleistifte","en":"pencil","t":"Bildung","l":"A","g":"m"},{"w":"Ordner","pl":"-","en":"folder, binder","t":"Bildung","l":"A","g":"m"},{"w":"Abschluss","pl":"Abschlüsse","en":"degree, conclusion","t":"Bildung","l":"B","g":"m"},{"w":"Wortschatz","pl":"Wortschätze","en":"vocabulary","t":"Bildung","l":"B","g":"m"},{"w":"Begriff","pl":"Begriffe","en":"term, concept","t":"Bildung","l":"B","g":"m"},{"w":"Inhalt","pl":"Inhalte","en":"content","t":"Bildung","l":"B","g":"m"},{"w":"Titel","pl":"-","en":"title","t":"Bildung","l":"B","g":"m"},{"w":"Absatz","pl":"Absätze","en":"paragraph","t":"Bildung","l":"B","g":"m"},{"w":"Zug","pl":"Züge","en":"train","t":"Reisen","l":"A","g":"m"},{"w":"Bus","pl":"Busse","en":"bus","t":"Reisen","l":"A","g":"m"},{"w":"Wagen","pl":"-","en":"car, carriage","t":"Reisen","l":"A","g":"m"},{"w":"Flug","pl":"Flüge","en":"flight","t":"Reisen","l":"A","g":"m"},{"w":"Flughafen","pl":"Flughäfen","en":"airport","t":"Reisen","l":"A","g":"m"},{"w":"Bahnhof","pl":"Bahnhöfe","en":"railway station","t":"Reisen","l":"A","g":"m"},{"w":"Hafen","pl":"Häfen","en":"harbour, port","t":"Reisen","l":"B","g":"m"},{"w":"Koffer","pl":"-","en":"suitcase","t":"Reisen","l":"A","g":"m"},{"w":"Rucksack","pl":"Rucksäcke","en":"backpack","t":"Reisen","l":"A","g":"m"},{"w":"Pass","pl":"Pässe","en":"passport","t":"Reisen","l":"A","g":"m"},{"w":"Fahrplan","pl":"Fahrpläne","en":"timetable","t":"Reisen","l":"A","g":"m"},{"w":"Ausflug","pl":"Ausflüge","en":"excursion, day trip","t":"Reisen","l":"A","g":"m"},{"w":"Aufenthalt","pl":"Aufenthalte","en":"stay","t":"Reisen","l":"B","g":"m"},{"w":"Weg","pl":"Wege","en":"way, path","t":"Reisen","l":"A","g":"m"},{"w":"Platz","pl":"Plätze","en":"place, square, seat","t":"Stadt","l":"A","g":"m"},{"w":"Reifen","pl":"-","en":"tyre","t":"Reisen","l":"B","g":"m"},{"w":"Motor","pl":"Motoren","en":"engine","t":"Technik","l":"B","g":"m"},{"w":"Führerschein","pl":"Führerscheine","en":"driving licence","t":"Reisen","l":"B","g":"m"},{"w":"Stau","pl":"Staus","en":"traffic jam","t":"Reisen","l":"A","g":"m"},{"w":"Unfall","pl":"Unfälle","en":"accident","t":"Reisen","l":"A","g":"m"},{"w":"Verkehr","pl":"","en":"traffic","t":"Reisen","l":"A","g":"m"},{"w":"Tunnel","pl":"-","en":"tunnel","t":"Reisen","l":"B","g":"m"},{"w":"Parkplatz","pl":"Parkplätze","en":"car park, parking space","t":"Reisen","l":"A","g":"m"},{"w":"Anschluss","pl":"Anschlüsse","en":"connection","t":"Reisen","l":"B","g":"m"},{"w":"Sitzplatz","pl":"Sitzplätze","en":"seat","t":"Reisen","l":"B","g":"m"},{"w":"Schalter","pl":"-","en":"counter, switch","t":"Reisen","l":"A","g":"m"},{"w":"Fahrschein","pl":"Fahrscheine","en":"ticket","t":"Reisen","l":"A","g":"m"},{"w":"Umweg","pl":"Umwege","en":"detour","t":"Reisen","l":"B","g":"m"},{"w":"Ort","pl":"Orte","en":"place, town","t":"Stadt","l":"A","g":"m"},{"w":"Stadtteil","pl":"Stadtteile","en":"district","t":"Stadt","l":"B","g":"m"},{"w":"Markt","pl":"Märkte","en":"market","t":"Stadt","l":"A","g":"m"},{"w":"Laden","pl":"Läden","en":"shop","t":"Stadt","l":"A","g":"m"},{"w":"Supermarkt","pl":"Supermärkte","en":"supermarket","t":"Stadt","l":"A","g":"m"},{"w":"Turm","pl":"Türme","en":"tower","t":"Stadt","l":"B","g":"m"},{"w":"Dom","pl":"Dome","en":"cathedral","t":"Stadt","l":"B","g":"m"},{"w":"Park","pl":"Parks","en":"park","t":"Stadt","l":"A","g":"m"},{"w":"Brunnen","pl":"-","en":"fountain, well","t":"Stadt","l":"B","g":"m"},{"w":"Zaun","pl":"Zäune","en":"fence","t":"Stadt","l":"B","g":"m"},{"w":"Kiosk","pl":"Kioske","en":"kiosk","t":"Stadt","l":"B","g":"m"},{"w":"Briefkasten","pl":"Briefkästen","en":"letterbox","t":"Stadt","l":"A","g":"m"},{"w":"Bezirk","pl":"Bezirke","en":"district","t":"Stadt","l":"B","g":"m"},{"w":"Staat","pl":"Staaten","en":"state","t":"Abstrakt","l":"B","g":"m"},{"w":"Bürger","pl":"-","en":"citizen","t":"Abstrakt","l":"B","g":"m"},{"w":"Einwohner","pl":"-","en":"inhabitant","t":"Stadt","l":"B","g":"m"},{"w":"Baum","pl":"Bäume","en":"tree","t":"Natur","l":"A","g":"m"},{"w":"Wald","pl":"Wälder","en":"forest","t":"Natur","l":"A","g":"m"},{"w":"Berg","pl":"Berge","en":"mountain","t":"Natur","l":"A","g":"m"},{"w":"See","pl":"Seen","en":"lake","t":"Natur","l":"A","g":"m"},{"w":"Fluss","pl":"Flüsse","en":"river","t":"Natur","l":"A","g":"m"},{"w":"Strand","pl":"Strände","en":"beach","t":"Natur","l":"A","g":"m"},{"w":"Himmel","pl":"-","en":"sky, heaven","t":"Natur","l":"A","g":"m"},{"w":"Mond","pl":"Monde","en":"moon","t":"Natur","l":"A","g":"m"},{"w":"Stern","pl":"Sterne","en":"star","t":"Natur","l":"A","g":"m"},{"w":"Wind","pl":"Winde","en":"wind","t":"Natur","l":"A","g":"m"},{"w":"Regen","pl":"","en":"rain","t":"Natur","l":"A","g":"m"},{"w":"Schnee","pl":"","en":"snow","t":"Natur","l":"A","g":"m"},{"w":"Nebel","pl":"-","en":"fog","t":"Natur","l":"B","g":"m"},{"w":"Sturm","pl":"Stürme","en":"storm","t":"Natur","l":"B","g":"m"},{"w":"Frost","pl":"Fröste","en":"frost","t":"Natur","l":"B","g":"m"},{"w":"Stein","pl":"Steine","en":"stone","t":"Natur","l":"A","g":"m"},{"w":"Sand","pl":"","en":"sand","t":"Natur","l":"B","g":"m"},{"w":"Vogel","pl":"Vögel","en":"bird","t":"Natur","l":"A","g":"m"},{"w":"Hund","pl":"Hunde","en":"dog","t":"Natur","l":"A","g":"m"},{"w":"Bär","pl":"Bären","en":"bear","t":"Natur","l":"B","g":"m"},{"w":"Löwe","pl":"Löwen","en":"lion","t":"Natur","l":"B","g":"m"},{"w":"Hase","pl":"Hasen","en":"hare","t":"Natur","l":"B","g":"m"},{"w":"Wolf","pl":"Wölfe","en":"wolf","t":"Natur","l":"B","g":"m"},{"w":"Ast","pl":"Äste","en":"branch","t":"Natur","l":"B","g":"m"},{"w":"Zweig","pl":"Zweige","en":"twig","t":"Natur","l":"B","g":"m"},{"w":"Schatten","pl":"-","en":"shade, shadow","t":"Natur","l":"B","g":"m"},{"w":"Abfall","pl":"Abfälle","en":"waste","t":"Natur","l":"B","g":"m"},{"w":"Schutz","pl":"","en":"protection","t":"Abstrakt","l":"B","g":"m"},{"w":"Tag","pl":"Tage","en":"day","t":"Zeit","l":"A","g":"m"},{"w":"Morgen","pl":"-","en":"morning","t":"Zeit","l":"A","g":"m"},{"w":"Vormittag","pl":"Vormittage","en":"late morning","t":"Zeit","l":"A","g":"m"},{"w":"Mittag","pl":"Mittage","en":"midday","t":"Zeit","l":"A","g":"m"},{"w":"Nachmittag","pl":"Nachmittage","en":"afternoon","t":"Zeit","l":"A","g":"m"},{"w":"Abend","pl":"Abende","en":"evening","t":"Zeit","l":"A","g":"m"},{"w":"Monat","pl":"Monate","en":"month","t":"Zeit","l":"A","g":"m"},{"w":"Sommer","pl":"-","en":"summer","t":"Zeit","l":"A","g":"m"},{"w":"Winter","pl":"-","en":"winter","t":"Zeit","l":"A","g":"m"},{"w":"Herbst","pl":"Herbste","en":"autumn","t":"Zeit","l":"A","g":"m"},{"w":"Frühling","pl":"Frühlinge","en":"spring","t":"Zeit","l":"A","g":"m"},{"w":"Montag","pl":"Montage","en":"Monday","t":"Zeit","l":"A","g":"m"},{"w":"Dienstag","pl":"Dienstage","en":"Tuesday","t":"Zeit","l":"A","g":"m"},{"w":"Mittwoch","pl":"Mittwoche","en":"Wednesday","t":"Zeit","l":"A","g":"m"},{"w":"Donnerstag","pl":"Donnerstage","en":"Thursday","t":"Zeit","l":"A","g":"m"},{"w":"Freitag","pl":"Freitage","en":"Friday","t":"Zeit","l":"A","g":"m"},{"w":"Samstag","pl":"Samstage","en":"Saturday","t":"Zeit","l":"A","g":"m"},{"w":"Sonntag","pl":"Sonntage","en":"Sunday","t":"Zeit","l":"A","g":"m"},{"w":"Januar","pl":"","en":"January","t":"Zeit","l":"A","g":"m"},{"w":"Zeitpunkt","pl":"Zeitpunkte","en":"point in time","t":"Zeit","l":"B","g":"m"},{"w":"Augenblick","pl":"Augenblicke","en":"moment","t":"Zeit","l":"B","g":"m"},{"w":"Moment","pl":"Momente","en":"moment","t":"Zeit","l":"A","g":"m"},{"w":"Anfang","pl":"Anfänge","en":"beginning","t":"Zeit","l":"A","g":"m"},{"w":"Beginn","pl":"","en":"start","t":"Zeit","l":"B","g":"m"},{"w":"Schluss","pl":"Schlüsse","en":"end, conclusion","t":"Zeit","l":"B","g":"m"},{"w":"Feiertag","pl":"Feiertage","en":"public holiday","t":"Zeit","l":"A","g":"m"},{"w":"Geburtstag","pl":"Geburtstage","en":"birthday","t":"Zeit","l":"A","g":"m"},{"w":"Kalender","pl":"-","en":"calendar","t":"Zeit","l":"A","g":"m"},{"w":"Alltag","pl":"","en":"everyday life","t":"Zeit","l":"B","g":"m"},{"w":"Zeitraum","pl":"Zeiträume","en":"period of time","t":"Zeit","l":"B","g":"m"},{"w":"Termindruck","pl":"","en":"time pressure","t":"Arbeit","l":"B","g":"m"},{"w":"Computer","pl":"-","en":"computer","t":"Technik","l":"A","g":"m"},{"w":"Drucker","pl":"-","en":"printer","t":"Technik","l":"A","g":"m"},{"w":"Bildschirm","pl":"Bildschirme","en":"screen","t":"Technik","l":"B","g":"m"},{"w":"Fernseher","pl":"-","en":"television set","t":"Technik","l":"A","g":"m"},{"w":"Anruf","pl":"Anrufe","en":"phone call","t":"Technik","l":"A","g":"m"},{"w":"Apparat","pl":"Apparate","en":"device, apparatus","t":"Technik","l":"B","g":"m"},{"w":"Akku","pl":"Akkus","en":"battery","t":"Technik","l":"B","g":"m"},{"w":"Strom","pl":"","en":"electricity, current","t":"Technik","l":"A","g":"m"},{"w":"Kanal","pl":"Kanäle","en":"channel","t":"Technik","l":"B","g":"m"},{"w":"Sender","pl":"-","en":"broadcaster, transmitter","t":"Technik","l":"B","g":"m"},{"w":"Film","pl":"Filme","en":"film","t":"Freizeit","l":"A","g":"m"},{"w":"Roman","pl":"Romane","en":"novel","t":"Freizeit","l":"B","g":"m"},{"w":"Brief","pl":"Briefe","en":"letter","t":"Technik","l":"A","g":"m"},{"w":"Umschlag","pl":"Umschläge","en":"envelope","t":"Technik","l":"B","g":"m"},{"w":"Absender","pl":"-","en":"sender","t":"Technik","l":"B","g":"m"},{"w":"Empfänger","pl":"-","en":"recipient","t":"Technik","l":"B","g":"m"},{"w":"Anhang","pl":"Anhänge","en":"attachment","t":"Technik","l":"B","g":"m"},{"w":"Link","pl":"Links","en":"link","t":"Technik","l":"B","g":"m"},{"w":"Zugang","pl":"Zugänge","en":"access","t":"Technik","l":"B","g":"m"},{"w":"Lautsprecher","pl":"-","en":"loudspeaker","t":"Technik","l":"B","g":"m"},{"w":"Kopfhörer","pl":"-","en":"headphones","t":"Technik","l":"B","g":"m"},{"w":"Stecker","pl":"-","en":"plug","t":"Technik","l":"B","g":"m"},{"w":"Sport","pl":"Sportarten","en":"sport","t":"Freizeit","l":"A","g":"m"},{"w":"Ball","pl":"Bälle","en":"ball","t":"Freizeit","l":"A","g":"m"},{"w":"Verein","pl":"Vereine","en":"club, association","t":"Freizeit","l":"B","g":"m"},{"w":"Tanz","pl":"Tänze","en":"dance","t":"Freizeit","l":"B","g":"m"},{"w":"Chor","pl":"Chöre","en":"choir","t":"Freizeit","l":"B","g":"m"},{"w":"Spaziergang","pl":"Spaziergänge","en":"walk","t":"Freizeit","l":"A","g":"m"},{"w":"Urlaubsort","pl":"Urlaubsorte","en":"holiday destination","t":"Reisen","l":"B","g":"m"},{"w":"Eintritt","pl":"Eintritte","en":"entry, admission","t":"Freizeit","l":"B","g":"m"},{"w":"Zuschlag","pl":"Zuschläge","en":"surcharge","t":"Reisen","l":"B","g":"m"},{"w":"Gedanke","pl":"Gedanken","en":"thought","t":"Abstrakt","l":"B","g":"m"},{"w":"Grund","pl":"Gründe","en":"reason","t":"Abstrakt","l":"A","g":"m"},{"w":"Zweifel","pl":"-","en":"doubt","t":"Abstrakt","l":"B","g":"m"},{"w":"Wunsch","pl":"Wünsche","en":"wish","t":"Abstrakt","l":"A","g":"m"},{"w":"Traum","pl":"Träume","en":"dream","t":"Abstrakt","l":"B","g":"m"},{"w":"Mut","pl":"","en":"courage","t":"Abstrakt","l":"B","g":"m"},{"w":"Ärger","pl":"","en":"trouble, annoyance","t":"Abstrakt","l":"B","g":"m"},{"w":"Streit","pl":"Streite","en":"argument","t":"Abstrakt","l":"B","g":"m"},{"w":"Frieden","pl":"","en":"peace","t":"Abstrakt","l":"B","g":"m"},{"w":"Krieg","pl":"Kriege","en":"war","t":"Abstrakt","l":"B","g":"m"},{"w":"Tod","pl":"Tode","en":"death","t":"Abstrakt","l":"B","g":"m"},{"w":"Spaß","pl":"Späße","en":"fun","t":"Abstrakt","l":"A","g":"m"},{"w":"Witz","pl":"Witze","en":"joke","t":"Abstrakt","l":"B","g":"m"},{"w":"Zufall","pl":"Zufälle","en":"coincidence","t":"Abstrakt","l":"B","g":"m"},{"w":"Versuch","pl":"Versuche","en":"attempt","t":"Abstrakt","l":"B","g":"m"},{"w":"Unterschied","pl":"Unterschiede","en":"difference","t":"Abstrakt","l":"B","g":"m"},{"w":"Zusammenhang","pl":"Zusammenhänge","en":"connection, context","t":"Abstrakt","l":"B","g":"m"},{"w":"Eindruck","pl":"Eindrücke","en":"impression","t":"Abstrakt","l":"B","g":"m"},{"w":"Einfluss","pl":"Einflüsse","en":"influence","t":"Abstrakt","l":"B","g":"m"},{"w":"Anteil","pl":"Anteile","en":"share, portion","t":"Abstrakt","l":"B","g":"m"},{"w":"Fall","pl":"Fälle","en":"case, fall","t":"Abstrakt","l":"A","g":"m"},{"w":"Sinn","pl":"Sinne","en":"sense, meaning","t":"Abstrakt","l":"B","g":"m"},{"w":"Wert","pl":"Werte","en":"value","t":"Abstrakt","l":"B","g":"m"},{"w":"Zustand","pl":"Zustände","en":"condition, state","t":"Abstrakt","l":"B","g":"m"},{"w":"Vergleich","pl":"Vergleiche","en":"comparison","t":"Abstrakt","l":"B","g":"m"},{"w":"Rat","pl":"Ratschläge","en":"advice","t":"Abstrakt","l":"B","g":"m"},{"w":"Ratschlag","pl":"Ratschläge","en":"piece of advice","t":"Abstrakt","l":"B","g":"m"},{"w":"Hinweis","pl":"Hinweise","en":"hint, note","t":"Abstrakt","l":"B","g":"m"},{"w":"Tipp","pl":"Tipps","en":"tip","t":"Abstrakt","l":"A","g":"m"},{"w":"Beitrag","pl":"Beiträge","en":"contribution, fee","t":"Abstrakt","l":"B","g":"m"},{"w":"Schritt","pl":"Schritte","en":"step","t":"Abstrakt","l":"A","g":"m"},{"w":"Blick","pl":"Blicke","en":"look, glance","t":"Abstrakt","l":"B","g":"m"},{"w":"Humor","pl":"","en":"humour","t":"Abstrakt","l":"B","g":"m"},{"w":"Charakter","pl":"Charaktere","en":"character","t":"Abstrakt","l":"B","g":"m"},{"w":"Stress","pl":"","en":"stress","t":"Abstrakt","l":"A","g":"m"},{"w":"Druck","pl":"","en":"pressure","t":"Abstrakt","l":"B","g":"m"},{"w":"Wille","pl":"Willen","en":"will","t":"Abstrakt","l":"B","g":"m"},{"w":"Neid","pl":"","en":"envy","t":"Abstrakt","l":"B","g":"m"},{"w":"Respekt","pl":"","en":"respect","t":"Abstrakt","l":"B","g":"m"},{"w":"Verdacht","pl":"","en":"suspicion","t":"Abstrakt","l":"B","g":"m"},{"w":"Zwang","pl":"Zwänge","en":"compulsion","t":"Abstrakt","l":"B","g":"m"},{"w":"Ersatz","pl":"","en":"replacement","t":"Abstrakt","l":"B","g":"m"},{"w":"Überblick","pl":"Überblicke","en":"overview","t":"Abstrakt","l":"B","g":"m"},{"w":"Nachweis","pl":"Nachweise","en":"proof","t":"Abstrakt","l":"B","g":"m"},{"w":"Verlauf","pl":"Verläufe","en":"course, progression","t":"Abstrakt","l":"B","g":"m"},{"w":"Aufwand","pl":"","en":"effort, expense","t":"Abstrakt","l":"B","g":"m"},{"w":"Umfang","pl":"Umfänge","en":"extent, scope","t":"Abstrakt","l":"B","g":"m"},{"w":"Kapitalismus","pl":"","en":"capitalism","t":"Abstrakt","l":"B","g":"m"},{"w":"Tourismus","pl":"","en":"tourism","t":"Reisen","l":"B","g":"m"},{"w":"Rhythmus","pl":"Rhythmen","en":"rhythm","t":"Freizeit","l":"B","g":"m"},{"w":"Zirkus","pl":"Zirkusse","en":"circus","t":"Freizeit","l":"B","g":"m"},{"w":"Schmetterling","pl":"Schmetterlinge","en":"butterfly","t":"Natur","l":"B","g":"m"},{"w":"Lehrling","pl":"Lehrlinge","en":"apprentice","t":"Arbeit","l":"B","g":"m"},{"w":"König","pl":"Könige","en":"king","t":"Abstrakt","l":"B","g":"m"},{"w":"Frau","pl":"Frauen","en":"woman, wife","t":"Menschen","l":"A","g":"f"},{"w":"Mutter","pl":"Mütter","en":"mother","t":"Menschen","l":"A","g":"f"},{"w":"Tochter","pl":"Töchter","en":"daughter","t":"Menschen","l":"A","g":"f"},{"w":"Schwester","pl":"Schwestern","en":"sister","t":"Menschen","l":"A","g":"f"},{"w":"Tante","pl":"Tanten","en":"aunt","t":"Menschen","l":"A","g":"f"},{"w":"Oma","pl":"Omas","en":"grandma","t":"Menschen","l":"A","g":"f"},{"w":"Großmutter","pl":"Großmütter","en":"grandmother","t":"Menschen","l":"A","g":"f"},{"w":"Nichte","pl":"Nichten","en":"niece","t":"Menschen","l":"B","g":"f"},{"w":"Freundin","pl":"Freundinnen","en":"female friend","t":"Menschen","l":"A","g":"f"},{"w":"Kollegin","pl":"Kolleginnen","en":"female colleague","t":"Arbeit","l":"A","g":"f"},{"w":"Lehrerin","pl":"Lehrerinnen","en":"female teacher","t":"Bildung","l":"A","g":"f"},{"w":"Ärztin","pl":"Ärztinnen","en":"female doctor","t":"Körper","l":"A","g":"f"},{"w":"Person","pl":"Personen","en":"person","t":"Menschen","l":"A","g":"f"},{"w":"Familie","pl":"Familien","en":"family","t":"Menschen","l":"A","g":"f"},{"w":"Gruppe","pl":"Gruppen","en":"group","t":"Menschen","l":"A","g":"f"},{"w":"Klasse","pl":"Klassen","en":"class","t":"Bildung","l":"A","g":"f"},{"w":"Mannschaft","pl":"Mannschaften","en":"team","t":"Freizeit","l":"B","g":"f"},{"w":"Bevölkerung","pl":"Bevölkerungen","en":"population","t":"Abstrakt","l":"B","g":"f"},{"w":"Gesellschaft","pl":"Gesellschaften","en":"society, company","t":"Abstrakt","l":"B","g":"f"},{"w":"Jugend","pl":"","en":"youth","t":"Menschen","l":"B","g":"f"},{"w":"Kindheit","pl":"","en":"childhood","t":"Menschen","l":"B","g":"f"},{"w":"Ehe","pl":"Ehen","en":"marriage","t":"Menschen","l":"B","g":"f"},{"w":"Hochzeit","pl":"Hochzeiten","en":"wedding","t":"Menschen","l":"A","g":"f"},{"w":"Liebe","pl":"","en":"love","t":"Abstrakt","l":"A","g":"f"},{"w":"Beziehung","pl":"Beziehungen","en":"relationship","t":"Abstrakt","l":"B","g":"f"},{"w":"Nachbarin","pl":"Nachbarinnen","en":"female neighbour","t":"Menschen","l":"A","g":"f"},{"w":"Kundin","pl":"Kundinnen","en":"female customer","t":"Arbeit","l":"B","g":"f"},{"w":"Hand","pl":"Hände","en":"hand","t":"Körper","l":"A","g":"f"},{"w":"Nase","pl":"Nasen","en":"nose","t":"Körper","l":"A","g":"f"},{"w":"Stirn","pl":"Stirnen","en":"forehead","t":"Körper","l":"B","g":"f"},{"w":"Schulter","pl":"Schultern","en":"shoulder","t":"Körper","l":"A","g":"f"},{"w":"Haut","pl":"Häute","en":"skin","t":"Körper","l":"B","g":"f"},{"w":"Zunge","pl":"Zungen","en":"tongue","t":"Körper","l":"B","g":"f"},{"w":"Lippe","pl":"Lippen","en":"lip","t":"Körper","l":"B","g":"f"},{"w":"Wange","pl":"Wangen","en":"cheek","t":"Körper","l":"B","g":"f"},{"w":"Gesundheit","pl":"","en":"health","t":"Körper","l":"A","g":"f"},{"w":"Krankheit","pl":"Krankheiten","en":"illness","t":"Körper","l":"A","g":"f"},{"w":"Apotheke","pl":"Apotheken","en":"pharmacy","t":"Körper","l":"A","g":"f"},{"w":"Praxis","pl":"Praxen","en":"practice, surgery","t":"Körper","l":"B","g":"f"},{"w":"Klinik","pl":"Kliniken","en":"clinic","t":"Körper","l":"B","g":"f"},{"w":"Untersuchung","pl":"Untersuchungen","en":"examination","t":"Körper","l":"B","g":"f"},{"w":"Tablette","pl":"Tabletten","en":"tablet, pill","t":"Körper","l":"A","g":"f"},{"w":"Salbe","pl":"Salben","en":"ointment","t":"Körper","l":"B","g":"f"},{"w":"Grippe","pl":"Grippen","en":"flu","t":"Körper","l":"A","g":"f"},{"w":"Erkältung","pl":"Erkältungen","en":"cold","t":"Körper","l":"A","g":"f"},{"w":"Wunde","pl":"Wunden","en":"wound","t":"Körper","l":"B","g":"f"},{"w":"Pflege","pl":"","en":"care","t":"Körper","l":"B","g":"f"},{"w":"Versicherung","pl":"Versicherungen","en":"insurance","t":"Arbeit","l":"B","g":"f"},{"w":"Bewegung","pl":"Bewegungen","en":"movement, exercise","t":"Körper","l":"B","g":"f"},{"w":"Wohnung","pl":"Wohnungen","en":"flat, apartment","t":"Wohnen","l":"A","g":"f"},{"w":"Küche","pl":"Küchen","en":"kitchen","t":"Wohnen","l":"A","g":"f"},{"w":"Tür","pl":"Türen","en":"door","t":"Wohnen","l":"A","g":"f"},{"w":"Wand","pl":"Wände","en":"wall","t":"Wohnen","l":"A","g":"f"},{"w":"Decke","pl":"Decken","en":"ceiling, blanket","t":"Wohnen","l":"A","g":"f"},{"w":"Treppe","pl":"Treppen","en":"stairs","t":"Wohnen","l":"A","g":"f"},{"w":"Lampe","pl":"Lampen","en":"lamp","t":"Wohnen","l":"A","g":"f"},{"w":"Uhr","pl":"Uhren","en":"clock, watch","t":"Wohnen","l":"A","g":"f"},{"w":"Vase","pl":"Vasen","en":"vase","t":"Wohnen","l":"B","g":"f"},{"w":"Dusche","pl":"Duschen","en":"shower","t":"Wohnen","l":"A","g":"f"},{"w":"Toilette","pl":"Toiletten","en":"toilet","t":"Wohnen","l":"A","g":"f"},{"w":"Waschmaschine","pl":"Waschmaschinen","en":"washing machine","t":"Wohnen","l":"A","g":"f"},{"w":"Spülmaschine","pl":"Spülmaschinen","en":"dishwasher","t":"Wohnen","l":"B","g":"f"},{"w":"Heizung","pl":"Heizungen","en":"heating","t":"Wohnen","l":"A","g":"f"},{"w":"Miete","pl":"Mieten","en":"rent","t":"Wohnen","l":"A","g":"f"},{"w":"Garage","pl":"Garagen","en":"garage","t":"Wohnen","l":"A","g":"f"},{"w":"Terrasse","pl":"Terrassen","en":"terrace","t":"Wohnen","l":"B","g":"f"},{"w":"Kommode","pl":"Kommoden","en":"chest of drawers","t":"Wohnen","l":"B","g":"f"},{"w":"Matratze","pl":"Matratzen","en":"mattress","t":"Wohnen","l":"B","g":"f"},{"w":"Steckdose","pl":"Steckdosen","en":"socket","t":"Wohnen","l":"B","g":"f"},{"w":"Klingel","pl":"Klingeln","en":"doorbell","t":"Wohnen","l":"B","g":"f"},{"w":"Kerze","pl":"Kerzen","en":"candle","t":"Wohnen","l":"B","g":"f"},{"w":"Wohngemeinschaft","pl":"Wohngemeinschaften","en":"shared flat","t":"Wohnen","l":"B","g":"f"},{"w":"Ordnung","pl":"Ordnungen","en":"order, tidiness","t":"Wohnen","l":"B","g":"f"},{"w":"Milch","pl":"","en":"milk","t":"Essen","l":"A","g":"f"},{"w":"Butter","pl":"","en":"butter","t":"Essen","l":"A","g":"f"},{"w":"Sahne","pl":"","en":"cream","t":"Essen","l":"B","g":"f"},{"w":"Wurst","pl":"Würste","en":"sausage","t":"Essen","l":"A","g":"f"},{"w":"Suppe","pl":"Suppen","en":"soup","t":"Essen","l":"A","g":"f"},{"w":"Soße","pl":"Soßen","en":"sauce","t":"Essen","l":"B","g":"f"},{"w":"Nudel","pl":"Nudeln","en":"noodle, pasta","t":"Essen","l":"A","g":"f"},{"w":"Kartoffel","pl":"Kartoffeln","en":"potato","t":"Essen","l":"A","g":"f"},{"w":"Tomate","pl":"Tomaten","en":"tomato","t":"Essen","l":"A","g":"f"},{"w":"Gurke","pl":"Gurken","en":"cucumber","t":"Essen","l":"A","g":"f"},{"w":"Zwiebel","pl":"Zwiebeln","en":"onion","t":"Essen","l":"A","g":"f"},{"w":"Karotte","pl":"Karotten","en":"carrot","t":"Essen","l":"A","g":"f"},{"w":"Banane","pl":"Bananen","en":"banana","t":"Essen","l":"A","g":"f"},{"w":"Birne","pl":"Birnen","en":"pear","t":"Essen","l":"A","g":"f"},{"w":"Orange","pl":"Orangen","en":"orange","t":"Essen","l":"A","g":"f"},{"w":"Zitrone","pl":"Zitronen","en":"lemon","t":"Essen","l":"A","g":"f"},{"w":"Erdbeere","pl":"Erdbeeren","en":"strawberry","t":"Essen","l":"A","g":"f"},{"w":"Kirsche","pl":"Kirschen","en":"cherry","t":"Essen","l":"A","g":"f"},{"w":"Traube","pl":"Trauben","en":"grape","t":"Essen","l":"A","g":"f"},{"w":"Schokolade","pl":"Schokoladen","en":"chocolate","t":"Essen","l":"A","g":"f"},{"w":"Torte","pl":"Torten","en":"gateau, layer cake","t":"Essen","l":"B","g":"f"},{"w":"Marmelade","pl":"Marmeladen","en":"jam","t":"Essen","l":"A","g":"f"},{"w":"Brezel","pl":"Brezeln","en":"pretzel","t":"Essen","l":"B","g":"f"},{"w":"Flasche","pl":"Flaschen","en":"bottle","t":"Essen","l":"A","g":"f"},{"w":"Tasse","pl":"Tassen","en":"cup","t":"Essen","l":"A","g":"f"},{"w":"Gabel","pl":"Gabeln","en":"fork","t":"Essen","l":"A","g":"f"},{"w":"Schüssel","pl":"Schüsseln","en":"bowl","t":"Essen","l":"B","g":"f"},{"w":"Pfanne","pl":"Pfannen","en":"pan","t":"Essen","l":"B","g":"f"},{"w":"Speisekarte","pl":"Speisekarten","en":"menu","t":"Essen","l":"A","g":"f"},{"w":"Rechnung","pl":"Rechnungen","en":"bill, invoice","t":"Arbeit","l":"A","g":"f"},{"w":"Portion","pl":"Portionen","en":"portion","t":"Essen","l":"B","g":"f"},{"w":"Mahlzeit","pl":"Mahlzeiten","en":"meal","t":"Essen","l":"B","g":"f"},{"w":"Zutat","pl":"Zutaten","en":"ingredient","t":"Essen","l":"B","g":"f"},{"w":"Ernährung","pl":"","en":"nutrition, diet","t":"Essen","l":"B","g":"f"},{"w":"Bäckerei","pl":"Bäckereien","en":"bakery","t":"Essen","l":"A","g":"f"},{"w":"Metzgerei","pl":"Metzgereien","en":"butcher's","t":"Essen","l":"B","g":"f"},{"w":"Hose","pl":"Hosen","en":"trousers","t":"Kleidung","l":"A","g":"f"},{"w":"Jacke","pl":"Jacken","en":"jacket","t":"Kleidung","l":"A","g":"f"},{"w":"Bluse","pl":"Blusen","en":"blouse","t":"Kleidung","l":"A","g":"f"},{"w":"Mütze","pl":"Mützen","en":"cap","t":"Kleidung","l":"A","g":"f"},{"w":"Krawatte","pl":"Krawatten","en":"tie","t":"Kleidung","l":"B","g":"f"},{"w":"Socke","pl":"Socken","en":"sock","t":"Kleidung","l":"A","g":"f"},{"w":"Tasche","pl":"Taschen","en":"bag, pocket","t":"Kleidung","l":"A","g":"f"},{"w":"Brille","pl":"Brillen","en":"glasses","t":"Kleidung","l":"A","g":"f"},{"w":"Kette","pl":"Ketten","en":"chain, necklace","t":"Kleidung","l":"B","g":"f"},{"w":"Größe","pl":"Größen","en":"size","t":"Kleidung","l":"A","g":"f"},{"w":"Farbe","pl":"Farben","en":"colour","t":"Kleidung","l":"A","g":"f"},{"w":"Mode","pl":"Moden","en":"fashion","t":"Kleidung","l":"B","g":"f"},{"w":"Wäsche","pl":"","en":"laundry, washing","t":"Wohnen","l":"A","g":"f"},{"w":"Baumwolle","pl":"","en":"cotton","t":"Kleidung","l":"B","g":"f"},{"w":"Arbeit","pl":"Arbeiten","en":"work","t":"Arbeit","l":"A","g":"f"},{"w":"Firma","pl":"Firmen","en":"firm, company","t":"Arbeit","l":"A","g":"f"},{"w":"Stelle","pl":"Stellen","en":"position, job, spot","t":"Arbeit","l":"A","g":"f"},{"w":"Bewerbung","pl":"Bewerbungen","en":"application","t":"Arbeit","l":"B","g":"f"},{"w":"Ausbildung","pl":"Ausbildungen","en":"training, apprenticeship","t":"Arbeit","l":"B","g":"f"},{"w":"Erfahrung","pl":"Erfahrungen","en":"experience","t":"Arbeit","l":"B","g":"f"},{"w":"Aufgabe","pl":"Aufgaben","en":"task","t":"Arbeit","l":"A","g":"f"},{"w":"Besprechung","pl":"Besprechungen","en":"meeting","t":"Arbeit","l":"B","g":"f"},{"w":"Sitzung","pl":"Sitzungen","en":"session, meeting","t":"Arbeit","l":"B","g":"f"},{"w":"Abteilung","pl":"Abteilungen","en":"department","t":"Arbeit","l":"B","g":"f"},{"w":"Leitung","pl":"Leitungen","en":"management, line","t":"Arbeit","l":"B","g":"f"},{"w":"Verantwortung","pl":"Verantwortungen","en":"responsibility","t":"Arbeit","l":"B","g":"f"},{"w":"Pause","pl":"Pausen","en":"break","t":"Arbeit","l":"A","g":"f"},{"w":"Schicht","pl":"Schichten","en":"shift, layer","t":"Arbeit","l":"B","g":"f"},{"w":"Kündigung","pl":"Kündigungen","en":"notice, termination","t":"Arbeit","l":"B","g":"f"},{"w":"Steuer","pl":"Steuern","en":"tax","t":"Arbeit","l":"B","g":"f"},{"w":"Rente","pl":"Renten","en":"pension","t":"Arbeit","l":"B","g":"f"},{"w":"Unterschrift","pl":"Unterschriften","en":"signature","t":"Arbeit","l":"B","g":"f"},{"w":"Bescheinigung","pl":"Bescheinigungen","en":"certificate","t":"Arbeit","l":"B","g":"f"},{"w":"Frist","pl":"Fristen","en":"deadline","t":"Arbeit","l":"B","g":"f"},{"w":"Anmeldung","pl":"Anmeldungen","en":"registration","t":"Arbeit","l":"B","g":"f"},{"w":"Quittung","pl":"Quittungen","en":"receipt","t":"Arbeit","l":"B","g":"f"},{"w":"Kasse","pl":"Kassen","en":"checkout, till","t":"Arbeit","l":"A","g":"f"},{"w":"Zahlung","pl":"Zahlungen","en":"payment","t":"Arbeit","l":"B","g":"f"},{"w":"Überweisung","pl":"Überweisungen","en":"bank transfer","t":"Arbeit","l":"B","g":"f"},{"w":"Bank","pl":"Banken","en":"bank","t":"Arbeit","l":"A","g":"f"},{"w":"Karte","pl":"Karten","en":"card, map, ticket","t":"Arbeit","l":"A","g":"f"},{"w":"Werbung","pl":"Werbungen","en":"advertising","t":"Arbeit","l":"B","g":"f"},{"w":"Konkurrenz","pl":"","en":"competition","t":"Arbeit","l":"B","g":"f"},{"w":"Leistung","pl":"Leistungen","en":"performance, service","t":"Arbeit","l":"B","g":"f"},{"w":"Entwicklung","pl":"Entwicklungen","en":"development","t":"Abstrakt","l":"B","g":"f"},{"w":"Produktion","pl":"Produktionen","en":"production","t":"Arbeit","l":"B","g":"f"},{"w":"Qualität","pl":"Qualitäten","en":"quality","t":"Arbeit","l":"B","g":"f"},{"w":"Menge","pl":"Mengen","en":"amount, crowd","t":"Abstrakt","l":"B","g":"f"},{"w":"Lieferung","pl":"Lieferungen","en":"delivery","t":"Arbeit","l":"B","g":"f"},{"w":"Bestellung","pl":"Bestellungen","en":"order","t":"Arbeit","l":"A","g":"f"},{"w":"Bedingung","pl":"Bedingungen","en":"condition","t":"Abstrakt","l":"B","g":"f"},{"w":"Vereinbarung","pl":"Vereinbarungen","en":"agreement","t":"Arbeit","l":"B","g":"f"},{"w":"Verwaltung","pl":"Verwaltungen","en":"administration","t":"Arbeit","l":"B","g":"f"},{"w":"Behörde","pl":"Behörden","en":"public authority","t":"Stadt","l":"B","g":"f"},{"w":"Genehmigung","pl":"Genehmigungen","en":"permit","t":"Arbeit","l":"B","g":"f"},{"w":"Erlaubnis","pl":"Erlaubnisse","en":"permission","t":"Abstrakt","l":"B","g":"f"},{"w":"Gebühr","pl":"Gebühren","en":"fee","t":"Arbeit","l":"B","g":"f"},{"w":"Strafe","pl":"Strafen","en":"penalty, fine","t":"Abstrakt","l":"B","g":"f"},{"w":"Regel","pl":"Regeln","en":"rule","t":"Abstrakt","l":"A","g":"f"},{"w":"Vorschrift","pl":"Vorschriften","en":"regulation","t":"Abstrakt","l":"B","g":"f"},{"w":"Pflicht","pl":"Pflichten","en":"duty","t":"Abstrakt","l":"B","g":"f"},{"w":"Wahl","pl":"Wahlen","en":"choice, election","t":"Abstrakt","l":"B","g":"f"},{"w":"Politik","pl":"","en":"politics","t":"Abstrakt","l":"B","g":"f"},{"w":"Partei","pl":"Parteien","en":"political party","t":"Abstrakt","l":"B","g":"f"},{"w":"Regierung","pl":"Regierungen","en":"government","t":"Abstrakt","l":"B","g":"f"},{"w":"Gewerkschaft","pl":"Gewerkschaften","en":"trade union","t":"Arbeit","l":"B","g":"f"},{"w":"Schule","pl":"Schulen","en":"school","t":"Bildung","l":"A","g":"f"},{"w":"Universität","pl":"Universitäten","en":"university","t":"Bildung","l":"A","g":"f"},{"w":"Hochschule","pl":"Hochschulen","en":"college, university","t":"Bildung","l":"B","g":"f"},{"w":"Prüfung","pl":"Prüfungen","en":"exam","t":"Bildung","l":"A","g":"f"},{"w":"Note","pl":"Noten","en":"grade, note","t":"Bildung","l":"A","g":"f"},{"w":"Stunde","pl":"Stunden","en":"hour, lesson","t":"Zeit","l":"A","g":"f"},{"w":"Vorlesung","pl":"Vorlesungen","en":"lecture","t":"Bildung","l":"B","g":"f"},{"w":"Übung","pl":"Übungen","en":"exercise","t":"Bildung","l":"A","g":"f"},{"w":"Hausaufgabe","pl":"Hausaufgaben","en":"homework","t":"Bildung","l":"A","g":"f"},{"w":"Sprache","pl":"Sprachen","en":"language","t":"Bildung","l":"A","g":"f"},{"w":"Grammatik","pl":"Grammatiken","en":"grammar","t":"Bildung","l":"A","g":"f"},{"w":"Bedeutung","pl":"Bedeutungen","en":"meaning","t":"Bildung","l":"B","g":"f"},{"w":"Erklärung","pl":"Erklärungen","en":"explanation","t":"Bildung","l":"B","g":"f"},{"w":"Antwort","pl":"Antworten","en":"answer","t":"Bildung","l":"A","g":"f"},{"w":"Frage","pl":"Fragen","en":"question","t":"Bildung","l":"A","g":"f"},{"w":"Lösung","pl":"Lösungen","en":"solution","t":"Abstrakt","l":"A","g":"f"},{"w":"Bibliothek","pl":"Bibliotheken","en":"library","t":"Bildung","l":"A","g":"f"},{"w":"Seite","pl":"Seiten","en":"page, side","t":"Bildung","l":"A","g":"f"},{"w":"Zeile","pl":"Zeilen","en":"line","t":"Bildung","l":"B","g":"f"},{"w":"Überschrift","pl":"Überschriften","en":"headline","t":"Bildung","l":"B","g":"f"},{"w":"Zusammenfassung","pl":"Zusammenfassungen","en":"summary","t":"Bildung","l":"B","g":"f"},{"w":"Wiederholung","pl":"Wiederholungen","en":"repetition","t":"Bildung","l":"B","g":"f"},{"w":"Kenntnis","pl":"Kenntnisse","en":"knowledge, skill","t":"Bildung","l":"B","g":"f"},{"w":"Fähigkeit","pl":"Fähigkeiten","en":"ability","t":"Abstrakt","l":"B","g":"f"},{"w":"Nummer","pl":"Nummern","en":"number","t":"Bildung","l":"A","g":"f"},{"w":"Zahl","pl":"Zahlen","en":"number, figure","t":"Bildung","l":"A","g":"f"},{"w":"Mathematik","pl":"","en":"mathematics","t":"Bildung","l":"A","g":"f"},{"w":"Geschichte","pl":"Geschichten","en":"history, story","t":"Bildung","l":"A","g":"f"},{"w":"Kunst","pl":"Künste","en":"art","t":"Freizeit","l":"A","g":"f"},{"w":"Musik","pl":"","en":"music","t":"Freizeit","l":"A","g":"f"},{"w":"Physik","pl":"","en":"physics","t":"Bildung","l":"B","g":"f"},{"w":"Chemie","pl":"","en":"chemistry","t":"Bildung","l":"B","g":"f"},{"w":"Biologie","pl":"","en":"biology","t":"Bildung","l":"B","g":"f"},{"w":"Wissenschaft","pl":"Wissenschaften","en":"science","t":"Bildung","l":"B","g":"f"},{"w":"Forschung","pl":"Forschungen","en":"research","t":"Bildung","l":"B","g":"f"},{"w":"Reise","pl":"Reisen","en":"journey, trip","t":"Reisen","l":"A","g":"f"},{"w":"Fahrt","pl":"Fahrten","en":"ride, drive","t":"Reisen","l":"A","g":"f"},{"w":"Bahn","pl":"Bahnen","en":"railway, train","t":"Reisen","l":"A","g":"f"},{"w":"Straßenbahn","pl":"Straßenbahnen","en":"tram","t":"Reisen","l":"A","g":"f"},{"w":"Haltestelle","pl":"Haltestellen","en":"stop","t":"Reisen","l":"A","g":"f"},{"w":"Station","pl":"Stationen","en":"station","t":"Reisen","l":"A","g":"f"},{"w":"Ankunft","pl":"Ankünfte","en":"arrival","t":"Reisen","l":"A","g":"f"},{"w":"Abfahrt","pl":"Abfahrten","en":"departure","t":"Reisen","l":"A","g":"f"},{"w":"Verspätung","pl":"Verspätungen","en":"delay","t":"Reisen","l":"A","g":"f"},{"w":"Richtung","pl":"Richtungen","en":"direction","t":"Reisen","l":"A","g":"f"},{"w":"Straße","pl":"Straßen","en":"street","t":"Stadt","l":"A","g":"f"},{"w":"Kreuzung","pl":"Kreuzungen","en":"crossroads","t":"Stadt","l":"B","g":"f"},{"w":"Ampel","pl":"Ampeln","en":"traffic light","t":"Stadt","l":"A","g":"f"},{"w":"Brücke","pl":"Brücken","en":"bridge","t":"Stadt","l":"A","g":"f"},{"w":"Grenze","pl":"Grenzen","en":"border, limit","t":"Abstrakt","l":"B","g":"f"},{"w":"Stadt","pl":"Städte","en":"city, town","t":"Stadt","l":"A","g":"f"},{"w":"Hauptstadt","pl":"Hauptstädte","en":"capital city","t":"Stadt","l":"A","g":"f"},{"w":"Gemeinde","pl":"Gemeinden","en":"municipality","t":"Stadt","l":"B","g":"f"},{"w":"Umgebung","pl":"Umgebungen","en":"surroundings","t":"Stadt","l":"B","g":"f"},{"w":"Gegend","pl":"Gegenden","en":"area","t":"Stadt","l":"B","g":"f"},{"w":"Landschaft","pl":"Landschaften","en":"landscape","t":"Natur","l":"B","g":"f"},{"w":"Insel","pl":"Inseln","en":"island","t":"Natur","l":"A","g":"f"},{"w":"Küste","pl":"Küsten","en":"coast","t":"Natur","l":"B","g":"f"},{"w":"Unterkunft","pl":"Unterkünfte","en":"accommodation","t":"Reisen","l":"B","g":"f"},{"w":"Jugendherberge","pl":"Jugendherbergen","en":"youth hostel","t":"Reisen","l":"B","g":"f"},{"w":"Buchung","pl":"Buchungen","en":"booking","t":"Reisen","l":"B","g":"f"},{"w":"Besichtigung","pl":"Besichtigungen","en":"viewing, tour","t":"Reisen","l":"B","g":"f"},{"w":"Führung","pl":"Führungen","en":"guided tour","t":"Reisen","l":"B","g":"f"},{"w":"Sehenswürdigkeit","pl":"Sehenswürdigkeiten","en":"sight, attraction","t":"Reisen","l":"B","g":"f"},{"w":"Kirche","pl":"Kirchen","en":"church","t":"Stadt","l":"A","g":"f"},{"w":"Burg","pl":"Burgen","en":"castle","t":"Stadt","l":"B","g":"f"},{"w":"Ausstellung","pl":"Ausstellungen","en":"exhibition","t":"Freizeit","l":"B","g":"f"},{"w":"Eintrittskarte","pl":"Eintrittskarten","en":"admission ticket","t":"Freizeit","l":"A","g":"f"},{"w":"Gasse","pl":"Gassen","en":"alley, lane","t":"Stadt","l":"B","g":"f"},{"w":"Blume","pl":"Blumen","en":"flower","t":"Natur","l":"A","g":"f"},{"w":"Pflanze","pl":"Pflanzen","en":"plant","t":"Natur","l":"A","g":"f"},{"w":"Wiese","pl":"Wiesen","en":"meadow","t":"Natur","l":"B","g":"f"},{"w":"Natur","pl":"","en":"nature","t":"Natur","l":"A","g":"f"},{"w":"Umwelt","pl":"","en":"environment","t":"Natur","l":"B","g":"f"},{"w":"Luft","pl":"Lüfte","en":"air","t":"Natur","l":"A","g":"f"},{"w":"Sonne","pl":"Sonnen","en":"sun","t":"Natur","l":"A","g":"f"},{"w":"Wolke","pl":"Wolken","en":"cloud","t":"Natur","l":"A","g":"f"},{"w":"Erde","pl":"Erden","en":"earth, soil","t":"Natur","l":"A","g":"f"},{"w":"Welt","pl":"Welten","en":"world","t":"Abstrakt","l":"A","g":"f"},{"w":"Jahreszeit","pl":"Jahreszeiten","en":"season","t":"Zeit","l":"A","g":"f"},{"w":"Temperatur","pl":"Temperaturen","en":"temperature","t":"Natur","l":"A","g":"f"},{"w":"Hitze","pl":"","en":"heat","t":"Natur","l":"B","g":"f"},{"w":"Kälte","pl":"","en":"cold","t":"Natur","l":"B","g":"f"},{"w":"Aussicht","pl":"Aussichten","en":"view, prospect","t":"Reisen","l":"B","g":"f"},{"w":"Katze","pl":"Katzen","en":"cat","t":"Natur","l":"A","g":"f"},{"w":"Kuh","pl":"Kühe","en":"cow","t":"Natur","l":"B","g":"f"},{"w":"Maus","pl":"Mäuse","en":"mouse","t":"Natur","l":"A","g":"f"},{"w":"Biene","pl":"Bienen","en":"bee","t":"Natur","l":"B","g":"f"},{"w":"Energie","pl":"Energien","en":"energy","t":"Natur","l":"B","g":"f"},{"w":"Tanne","pl":"Tannen","en":"fir tree","t":"Natur","l":"B","g":"f"},{"w":"Rose","pl":"Rosen","en":"rose","t":"Natur","l":"B","g":"f"},{"w":"Eiche","pl":"Eichen","en":"oak","t":"Natur","l":"B","g":"f"},{"w":"Sekunde","pl":"Sekunden","en":"second","t":"Zeit","l":"A","g":"f"},{"w":"Minute","pl":"Minuten","en":"minute","t":"Zeit","l":"A","g":"f"},{"w":"Woche","pl":"Wochen","en":"week","t":"Zeit","l":"A","g":"f"},{"w":"Nacht","pl":"Nächte","en":"night","t":"Zeit","l":"A","g":"f"},{"w":"Zeit","pl":"Zeiten","en":"time","t":"Zeit","l":"A","g":"f"},{"w":"Zukunft","pl":"","en":"future","t":"Zeit","l":"B","g":"f"},{"w":"Vergangenheit","pl":"","en":"past","t":"Zeit","l":"B","g":"f"},{"w":"Gegenwart","pl":"","en":"present","t":"Zeit","l":"B","g":"f"},{"w":"Dauer","pl":"","en":"duration","t":"Zeit","l":"B","g":"f"},{"w":"Verabredung","pl":"Verabredungen","en":"appointment, date","t":"Zeit","l":"B","g":"f"},{"w":"Feier","pl":"Feiern","en":"celebration, party","t":"Freizeit","l":"A","g":"f"},{"w":"Gelegenheit","pl":"Gelegenheiten","en":"opportunity","t":"Abstrakt","l":"B","g":"f"},{"w":"Möglichkeit","pl":"Möglichkeiten","en":"possibility","t":"Abstrakt","l":"A","g":"f"},{"w":"Zeitung","pl":"Zeitungen","en":"newspaper","t":"Technik","l":"A","g":"f"},{"w":"Zeitschrift","pl":"Zeitschriften","en":"magazine","t":"Technik","l":"B","g":"f"},{"w":"Nachricht","pl":"Nachrichten","en":"message, news","t":"Technik","l":"A","g":"f"},{"w":"Sendung","pl":"Sendungen","en":"broadcast, parcel","t":"Technik","l":"B","g":"f"},{"w":"Meldung","pl":"Meldungen","en":"report, notification","t":"Technik","l":"B","g":"f"},{"w":"Anzeige","pl":"Anzeigen","en":"advert, display","t":"Technik","l":"B","g":"f"},{"w":"Datei","pl":"Dateien","en":"file","t":"Technik","l":"B","g":"f"},{"w":"Tastatur","pl":"Tastaturen","en":"keyboard","t":"Technik","l":"B","g":"f"},{"w":"Kamera","pl":"Kameras","en":"camera","t":"Technik","l":"A","g":"f"},{"w":"Verbindung","pl":"Verbindungen","en":"connection","t":"Technik","l":"B","g":"f"},{"w":"Suchmaschine","pl":"Suchmaschinen","en":"search engine","t":"Technik","l":"B","g":"f"},{"w":"Software","pl":"","en":"software","t":"Technik","l":"B","g":"f"},{"w":"Idee","pl":"Ideen","en":"idea","t":"Abstrakt","l":"A","g":"f"},{"w":"Meinung","pl":"Meinungen","en":"opinion","t":"Abstrakt","l":"A","g":"f"},{"w":"Ansicht","pl":"Ansichten","en":"view, opinion","t":"Abstrakt","l":"B","g":"f"},{"w":"Absicht","pl":"Absichten","en":"intention","t":"Abstrakt","l":"B","g":"f"},{"w":"Hoffnung","pl":"Hoffnungen","en":"hope","t":"Abstrakt","l":"B","g":"f"},{"w":"Angst","pl":"Ängste","en":"fear","t":"Abstrakt","l":"A","g":"f"},{"w":"Freude","pl":"Freuden","en":"joy","t":"Abstrakt","l":"A","g":"f"},{"w":"Sorge","pl":"Sorgen","en":"worry","t":"Abstrakt","l":"B","g":"f"},{"w":"Wut","pl":"","en":"rage, anger","t":"Abstrakt","l":"B","g":"f"},{"w":"Ruhe","pl":"","en":"calm, quiet","t":"Abstrakt","l":"B","g":"f"},{"w":"Stimmung","pl":"Stimmungen","en":"mood, atmosphere","t":"Abstrakt","l":"B","g":"f"},{"w":"Laune","pl":"Launen","en":"mood","t":"Abstrakt","l":"B","g":"f"},{"w":"Überraschung","pl":"Überraschungen","en":"surprise","t":"Abstrakt","l":"B","g":"f"},{"w":"Erinnerung","pl":"Erinnerungen","en":"memory","t":"Abstrakt","l":"B","g":"f"},{"w":"Vorstellung","pl":"Vorstellungen","en":"idea, performance","t":"Abstrakt","l":"B","g":"f"},{"w":"Gewohnheit","pl":"Gewohnheiten","en":"habit","t":"Abstrakt","l":"B","g":"f"},{"w":"Wirklichkeit","pl":"","en":"reality","t":"Abstrakt","l":"B","g":"f"},{"w":"Wahrheit","pl":"Wahrheiten","en":"truth","t":"Abstrakt","l":"B","g":"f"},{"w":"Lüge","pl":"Lügen","en":"lie","t":"Abstrakt","l":"B","g":"f"},{"w":"Ursache","pl":"Ursachen","en":"cause","t":"Abstrakt","l":"B","g":"f"},{"w":"Folge","pl":"Folgen","en":"consequence, episode","t":"Abstrakt","l":"B","g":"f"},{"w":"Wirkung","pl":"Wirkungen","en":"effect","t":"Abstrakt","l":"B","g":"f"},{"w":"Veränderung","pl":"Veränderungen","en":"change","t":"Abstrakt","l":"B","g":"f"},{"w":"Entscheidung","pl":"Entscheidungen","en":"decision","t":"Abstrakt","l":"B","g":"f"},{"w":"Schwierigkeit","pl":"Schwierigkeiten","en":"difficulty","t":"Abstrakt","l":"B","g":"f"},{"w":"Gefahr","pl":"Gefahren","en":"danger","t":"Abstrakt","l":"B","g":"f"},{"w":"Sicherheit","pl":"Sicherheiten","en":"safety, certainty","t":"Abstrakt","l":"B","g":"f"},{"w":"Hilfe","pl":"Hilfen","en":"help","t":"Abstrakt","l":"A","g":"f"},{"w":"Unterstützung","pl":"","en":"support","t":"Abstrakt","l":"B","g":"f"},{"w":"Rücksicht","pl":"","en":"consideration","t":"Abstrakt","l":"B","g":"f"},{"w":"Geduld","pl":"","en":"patience","t":"Abstrakt","l":"B","g":"f"},{"w":"Mühe","pl":"Mühen","en":"effort, trouble","t":"Abstrakt","l":"B","g":"f"},{"w":"Kraft","pl":"Kräfte","en":"strength, force","t":"Abstrakt","l":"B","g":"f"},{"w":"Chance","pl":"Chancen","en":"chance","t":"Abstrakt","l":"A","g":"f"},{"w":"Voraussetzung","pl":"Voraussetzungen","en":"prerequisite","t":"Abstrakt","l":"B","g":"f"},{"w":"Auswahl","pl":"","en":"selection","t":"Abstrakt","l":"B","g":"f"},{"w":"Reihenfolge","pl":"Reihenfolgen","en":"order, sequence","t":"Abstrakt","l":"B","g":"f"},{"w":"Art","pl":"Arten","en":"kind, type","t":"Abstrakt","l":"A","g":"f"},{"w":"Weise","pl":"Weisen","en":"manner, way","t":"Abstrakt","l":"B","g":"f"},{"w":"Situation","pl":"Situationen","en":"situation","t":"Abstrakt","l":"A","g":"f"},{"w":"Lage","pl":"Lagen","en":"situation, location","t":"Abstrakt","l":"B","g":"f"},{"w":"Rolle","pl":"Rollen","en":"role","t":"Abstrakt","l":"B","g":"f"},{"w":"Aufmerksamkeit","pl":"","en":"attention","t":"Abstrakt","l":"B","g":"f"},{"w":"Beschreibung","pl":"Beschreibungen","en":"description","t":"Abstrakt","l":"B","g":"f"},{"w":"Diskussion","pl":"Diskussionen","en":"discussion","t":"Abstrakt","l":"B","g":"f"},{"w":"Unterhaltung","pl":"Unterhaltungen","en":"conversation, entertainment","t":"Abstrakt","l":"B","g":"f"},{"w":"Einladung","pl":"Einladungen","en":"invitation","t":"Abstrakt","l":"A","g":"f"},{"w":"Freundschaft","pl":"Freundschaften","en":"friendship","t":"Abstrakt","l":"B","g":"f"},{"w":"Zusammenarbeit","pl":"","en":"cooperation","t":"Arbeit","l":"B","g":"f"},{"w":"Freiheit","pl":"Freiheiten","en":"freedom","t":"Abstrakt","l":"B","g":"f"},{"w":"Kultur","pl":"Kulturen","en":"culture","t":"Abstrakt","l":"B","g":"f"},{"w":"Distanz","pl":"Distanzen","en":"distance","t":"Abstrakt","l":"B","g":"f"},{"w":"Konferenz","pl":"Konferenzen","en":"conference","t":"Arbeit","l":"B","g":"f"},{"w":"Existenz","pl":"Existenzen","en":"existence","t":"Abstrakt","l":"B","g":"f"},{"w":"Nation","pl":"Nationen","en":"nation","t":"Abstrakt","l":"B","g":"f"},{"w":"Version","pl":"Versionen","en":"version","t":"Technik","l":"B","g":"f"},{"w":"Aktion","pl":"Aktionen","en":"campaign, action","t":"Arbeit","l":"B","g":"f"},{"w":"Funktion","pl":"Funktionen","en":"function","t":"Technik","l":"B","g":"f"},{"w":"Information","pl":"Informationen","en":"information","t":"Abstrakt","l":"A","g":"f"},{"w":"Organisation","pl":"Organisationen","en":"organisation","t":"Arbeit","l":"B","g":"f"},{"w":"Technik","pl":"Techniken","en":"technology, technique","t":"Technik","l":"A","g":"f"},{"w":"Kritik","pl":"Kritiken","en":"criticism","t":"Abstrakt","l":"B","g":"f"},{"w":"Statistik","pl":"Statistiken","en":"statistics","t":"Abstrakt","l":"B","g":"f"},{"w":"Industrie","pl":"Industrien","en":"industry","t":"Arbeit","l":"B","g":"f"},{"w":"Wirtschaft","pl":"","en":"economy","t":"Arbeit","l":"B","g":"f"},{"w":"Passage","pl":"Passagen","en":"passage","t":"Stadt","l":"B","g":"f"},{"w":"Montage","pl":"Montagen","en":"assembly","t":"Arbeit","l":"B","g":"f"},{"w":"Figur","pl":"Figuren","en":"figure, character","t":"Abstrakt","l":"B","g":"f"},{"w":"Polizei","pl":"","en":"police","t":"Stadt","l":"A","g":"f"},{"w":"Wohnungssuche","pl":"","en":"flat hunting","t":"Wohnen","l":"B","g":"f"},{"w":"Kind","pl":"Kinder","en":"child","t":"Menschen","l":"A","g":"n"},{"w":"Baby","pl":"Babys","en":"baby","t":"Menschen","l":"A","g":"n"},{"w":"Mädchen","pl":"-","en":"girl","t":"Menschen","l":"A","g":"n"},{"w":"Paar","pl":"Paare","en":"pair, couple","t":"Menschen","l":"A","g":"n"},{"w":"Ehepaar","pl":"Ehepaare","en":"married couple","t":"Menschen","l":"B","g":"n"},{"w":"Team","pl":"Teams","en":"team","t":"Arbeit","l":"B","g":"n"},{"w":"Mitglied","pl":"Mitglieder","en":"member","t":"Abstrakt","l":"B","g":"n"},{"w":"Volk","pl":"Völker","en":"people, nation","t":"Abstrakt","l":"B","g":"n"},{"w":"Publikum","pl":"","en":"audience","t":"Freizeit","l":"B","g":"n"},{"w":"Fräulein","pl":"-","en":"young lady (dated)","t":"Menschen","l":"B","g":"n"},{"w":"Auge","pl":"Augen","en":"eye","t":"Körper","l":"A","g":"n"},{"w":"Ohr","pl":"Ohren","en":"ear","t":"Körper","l":"A","g":"n"},{"w":"Haar","pl":"Haare","en":"hair","t":"Körper","l":"A","g":"n"},{"w":"Bein","pl":"Beine","en":"leg","t":"Körper","l":"A","g":"n"},{"w":"Knie","pl":"-","en":"knee","t":"Körper","l":"A","g":"n"},{"w":"Herz","pl":"Herzen","en":"heart","t":"Körper","l":"A","g":"n"},{"w":"Gesicht","pl":"Gesichter","en":"face","t":"Körper","l":"A","g":"n"},{"w":"Blut","pl":"","en":"blood","t":"Körper","l":"B","g":"n"},{"w":"Gehirn","pl":"Gehirne","en":"brain","t":"Körper","l":"B","g":"n"},{"w":"Gewicht","pl":"Gewichte","en":"weight","t":"Körper","l":"B","g":"n"},{"w":"Alter","pl":"","en":"age","t":"Menschen","l":"A","g":"n"},{"w":"Leben","pl":"-","en":"life","t":"Abstrakt","l":"A","g":"n"},{"w":"Fieber","pl":"","en":"fever","t":"Körper","l":"A","g":"n"},{"w":"Medikament","pl":"Medikamente","en":"medication","t":"Körper","l":"B","g":"n"},{"w":"Rezept","pl":"Rezepte","en":"prescription, recipe","t":"Körper","l":"A","g":"n"},{"w":"Krankenhaus","pl":"Krankenhäuser","en":"hospital","t":"Körper","l":"A","g":"n"},{"w":"Haus","pl":"Häuser","en":"house","t":"Wohnen","l":"A","g":"n"},{"w":"Zimmer","pl":"-","en":"room","t":"Wohnen","l":"A","g":"n"},{"w":"Bad","pl":"Bäder","en":"bathroom","t":"Wohnen","l":"A","g":"n"},{"w":"Wohnzimmer","pl":"-","en":"living room","t":"Wohnen","l":"A","g":"n"},{"w":"Schlafzimmer","pl":"-","en":"bedroom","t":"Wohnen","l":"A","g":"n"},{"w":"Kinderzimmer","pl":"-","en":"child's room","t":"Wohnen","l":"A","g":"n"},{"w":"Büro","pl":"Büros","en":"office","t":"Arbeit","l":"A","g":"n"},{"w":"Fenster","pl":"-","en":"window","t":"Wohnen","l":"A","g":"n"},{"w":"Dach","pl":"Dächer","en":"roof","t":"Wohnen","l":"A","g":"n"},{"w":"Bett","pl":"Betten","en":"bed","t":"Wohnen","l":"A","g":"n"},{"w":"Sofa","pl":"Sofas","en":"sofa","t":"Wohnen","l":"A","g":"n"},{"w":"Regal","pl":"Regale","en":"shelf","t":"Wohnen","l":"A","g":"n"},{"w":"Bild","pl":"Bilder","en":"picture","t":"Wohnen","l":"A","g":"n"},{"w":"Handtuch","pl":"Handtücher","en":"towel","t":"Wohnen","l":"A","g":"n"},{"w":"Kissen","pl":"-","en":"cushion, pillow","t":"Wohnen","l":"A","g":"n"},{"w":"Licht","pl":"Lichter","en":"light","t":"Wohnen","l":"A","g":"n"},{"w":"Schloss","pl":"Schlösser","en":"lock, castle","t":"Wohnen","l":"B","g":"n"},{"w":"Gerät","pl":"Geräte","en":"device, appliance","t":"Technik","l":"A","g":"n"},{"w":"Werkzeug","pl":"Werkzeuge","en":"tool","t":"Technik","l":"B","g":"n"},{"w":"Waschbecken","pl":"-","en":"washbasin","t":"Wohnen","l":"B","g":"n"},{"w":"Geschirr","pl":"","en":"dishes, crockery","t":"Wohnen","l":"A","g":"n"},{"w":"Besteck","pl":"Bestecke","en":"cutlery","t":"Essen","l":"B","g":"n"},{"w":"Messer","pl":"-","en":"knife","t":"Essen","l":"A","g":"n"},{"w":"Glas","pl":"Gläser","en":"glass","t":"Essen","l":"A","g":"n"},{"w":"Möbelstück","pl":"Möbelstücke","en":"piece of furniture","t":"Wohnen","l":"B","g":"n"},{"w":"Treppenhaus","pl":"Treppenhäuser","en":"stairwell","t":"Wohnen","l":"B","g":"n"},{"w":"Brot","pl":"Brote","en":"bread","t":"Essen","l":"A","g":"n"},{"w":"Brötchen","pl":"-","en":"bread roll","t":"Essen","l":"A","g":"n"},{"w":"Ei","pl":"Eier","en":"egg","t":"Essen","l":"A","g":"n"},{"w":"Fleisch","pl":"","en":"meat","t":"Essen","l":"A","g":"n"},{"w":"Gemüse","pl":"-","en":"vegetables","t":"Essen","l":"A","g":"n"},{"w":"Obst","pl":"","en":"fruit","t":"Essen","l":"A","g":"n"},{"w":"Getränk","pl":"Getränke","en":"drink","t":"Essen","l":"A","g":"n"},{"w":"Bier","pl":"Biere","en":"beer","t":"Essen","l":"A","g":"n"},{"w":"Wasser","pl":"-","en":"water","t":"Essen","l":"A","g":"n"},{"w":"Mineralwasser","pl":"-","en":"mineral water","t":"Essen","l":"A","g":"n"},{"w":"Salz","pl":"Salze","en":"salt","t":"Essen","l":"A","g":"n"},{"w":"Gewürz","pl":"Gewürze","en":"spice","t":"Essen","l":"B","g":"n"},{"w":"Mehl","pl":"","en":"flour","t":"Essen","l":"B","g":"n"},{"w":"Müsli","pl":"Müslis","en":"muesli","t":"Essen","l":"A","g":"n"},{"w":"Frühstück","pl":"Frühstücke","en":"breakfast","t":"Essen","l":"A","g":"n"},{"w":"Mittagessen","pl":"-","en":"lunch","t":"Essen","l":"A","g":"n"},{"w":"Abendessen","pl":"-","en":"dinner","t":"Essen","l":"A","g":"n"},{"w":"Essen","pl":"-","en":"food, meal","t":"Essen","l":"A","g":"n"},{"w":"Restaurant","pl":"Restaurants","en":"restaurant","t":"Essen","l":"A","g":"n"},{"w":"Café","pl":"Cafés","en":"café","t":"Essen","l":"A","g":"n"},{"w":"Lokal","pl":"Lokale","en":"pub, restaurant","t":"Essen","l":"B","g":"n"},{"w":"Trinkgeld","pl":"Trinkgelder","en":"tip","t":"Essen","l":"A","g":"n"},{"w":"Menü","pl":"Menüs","en":"set menu","t":"Essen","l":"A","g":"n"},{"w":"Stück","pl":"Stücke","en":"piece","t":"Essen","l":"A","g":"n"},{"w":"Kilo","pl":"-","en":"kilo","t":"Essen","l":"A","g":"n"},{"w":"Gramm","pl":"-","en":"gram","t":"Essen","l":"A","g":"n"},{"w":"Pfund","pl":"Pfunde","en":"pound (500 g)","t":"Essen","l":"B","g":"n"},{"w":"Eis","pl":"","en":"ice, ice cream","t":"Essen","l":"A","g":"n"},{"w":"Öl","pl":"Öle","en":"oil","t":"Essen","l":"A","g":"n"},{"w":"Hemd","pl":"Hemden","en":"shirt","t":"Kleidung","l":"A","g":"n"},{"w":"T-Shirt","pl":"T-Shirts","en":"T-shirt","t":"Kleidung","l":"A","g":"n"},{"w":"Kleid","pl":"Kleider","en":"dress","t":"Kleidung","l":"A","g":"n"},{"w":"Kostüm","pl":"Kostüme","en":"costume, ladies' suit","t":"Kleidung","l":"B","g":"n"},{"w":"Muster","pl":"-","en":"pattern","t":"Kleidung","l":"B","g":"n"},{"w":"Material","pl":"Materialien","en":"material","t":"Kleidung","l":"B","g":"n"},{"w":"Geld","pl":"Gelder","en":"money","t":"Arbeit","l":"A","g":"n"},{"w":"Konto","pl":"Konten","en":"account","t":"Arbeit","l":"A","g":"n"},{"w":"Bargeld","pl":"","en":"cash","t":"Arbeit","l":"B","g":"n"},{"w":"Gehalt","pl":"Gehälter","en":"salary","t":"Arbeit","l":"B","g":"n"},{"w":"Einkommen","pl":"-","en":"income","t":"Arbeit","l":"B","g":"n"},{"w":"Geschäft","pl":"Geschäfte","en":"shop, business","t":"Arbeit","l":"A","g":"n"},{"w":"Unternehmen","pl":"-","en":"company, enterprise","t":"Arbeit","l":"B","g":"n"},{"w":"Projekt","pl":"Projekte","en":"project","t":"Arbeit","l":"B","g":"n"},{"w":"Ziel","pl":"Ziele","en":"goal, destination","t":"Abstrakt","l":"A","g":"n"},{"w":"Ergebnis","pl":"Ergebnisse","en":"result","t":"Abstrakt","l":"B","g":"n"},{"w":"Problem","pl":"Probleme","en":"problem","t":"Abstrakt","l":"A","g":"n"},{"w":"Thema","pl":"Themen","en":"topic","t":"Abstrakt","l":"A","g":"n"},{"w":"Angebot","pl":"Angebote","en":"offer","t":"Arbeit","l":"A","g":"n"},{"w":"Interesse","pl":"Interessen","en":"interest","t":"Abstrakt","l":"A","g":"n"},{"w":"Formular","pl":"Formulare","en":"form","t":"Arbeit","l":"B","g":"n"},{"w":"Dokument","pl":"Dokumente","en":"document","t":"Arbeit","l":"B","g":"n"},{"w":"Zeugnis","pl":"Zeugnisse","en":"certificate, report","t":"Bildung","l":"B","g":"n"},{"w":"Zertifikat","pl":"Zertifikate","en":"certificate","t":"Bildung","l":"B","g":"n"},{"w":"Protokoll","pl":"Protokolle","en":"minutes, protocol","t":"Arbeit","l":"B","g":"n"},{"w":"Gesetz","pl":"Gesetze","en":"law","t":"Abstrakt","l":"B","g":"n"},{"w":"Recht","pl":"Rechte","en":"right, law","t":"Abstrakt","l":"B","g":"n"},{"w":"Amt","pl":"Ämter","en":"public office","t":"Stadt","l":"B","g":"n"},{"w":"Rathaus","pl":"Rathäuser","en":"town hall","t":"Stadt","l":"A","g":"n"},{"w":"Gericht","pl":"Gerichte","en":"court, dish","t":"Abstrakt","l":"B","g":"n"},{"w":"Urteil","pl":"Urteile","en":"judgement, verdict","t":"Abstrakt","l":"B","g":"n"},{"w":"Verfahren","pl":"-","en":"procedure","t":"Arbeit","l":"B","g":"n"},{"w":"Praktikum","pl":"Praktika","en":"internship","t":"Arbeit","l":"B","g":"n"},{"w":"Studium","pl":"Studien","en":"studies","t":"Bildung","l":"B","g":"n"},{"w":"Semester","pl":"-","en":"semester","t":"Bildung","l":"B","g":"n"},{"w":"Fach","pl":"Fächer","en":"subject, compartment","t":"Bildung","l":"A","g":"n"},{"w":"Beispiel","pl":"Beispiele","en":"example","t":"Abstrakt","l":"A","g":"n"},{"w":"Detail","pl":"Details","en":"detail","t":"Abstrakt","l":"B","g":"n"},{"w":"System","pl":"Systeme","en":"system","t":"Technik","l":"B","g":"n"},{"w":"Modell","pl":"Modelle","en":"model","t":"Technik","l":"B","g":"n"},{"w":"Verhältnis","pl":"Verhältnisse","en":"ratio, relationship","t":"Abstrakt","l":"B","g":"n"},{"w":"Niveau","pl":"Niveaus","en":"level","t":"Bildung","l":"B","g":"n"},{"w":"Prozent","pl":"-","en":"per cent","t":"Abstrakt","l":"A","g":"n"},{"w":"Datum","pl":"Daten","en":"date","t":"Zeit","l":"A","g":"n"},{"w":"Argument","pl":"Argumente","en":"argument","t":"Abstrakt","l":"B","g":"n"},{"w":"Instrument","pl":"Instrumente","en":"instrument","t":"Freizeit","l":"B","g":"n"},{"w":"Eigentum","pl":"","en":"property","t":"Abstrakt","l":"B","g":"n"},{"w":"Wachstum","pl":"","en":"growth","t":"Arbeit","l":"B","g":"n"},{"w":"Handy","pl":"Handys","en":"mobile phone","t":"Technik","l":"A","g":"n"},{"w":"Telefon","pl":"Telefone","en":"telephone","t":"Technik","l":"A","g":"n"},{"w":"Programm","pl":"Programme","en":"programme","t":"Technik","l":"A","g":"n"},{"w":"Passwort","pl":"Passwörter","en":"password","t":"Technik","l":"B","g":"n"},{"w":"Video","pl":"Videos","en":"video","t":"Technik","l":"A","g":"n"},{"w":"Foto","pl":"Fotos","en":"photo","t":"Technik","l":"A","g":"n"},{"w":"Radio","pl":"Radios","en":"radio","t":"Technik","l":"A","g":"n"},{"w":"Fernsehen","pl":"","en":"television","t":"Technik","l":"A","g":"n"},{"w":"Internet","pl":"","en":"internet","t":"Technik","l":"A","g":"n"},{"w":"Netz","pl":"Netze","en":"net, network","t":"Technik","l":"B","g":"n"},{"w":"Netzwerk","pl":"Netzwerke","en":"network","t":"Technik","l":"B","g":"n"},{"w":"Tablet","pl":"Tablets","en":"tablet","t":"Technik","l":"B","g":"n"},{"w":"Kabel","pl":"-","en":"cable","t":"Technik","l":"B","g":"n"},{"w":"Papier","pl":"Papiere","en":"paper","t":"Bildung","l":"A","g":"n"},{"w":"Buch","pl":"Bücher","en":"book","t":"Bildung","l":"A","g":"n"},{"w":"Heft","pl":"Hefte","en":"exercise book","t":"Bildung","l":"A","g":"n"},{"w":"Blatt","pl":"Blätter","en":"sheet, leaf","t":"Bildung","l":"A","g":"n"},{"w":"Wörterbuch","pl":"Wörterbücher","en":"dictionary","t":"Bildung","l":"A","g":"n"},{"w":"Wort","pl":"Wörter","en":"word","t":"Bildung","l":"A","g":"n"},{"w":"Zeichen","pl":"-","en":"sign, character","t":"Bildung","l":"B","g":"n"},{"w":"Symbol","pl":"Symbole","en":"symbol","t":"Bildung","l":"B","g":"n"},{"w":"Schild","pl":"Schilder","en":"sign","t":"Stadt","l":"A","g":"n"},{"w":"Plakat","pl":"Plakate","en":"poster","t":"Stadt","l":"B","g":"n"},{"w":"Paket","pl":"Pakete","en":"parcel, package","t":"Technik","l":"A","g":"n"},{"w":"Päckchen","pl":"-","en":"small parcel","t":"Technik","l":"B","g":"n"},{"w":"Gespräch","pl":"Gespräche","en":"conversation","t":"Abstrakt","l":"A","g":"n"},{"w":"Zitat","pl":"Zitate","en":"quotation","t":"Bildung","l":"B","g":"n"},{"w":"Spiel","pl":"Spiele","en":"game","t":"Freizeit","l":"A","g":"n"},{"w":"Spielzeug","pl":"Spielzeuge","en":"toy","t":"Freizeit","l":"B","g":"n"},{"w":"Hobby","pl":"Hobbys","en":"hobby","t":"Freizeit","l":"A","g":"n"},{"w":"Klavier","pl":"Klaviere","en":"piano","t":"Freizeit","l":"B","g":"n"},{"w":"Konzert","pl":"Konzerte","en":"concert","t":"Freizeit","l":"A","g":"n"},{"w":"Theater","pl":"-","en":"theatre","t":"Freizeit","l":"A","g":"n"},{"w":"Kino","pl":"Kinos","en":"cinema","t":"Freizeit","l":"A","g":"n"},{"w":"Museum","pl":"Museen","en":"museum","t":"Freizeit","l":"A","g":"n"},{"w":"Stadion","pl":"Stadien","en":"stadium","t":"Freizeit","l":"B","g":"n"},{"w":"Schwimmbad","pl":"Schwimmbäder","en":"swimming pool","t":"Freizeit","l":"A","g":"n"},{"w":"Training","pl":"Trainings","en":"training","t":"Freizeit","l":"B","g":"n"},{"w":"Tor","pl":"Tore","en":"gate, goal","t":"Freizeit","l":"A","g":"n"},{"w":"Turnier","pl":"Turniere","en":"tournament","t":"Freizeit","l":"B","g":"n"},{"w":"Lied","pl":"Lieder","en":"song","t":"Freizeit","l":"A","g":"n"},{"w":"Gedicht","pl":"Gedichte","en":"poem","t":"Bildung","l":"B","g":"n"},{"w":"Märchen","pl":"-","en":"fairy tale","t":"Freizeit","l":"B","g":"n"},{"w":"Ballett","pl":"Ballette","en":"ballet","t":"Freizeit","l":"B","g":"n"},{"w":"Fest","pl":"Feste","en":"festival, party","t":"Freizeit","l":"A","g":"n"},{"w":"Geschenk","pl":"Geschenke","en":"present","t":"Freizeit","l":"A","g":"n"},{"w":"Andenken","pl":"-","en":"souvenir","t":"Reisen","l":"B","g":"n"},{"w":"Fahrrad","pl":"Fahrräder","en":"bicycle","t":"Reisen","l":"A","g":"n"},{"w":"Auto","pl":"Autos","en":"car","t":"Reisen","l":"A","g":"n"},{"w":"Flugzeug","pl":"Flugzeuge","en":"aeroplane","t":"Reisen","l":"A","g":"n"},{"w":"Schiff","pl":"Schiffe","en":"ship","t":"Reisen","l":"A","g":"n"},{"w":"Boot","pl":"Boote","en":"boat","t":"Reisen","l":"B","g":"n"},{"w":"Motorrad","pl":"Motorräder","en":"motorbike","t":"Reisen","l":"A","g":"n"},{"w":"Ticket","pl":"Tickets","en":"ticket","t":"Reisen","l":"A","g":"n"},{"w":"Gepäck","pl":"","en":"luggage","t":"Reisen","l":"A","g":"n"},{"w":"Zelt","pl":"Zelte","en":"tent","t":"Reisen","l":"B","g":"n"},{"w":"Hotel","pl":"Hotels","en":"hotel","t":"Reisen","l":"A","g":"n"},{"w":"Ausland","pl":"","en":"abroad","t":"Reisen","l":"A","g":"n"},{"w":"Visum","pl":"Visa","en":"visa","t":"Reisen","l":"B","g":"n"},{"w":"Reiseziel","pl":"Reiseziele","en":"destination","t":"Reisen","l":"B","g":"n"},{"w":"Land","pl":"Länder","en":"country, land","t":"Stadt","l":"A","g":"n"},{"w":"Dorf","pl":"Dörfer","en":"village","t":"Stadt","l":"A","g":"n"},{"w":"Gebiet","pl":"Gebiete","en":"area, region","t":"Stadt","l":"B","g":"n"},{"w":"Gebäude","pl":"-","en":"building","t":"Stadt","l":"A","g":"n"},{"w":"Zentrum","pl":"Zentren","en":"centre","t":"Stadt","l":"A","g":"n"},{"w":"Viertel","pl":"-","en":"quarter, district","t":"Stadt","l":"B","g":"n"},{"w":"Grundstück","pl":"Grundstücke","en":"plot of land","t":"Wohnen","l":"B","g":"n"},{"w":"Meer","pl":"Meere","en":"sea","t":"Natur","l":"A","g":"n"},{"w":"Ufer","pl":"-","en":"shore, bank","t":"Natur","l":"B","g":"n"},{"w":"Tal","pl":"Täler","en":"valley","t":"Natur","l":"B","g":"n"},{"w":"Feld","pl":"Felder","en":"field","t":"Natur","l":"B","g":"n"},{"w":"Gras","pl":"Gräser","en":"grass","t":"Natur","l":"B","g":"n"},{"w":"Holz","pl":"Hölzer","en":"wood","t":"Natur","l":"B","g":"n"},{"w":"Metall","pl":"Metalle","en":"metal","t":"Natur","l":"B","g":"n"},{"w":"Gold","pl":"","en":"gold","t":"Natur","l":"B","g":"n"},{"w":"Silber","pl":"","en":"silver","t":"Natur","l":"B","g":"n"},{"w":"Eisen","pl":"","en":"iron","t":"Natur","l":"B","g":"n"},{"w":"Tier","pl":"Tiere","en":"animal","t":"Natur","l":"A","g":"n"},{"w":"Pferd","pl":"Pferde","en":"horse","t":"Natur","l":"A","g":"n"},{"w":"Schwein","pl":"Schweine","en":"pig","t":"Natur","l":"B","g":"n"},{"w":"Huhn","pl":"Hühner","en":"chicken","t":"Natur","l":"B","g":"n"},{"w":"Insekt","pl":"Insekten","en":"insect","t":"Natur","l":"B","g":"n"},{"w":"Wetter","pl":"-","en":"weather","t":"Natur","l":"A","g":"n"},{"w":"Gewitter","pl":"-","en":"thunderstorm","t":"Natur","l":"B","g":"n"},{"w":"Klima","pl":"","en":"climate","t":"Natur","l":"B","g":"n"},{"w":"Feuer","pl":"-","en":"fire","t":"Natur","l":"B","g":"n"},{"w":"Gemüsebeet","pl":"Gemüsebeete","en":"vegetable bed","t":"Natur","l":"B","g":"n"},{"w":"Jahr","pl":"Jahre","en":"year","t":"Zeit","l":"A","g":"n"},{"w":"Jahrhundert","pl":"Jahrhunderte","en":"century","t":"Zeit","l":"B","g":"n"},{"w":"Wochenende","pl":"Wochenenden","en":"weekend","t":"Zeit","l":"A","g":"n"},{"w":"Ende","pl":"Enden","en":"end","t":"Zeit","l":"A","g":"n"},{"w":"Ereignis","pl":"Ereignisse","en":"event","t":"Abstrakt","l":"B","g":"n"},{"w":"Glück","pl":"","en":"luck, happiness","t":"Abstrakt","l":"A","g":"n"},{"w":"Pech","pl":"","en":"bad luck","t":"Abstrakt","l":"B","g":"n"},{"w":"Gefühl","pl":"Gefühle","en":"feeling","t":"Abstrakt","l":"A","g":"n"},{"w":"Vertrauen","pl":"","en":"trust","t":"Abstrakt","l":"B","g":"n"},{"w":"Verständnis","pl":"","en":"understanding","t":"Abstrakt","l":"B","g":"n"},{"w":"Wissen","pl":"","en":"knowledge","t":"Abstrakt","l":"B","g":"n"},{"w":"Bedürfnis","pl":"Bedürfnisse","en":"need","t":"Abstrakt","l":"B","g":"n"},{"w":"Erlebnis","pl":"Erlebnisse","en":"experience","t":"Abstrakt","l":"B","g":"n"},{"w":"Geheimnis","pl":"Geheimnisse","en":"secret","t":"Abstrakt","l":"B","g":"n"},{"w":"Missverständnis","pl":"Missverständnisse","en":"misunderstanding","t":"Abstrakt","l":"B","g":"n"},{"w":"Vorurteil","pl":"Vorurteile","en":"prejudice","t":"Abstrakt","l":"B","g":"n"},{"w":"Risiko","pl":"Risiken","en":"risk","t":"Abstrakt","l":"B","g":"n"},{"w":"Verhalten","pl":"","en":"behaviour","t":"Abstrakt","l":"B","g":"n"},{"w":"Maß","pl":"Maße","en":"measure, extent","t":"Abstrakt","l":"B","g":"n"},{"w":"Drittel","pl":"-","en":"third","t":"Abstrakt","l":"B","g":"n"},{"w":"Schicksal","pl":"Schicksale","en":"fate","t":"Abstrakt","l":"B","g":"n"},{"w":"Gedächtnis","pl":"","en":"memory (faculty)","t":"Abstrakt","l":"B","g":"n"},{"w":"Lesen","pl":"","en":"reading","t":"Bildung","l":"A","g":"n"},{"w":"Schwimmen","pl":"","en":"swimming","t":"Freizeit","l":"A","g":"n"},{"w":"Drama","pl":"Dramen","en":"drama","t":"Freizeit","l":"B","g":"n"},{"w":"Kabinett","pl":"Kabinette","en":"cabinet","t":"Abstrakt","l":"B","g":"n"},{"w":"Etikett","pl":"Etiketten","en":"label","t":"Arbeit","l":"B","g":"n"}];
+        var ART = {m:"der", f:"die", n:"das"};
+
+        /* ---------------- rule engine ---------------- */
+        /*RULES-START*/
+        var ENDINGS = [
+            // [suffix, gender, explanation, exceptions that must not match]
+            ["ung","f","Nouns ending in <code>-ung</code> are feminine — without exception.",[]],
+            ["heit","f","<code>-heit</code> is always feminine.",[]],
+            ["keit","f","<code>-keit</code> is always feminine.",[]],
+            ["schaft","f","<code>-schaft</code> is always feminine.",[]],
+            ["tion","f","<code>-tion</code> (and -sion) is feminine, like every Latin-derived abstract noun of this shape.",[]],
+            ["sion","f","<code>-sion</code> is feminine.",[]],
+            ["tät","f","<code>-tät</code> is feminine — the German counterpart of English -ty.",[]],
+            ["ei","f","<code>-ei</code> is feminine: die Polizei, die Bäckerei.",[]],
+            ["ie","f","<code>-ie</code> is feminine: die Familie, die Energie.",["Knie"]],
+            ["ik","f","<code>-ik</code> is feminine: die Musik, die Technik.",[]],
+            ["eur","m","French-derived <code>-eur</code> is masculine: der Ingenieur, der Friseur.",[]],
+            ["är","m","<code>-är</code> is masculine: der Millionär, der Sekretär.",[]],
+            ["ur","f","<code>-ur</code> is feminine: die Natur, die Kultur (exception: das Abitur).",[]],
+            ["anz","f","<code>-anz</code> is feminine: die Distanz, die Toleranz, die Bilanz.",["Tanz","Kranz","Glanz","Schwanz"]],
+            ["enz","f","<code>-enz</code> is feminine.",[]],
+            ["age","f","French-derived <code>-age</code> is feminine: die Garage, die Passage.",[]],
+            ["ade","f","<code>-ade</code> is feminine: die Marmelade, die Limonade.",[]],
+            ["ette","f","<code>-ette</code> is feminine: die Toilette, die Tablette.",[]],
+            ["in","f","The suffix <code>-in</code> makes the female form of a person: die Lehrerin, die Ärztin.",["Termin","Benzin"]],
+            ["cht","f","Verbal nouns in <code>-cht</code> are feminine: die Nacht, die Sicht, die Pflicht, die Schicht.",["Licht","Gericht","Gesicht","Gewicht","Gedicht","Recht","Bericht"]],
+            ["ft","f","Verbal nouns in <code>-ft</code> are feminine: die Ankunft, die Zukunft, die Kraft, die Schrift.",["Geschäft","Heft","Saft","Gift","Duft"]],
+            ["chen","n","The diminutive <code>-chen</code> makes any noun neuter, overriding natural gender.",["Kuchen","Knochen","Rechen","Drachen","Kirchen"]],
+            ["lein","n","The diminutive <code>-lein</code> makes any noun neuter.",[]],
+            ["ment","n","<code>-ment</code> is neuter: das Dokument, das Instrument (but der Moment, der Zement).",["Moment","Zement"]],
+            ["tum","n","<code>-tum</code> is neuter: das Eigentum, das Wachstum (but der Reichtum, der Irrtum).",["Reichtum","Irrtum"]],
+            ["um","n","Latin-derived <code>-um</code> is neuter: das Museum, das Zentrum, das Datum.",["Baum","Raum","Traum","Zeitraum","Reichtum","Irrtum","Ruhm","Konsum"]],
+            ["nis","n","<code>-nis</code> is usually neuter (das Ergebnis, das Erlebnis) — but die Erlaubnis and die Kenntnis are feminine.",[]],
+            ["ma","n","Greek-derived <code>-ma</code> is neuter: das Thema, das Klima, das Drama.",["Firma","Oma","Mama"]],
+            ["zeug","n","<code>-zeug</code> is neuter: das Werkzeug, das Flugzeug, das Spielzeug.",[]],
+            ["ett","n","<code>-ett</code> is neuter: das Ballett, das Kabinett, das Etikett.",[]],
+            ["ling","m","<code>-ling</code> is masculine: der Frühling, der Lehrling.",[]],
+            ["ismus","m","<code>-ismus</code> is masculine: der Kapitalismus, der Tourismus.",[]],
+            ["ant","m","<code>-ant</code> is masculine — and it is an n-noun: den Praktikanten.",["Restaurant"]],
+            ["ent","m","<code>-ent</code> is masculine for people: der Student, der Präsident, der Assistent.",["Prozent","Talent","Argument","Instrument","Dokument","Experiment","Moment","Zement","Element","Abonnement"]],
+            ["ist","m","<code>-ist</code> is masculine: der Tourist, der Journalist, der Polizist.",["Frist","Mist"]],
+            ["or","m","<code>-or</code> is masculine: der Motor, der Professor.",["Labor","Tor","Chor","Büro"]],
+            ["ich","m","<code>-ich</code> is masculine: der Teppich, der Rettich.",[]],
+            ["ig","m","<code>-ig</code> is masculine: der Honig, der König, der Essig.",[]],
+            ["us","m","<code>-us</code> is masculine: der Zirkus, der Rhythmus, der Bonus.",["Haus","Maus","Aus","Minus","Plus","Virus"]],
+            ["er","m","<code>-er</code> on a person or tool is masculine: der Lehrer, der Computer — but watch die Mutter, das Fenster, das Wasser, das Zimmer.",["Gewitter"]],
+            ["en","m","A noun in <code>-en</code> that is not a nominalised infinitive is masculine: der Garten, der Wagen, der Ofen.",[]],
+            ["e","f","About 90% of nouns ending in <code>-e</code> are feminine: die Lampe, die Blume. The main breakers are the weak masculines (der Name, der Junge, der Kollege) and das Auge, das Ende, das Interesse.",[]]
+        ];
+
+        var SEMANTIC = [
+            [["Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag","Sonntag"],"m","Days of the week are masculine — as are months and seasons."],
+            [["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"],"m","Months are masculine."],
+            [["Frühling","Sommer","Herbst","Winter"],"m","Seasons are masculine."],
+            [["Regen","Schnee","Wind","Nebel","Sturm","Frost"],"m","Weather words are masculine — but das Wetter, das Gewitter and die Wolke break it."],
+            [["Wein","Wodka","Sekt","Schnaps"],"m","Alcoholic drinks are masculine — das Bier is the famous exception."],
+            [["Gold","Silber","Eisen","Metall","Kupfer","Blei"],"n","Metals are neuter (but der Stahl)."],
+            [["Kind","Baby","Mädchen","Kalb","Lamm"],"n","Young beings are neuter, whatever their natural gender."],
+            [["Essen","Lesen","Schwimmen","Leben","Wissen","Verhalten","Vertrauen","Einkommen","Unternehmen","Verfahren","Schreiben"],"n","A nominalised infinitive is always neuter: das Essen, das Lesen, das Leben."],
+            [["Deutsch","Englisch"],"n","Languages used as nouns are neuter."],
+            [["Hotel","Kino","Café","Museum","Restaurant","Theater","Stadion"],"n","Buildings for the public — hotels, cinemas, cafés, theatres — are neuter."]
+        ];
+
+        var PREFIX_GE = "Ge";
+        var GE_EXC = {"Gedanke":1,"Geschmack":1,"Geschichte":1,"Gefahr":1,"Geduld":1,"Gemeinde":1,"Gewerkschaft":1,"Gegend":1,"Gegenwart":1,"Gelegenheit":1,"Gewohnheit":1,"Gesellschaft":1,"Gesundheit":1,"Geschwindigkeit":1,"Gewinn":1,"Genehmigung":1};
+
+        var wordIndex = null;
+        function buildIndex(){
+            wordIndex = {};
+            for(var i=0;i<NOUNS.length;i++){
+                wordIndex[NOUNS[i].w.toLowerCase()] = NOUNS[i];
+            }
+        }
+        var NOT_COMPOUND = {"Antragsteller":1,"Zeitraum":1,"Mitglied":1,"Vermieter":1,"Gemüsebeet":1,"Kommode":1,"Programm":1};
+        function compoundBase(entry){
+            if(!wordIndex) buildIndex();
+            if(NOT_COMPOUND[entry.w]) return null;
+            var w = entry.w.toLowerCase();
+            if(w.length < 7) return null;
+            for(var cut = 3; cut <= w.length - 4; cut++){
+                var tail = w.slice(cut);
+                var hit = wordIndex[tail];
+                if(hit && hit.g === entry.g && hit.w.toLowerCase() !== w) return hit;
+            }
+            return null;
+        }
+        function endsWith(w, s){ return w.length > s.length && w.slice(-s.length).toLowerCase() === s; }
+        function isConsonant(ch){ return ch !== "" && "aeiouäöüy".indexOf(ch.toLowerCase()) === -1; }
+
+        function ruleFor(entry){
+            var w = entry.w, g = entry.g, i, j;
+
+            for(i=0;i<SEMANTIC.length;i++){
+                if(SEMANTIC[i][0].indexOf(w) !== -1 && SEMANTIC[i][1] === g)
+                    return {kind:"Bedeutung", text:SEMANTIC[i][2]};
+            }
+
+            var base = compoundBase(entry);
+            if(base){
+                return {kind:"Kompositum", text:"Compound noun — the <b>last</b> element decides. <b>" +
+                        ART[base.g] + " " + base.w + "</b> is " + ART[base.g] + ", so it is " + ART[g] + " " + w + "."};
+            }
+
+            if(w.slice(0,2) === PREFIX_GE && g === "n" && !GE_EXC[w])
+                return {kind:"Vorsilbe", text:"The collective prefix <code>Ge-</code> usually gives a neuter noun: das Gebäude, das Gemüse, das Gespräch."};
+
+            if(g === "n" && endsWith(w, "en") && !endsWith(w, "chen"))
+                return {kind:"Substantiviertes Verb", text:"Neuter nouns in <code>-en</code> are verbs (or tools) turned into nouns: das Essen, das Leben, das Zeichen, das Kissen. The \u201c-en is masculine\u201d rule only covers ordinary nouns like der Garten and der Wagen."};
+
+            for(i=0;i<ENDINGS.length;i++){
+                var e = ENDINGS[i];
+                if(!e[2]) continue;
+                if(e[3].indexOf(w) !== -1) continue;
+                if(e[0] === "in" && endsWith(w, "ein")) continue;
+                if((e[0] === "er" || e[0] === "en") && !isConsonant(w.charAt(w.length - 3))) continue;
+                if(endsWith(w, e[0])){
+                    if(e[1] === g) return {kind:"Endung", text:e[2]};
+                    return {kind:"Ausnahme", text:"Careful — this looks like a <code>-" + e[0] +
+                            "</code> noun, which is normally " + ART[e[1]] + ". <b>" + ART[g] + " " + w +
+                            "</b> is an exception, so it has to be learned as a phrase."};
+                }
+            }
+
+            if(endsWith(w, "el")){
+                if(g === "m") return {kind:"Tendenz", text:"<code>-el</code> leans masculine — der Schlüssel, der Löffel, der Apfel, der Vogel — but it is a tendency, not a rule."};
+                if(g === "f") return {kind:"Tendenz", text:"<code>-el</code> leans masculine, so this one breaks the tendency: die Gabel, die Regel, die Nudel, die Insel are all feminine. Learn it as a phrase."};
+                return {kind:"Tendenz", text:"<code>-el</code> leans masculine, but a small neuter group exists: das Kabel, das Segel, das Möbel."};
+            }
+
+            if(g === "f") return {kind:"Kein Signal", text:"No ending rule covers this one. Feminine is the largest group among nouns with no obvious signal — but this is a word to learn as a phrase: <b>die " + w + "</b>."};
+            if(g === "m") return {kind:"Kein Signal", text:"No ending rule covers this one. Learn it as a phrase: <b>der " + w + "</b>."};
+            return {kind:"Kein Signal", text:"No ending rule covers this one. Learn it as a phrase: <b>das " + w + "</b>."};
+        }
+
+        /*RULES-END*/
+        /* ---------------- storage ---------------- */
+        var KEY = "artikel-trainer-v1";
+        var store = {};
+        function loadStore(){
+            try{ var raw = localStorage.getItem(KEY); if(raw) store = JSON.parse(raw) || {}; }
+            catch(e){ store = {}; }
+        }
+        function saveStore(){
+            try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e){}
+        }
+        function rec(w){
+            if(!store[w]) store[w] = {c:0, x:0, s:0};
+            return store[w];
+        }
+
+        /* ---------------- state ---------------- */
+        var filters = {lvl:"all", topic:"all", weak:false};
+        var pool = [], current = null, answered = false, prev = null;
+        var session = {n:0, ok:0, streak:0, best:0};
+
+        var $ = function(id){ return document.getElementById(id); };
+
+        function inFilters(e){
+            if(filters.lvl !== "all" && e.l !== filters.lvl) return false;
+            if(filters.topic !== "all" && e.t !== filters.topic) return false;
+            if(filters.weak){ var r = store[e.w]; if(!r || r.x === 0) return false; }
+            return true;
+        }
+        function rebuildPool(){
+            pool = NOUNS.filter(inFilters);
+            $("sPool").textContent = pool.length;
+        }
+        function weight(e){
+            var r = store[e.w];
+            if(!r) return 3;                      // unseen: high priority
+            if(r.s < 0) return 8;                 // last answer wrong: highest
+            if(r.s >= 3) return 1;                // mastered: rare
+            return 4 - r.s;
+        }
+        function pick(){
+            if(!pool.length) return null;
+            var total = 0, i, ws = [];
+            for(i=0;i<pool.length;i++){
+                var w = weight(pool[i]);
+                if(pool.length > 1 && prev && pool[i].w === prev) w = 0;
+                ws.push(w); total += w;
+            }
+            if(total <= 0) return pool[Math.floor(Math.random()*pool.length)];
+            var r = Math.random()*total;
+            for(i=0;i<pool.length;i++){ r -= ws[i]; if(r <= 0) return pool[i]; }
+            return pool[pool.length-1];
+        }
+
+        /* ---------------- rendering ---------------- */
+        var buttons = Array.prototype.slice.call(document.querySelectorAll(".tr-btns button"));
+
+        function showWord(){
+            answered = false;
+            current = pick();
+            if(!current){
+                $("word").textContent = "Kein Wort im Filter";
+                $("word").style.color = "var(--muted)";
+                $("wordEn").textContent = "Loosen the filters above to keep training.";
+                $("verdict").textContent = ""; $("verdict").className = "verdict";
+                $("rule").textContent = "";
+                $("meta").textContent = "";
+                buttons.forEach(function(b){ b.disabled = true; b.className = ""; });
+                return;
+            }
+            $("word").textContent = current.w;
+            $("word").style.color = "var(--ink)";
+            $("wordEn").textContent = current.en;
+            $("verdict").textContent = ""; $("verdict").className = "verdict";
+            $("rule").className = "rule";
+            $("rule").textContent = "Choose an article — the rule behind the answer appears here.";
+            $("meta").innerHTML = "";
+            buttons.forEach(function(b){ b.disabled = false; b.className = ""; });
+        }
+
+        function answer(g){
+            if(answered || !current) return;
+            answered = true;
+            var it = current, ok = (g === it.g), r = rec(it.w);
+            session.n++;
+            if(ok){ session.ok++; session.streak++; r.c++; r.s = (r.s < 0 ? 1 : r.s + 1); }
+            else  { session.streak = 0; r.x++; r.s = -1; }
+            if(session.streak > session.best) session.best = session.streak;
+            saveStore();
+
+            buttons.forEach(function(b){
+                b.disabled = true;
+                if(b.getAttribute("data-g") === it.g) b.className = "right";
+                else if(b.getAttribute("data-g") === g) b.className = "wrong";
+            });
+
+            $("word").textContent = ART[it.g] + " " + it.w;
+            $("word").style.color = "var(--" + it.g + ")";
+            $("verdict").className = "verdict " + (ok ? "ok" : "no");
+            $("verdict").textContent = ok ? "Richtig." : "Leider nicht — es heißt " + ART[it.g] + " " + it.w + ".";
+
+            var rule = ruleFor(it);
+            $("rule").className = "rule has";
+            $("rule").innerHTML = "<b>" + rule.kind + ".</b> " + rule.text;
+
+            var plural = it.pl === "-" ? ("die " + it.w) : (it.pl ? "die " + it.pl : "kein Plural");
+            $("meta").innerHTML = '<span class="pl">Plural: ' + plural + "</span>" +
+                "<span>Thema: " + it.t + "</span>" +
+                "<span>" + (it.l === "A" ? "A1–A2" : "B1") + "</span>" +
+                "<span>richtig " + r.c + " · falsch " + r.x + "</span>";
+
+            prev = it.w;
+            updateStats();
+            renderProgress();
+        }
+
+        function updateStats(){
+            $("sScore").textContent = session.ok + "/" + session.n;
+            $("sPct").textContent = session.n ? Math.round(session.ok / session.n * 100) + "%" : "–";
+            $("sStreak").textContent = session.streak;
+            $("sStreakWrap").className = "streak" + (session.streak >= 5 ? " hot" : "");
+        }
+
+        function renderProgress(){
+            var mast = 0, learn = 0, weak = 0, total = NOUNS.length, i;
+            for(i=0;i<NOUNS.length;i++){
+                var r = store[NOUNS[i].w];
+                if(!r) continue;
+                if(r.s < 0) weak++;
+                else if(r.s >= 3) mast++;
+                else learn++;
+            }
+            var pct = function(x){ return (x / total * 100).toFixed(2) + "%"; };
+            $("barMast").style.width = pct(mast);
+            $("barLearn").style.width = pct(learn);
+            $("barWeak").style.width = pct(weak);
+            $("cMast").textContent = mast;
+            $("cLearn").textContent = learn;
+            $("cWeak").textContent = weak;
+            $("cNew").textContent = total - mast - learn - weak;
+
+            var misses = [];
+            for(i=0;i<NOUNS.length;i++){
+                var e = NOUNS[i], rr = store[e.w];
+                if(rr && rr.x > 0) misses.push({e:e, x:rr.x, c:rr.c});
+            }
+            misses.sort(function(a,b){ return b.x - a.x || a.e.w.localeCompare(b.e.w); });
+            var box = $("weaklist");
+            if(!misses.length){
+                box.innerHTML = '<p class="empty">Nothing yet — misses collect here with their article.</p>';
+                return;
+            }
+            var html = "";
+            for(i=0;i<misses.length && i<60;i++){
+                var m = misses[i];
+                html += '<div class="weakrow"><span class="art ' + m.e.g + '">' + ART[m.e.g] +
+                    '</span><span>' + m.e.w + ' <span class="en">· ' + m.e.en + '</span></span><small>' +
+                    m.x + '×</small></div>';
+            }
+            box.innerHTML = html;
+        }
+
+        /* ---------------- export ---------------- */
+        function buildCsv(){
+            var rows = ['"Artikel","Nomen","Plural","Englisch","Thema","falsch","richtig"'];
+            for(var i=0;i<NOUNS.length;i++){
+                var e = NOUNS[i], r = store[e.w];
+                if(!r || r.x === 0) continue;
+                var pl = e.pl === "-" ? e.w : e.pl;
+                rows.push('"' + ART[e.g] + '","' + e.w + '","' + pl + '","' +
+                    e.en.replace(/"/g,'""') + '","' + e.t + '",' + r.x + ',' + r.c);
+            }
+            return rows.join("\n");
+        }
+        async function exportCsv(){
+            var csv = buildCsv();
+            if(csv.split("\n").length < 2){
+                $("exportBtn").textContent = "Noch keine Fehler";
+                setTimeout(function(){ $("exportBtn").textContent = "Als CSV exportieren"; }, 1600);
+                return;
+            }
+            var name = "problemwoerter.csv";
+            try{
+                if(window.claude && window.claude.use){
+                    var dl = await window.claude.use("downloads");
+                    if(dl){ await dl.save({filename:name, data:csv}); return; }
+                }
+            }catch(e){ /* fall through to the blob path */ }
+            try{
+                var blob = new Blob(["﻿" + csv], {type:"text/csv;charset=utf-8"});
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement("a");
+                a.href = url; a.download = name; document.body.appendChild(a); a.click();
+                document.body.removeChild(a); setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+            }catch(e2){
+                $("exportBtn").textContent = "Download hier nicht möglich";
+                setTimeout(function(){ $("exportBtn").textContent = "Als CSV exportieren"; }, 2200);
+            }
+        }
+
+        /* ---------------- wiring ---------------- */
+        function initTopics(){
+            var seen = {}, list = [], i;
+            for(i=0;i<NOUNS.length;i++){ if(!seen[NOUNS[i].t]){ seen[NOUNS[i].t] = 1; list.push(NOUNS[i].t); } }
+            list.sort();
+            var sel = $("topic");
+            for(i=0;i<list.length;i++){
+                var o = document.createElement("option");
+                o.value = list[i]; o.textContent = list[i];
+                sel.appendChild(o);
+            }
+        }
+
+        buttons.forEach(function(b){
+            b.addEventListener("click", function(){ answer(b.getAttribute("data-g")); });
+        });
+        $("next").addEventListener("click", showWord);
+
+        document.addEventListener("keydown", function(ev){
+            if(ev.target && /^(INPUT|SELECT|TEXTAREA)$/.test(ev.target.tagName)) return;
+            if(ev.key === "1") { answer("m"); ev.preventDefault(); }
+            else if(ev.key === "2") { answer("f"); ev.preventDefault(); }
+            else if(ev.key === "3") { answer("n"); ev.preventDefault(); }
+            else if(ev.key === "Enter" || ev.key === " ") { if(answered){ showWord(); ev.preventDefault(); } }
+        });
+
+        Array.prototype.slice.call(document.querySelectorAll("#lvl .chip")).forEach(function(c){
+            c.addEventListener("click", function(){
+                Array.prototype.slice.call(document.querySelectorAll("#lvl .chip")).forEach(function(o){
+                    o.setAttribute("aria-pressed", o === c ? "true" : "false");
+                });
+                filters.lvl = c.getAttribute("data-lvl");
+                rebuildPool(); showWord();
+            });
+        });
+        $("topic").addEventListener("change", function(){
+            filters.topic = this.value; rebuildPool(); showWord();
+        });
+        $("onlyWeak").addEventListener("click", function(){
+            filters.weak = !filters.weak;
+            this.setAttribute("aria-pressed", filters.weak ? "true" : "false");
+            rebuildPool(); showWord();
+        });
+        $("reset").addEventListener("click", function(){
+            store = {}; saveStore();
+            session = {n:0, ok:0, streak:0, best:0};
+            updateStats(); renderProgress(); rebuildPool(); showWord();
+        });
+        $("exportBtn").addEventListener("click", exportCsv);
+
+        loadStore();
+        initTopics();
+        $("deckTotal").textContent = NOUNS.length;
+        $("footCount").textContent = NOUNS.length;
+        rebuildPool();
+        updateStats();
+        renderProgress();
+        showWord();
+    })();
+</script>
+</body>
+</html>
