@@ -36,6 +36,7 @@ const sections = [
 // `atBottom` last-section fallback keep working untouched.
 const germanLinks = [
     { label: 'Der / Die / Das', href: '/germanLessons/artikel/' },
+    { label: 'Akk / Dat / Gen', href: '/germanLessons/akkusativ-dativ/' },
     { label: 'Tests', href: '/germanLessons/test/' },
 ];
 
