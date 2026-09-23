@@ -1,0 +1,2153 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wer? Wen? Wem? Wessen? — Akkusativ, Dativ, Genitiv</title>
+    <meta name="description" content="Akkusativ, Dativ und Genitiv bis B1 — interaktiv erklärt, mit Tricks, Ausnahmen und Übungen. Gebaut zum Unterrichten am Beamer und Touchscreen.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+Bengali:wght@400;600&display=swap">
+    <style>
+        /* Bright-only on purpose: this page is built for a projector. */
+        :root{
+            color-scheme:light;
+            --paper:#FAF8F3;
+            --surface:#FFFFFF;
+            --surface-2:#F2EFE7;
+            --ink:#15191F;
+            --ink-2:#3A4250;
+            --muted:#697180;
+            --line:#E3DED2;
+            --line-strong:#C8C0AE;
+
+            --nom:#A35D00; --nom-soft:#FFF0D4; --nom-mid:#F0BF62;
+            --akk:#C62F28; --akk-soft:#FDE5E1; --akk-mid:#F09A90;
+            --dat:#08787F; --dat-soft:#D9F1F2; --dat-mid:#76C8CD;
+            --gen:#6A44B3; --gen-soft:#EDE6FB; --gen-mid:#B7A0E6;
+            --ok:#1C8448; --ok-soft:#DDF3E5;
+            --bad:#C62F28; --bad-soft:#FDE5E1;
+
+            --shadow:0 1px 2px rgba(21,25,31,.05), 0 10px 28px -18px rgba(21,25,31,.35);
+            --shadow-lg:0 2px 6px rgba(21,25,31,.08), 0 24px 48px -24px rgba(21,25,31,.45);
+            --r:14px;
+
+            --sans:"Source Sans 3","Segoe UI",system-ui,-apple-system,sans-serif;
+            --slab:"Zilla Slab",Georgia,"Times New Roman",serif;
+            --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+            --bn:"Noto Sans Bengali","Nirmala UI",sans-serif;
+            --fs:19px;
+        }
+        *{box-sizing:border-box}
+        html{font-size:var(--fs);scroll-behavior:smooth;scroll-padding-top:64px}
+        body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+            line-height:1.55;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+        img,svg{max-width:100%}
+        [hidden]{display:none!important}
+        h1,h2,h3,h4{font-family:var(--slab);margin:0;text-wrap:balance;line-height:1.15}
+        h2{font-size:clamp(1.7rem,3.4vw,2.3rem);font-weight:700;letter-spacing:-.015em}
+        h3{font-size:1.22rem;font-weight:600}
+        h4{font-size:1rem;font-weight:600;color:var(--ink-2)}
+        p{margin:0}
+        a{color:var(--dat)}
+        button{font:inherit;color:inherit}
+        .wrap{max-width:1180px;margin:0 auto;padding:0 20px 140px}
+        .eyebrow{font-size:.7rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+        .en{color:var(--muted);font-size:.9em}
+        .bn{font-family:var(--bn)}
+        .mono{font-family:var(--mono);font-size:.9em}
+        .lead{font-size:1.1rem;color:var(--ink-2);max-width:62ch}
+        .small{font-size:.85rem}
+        .muted{color:var(--muted)}
+
+        /* ---------- case colours ---------- */
+        .n,.a,.d,.g{font-weight:700;border-radius:6px;padding:0 .18em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+        .n{color:var(--nom);background:var(--nom-soft)}
+        .a{color:var(--akk);background:var(--akk-soft)}
+        .d{color:var(--dat);background:var(--dat-soft)}
+        .g{color:var(--gen);background:var(--gen-soft)}
+        .tn{color:var(--nom)} .ta{color:var(--akk)} .td{color:var(--dat)} .tg{color:var(--gen)}
+        .tag{display:inline-flex;align-items:center;gap:.3em;font-size:.72rem;font-weight:800;letter-spacing:.08em;
+            text-transform:uppercase;padding:.2em .6em;border-radius:99px;vertical-align:middle;white-space:nowrap}
+        .tag.n{background:var(--nom);color:#fff}
+        .tag.a{background:var(--akk);color:#fff}
+        .tag.d{background:var(--dat);color:#fff}
+        .tag.g{background:var(--gen);color:#fff}
+        .de{font-family:var(--slab);font-size:1.12em}
+
+        /* reveal-on-tap (Rätselmodus) */
+        body.quizmode .rv{color:transparent!important;background:var(--surface-2)!important;border-radius:6px;
+            cursor:pointer;box-shadow:inset 0 0 0 2px var(--line-strong);position:relative;user-select:none}
+        body.quizmode .rv::after{content:"?";position:absolute;inset:0;display:grid;place-items:center;
+            color:var(--muted);font-weight:800}
+        body.quizmode .rv.shown{color:inherit!important;background:revert!important;box-shadow:none}
+        body.quizmode .rv.shown::after{content:none}
+        body.quizmode .rv.n.shown{background:var(--nom-soft)!important}
+        body.quizmode .rv.a.shown{background:var(--akk-soft)!important}
+        body.quizmode .rv.d.shown{background:var(--dat-soft)!important}
+        body.quizmode .rv.g.shown{background:var(--gen-soft)!important}
+
+        /* ---------- masthead ---------- */
+        header.mast{background:var(--surface);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+        .mast-in{max-width:1180px;margin:0 auto;padding:48px 20px 40px;display:grid;gap:32px;
+            grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);align-items:center}
+        .mast h1{font-size:clamp(2.4rem,6.2vw,4.4rem);font-weight:700;letter-spacing:-.03em;line-height:1}
+        .mast h1 span{display:inline-block}
+        .mast .lead{margin-top:18px}
+        .mast .meta{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+        .pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:99px;border:1px solid var(--line);
+            background:var(--surface-2);font-size:.8rem;font-weight:600;color:var(--ink-2);text-decoration:none}
+        .hero-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+        .hero-card{text-decoration:none;color:inherit;border-radius:var(--r);padding:16px;border:2px solid;background:var(--surface);display:flex;gap:12px;align-items:center;
+            cursor:pointer;transition:transform .15s ease, box-shadow .15s ease;min-height:92px;text-align:left}
+        .hero-card:hover,.hero-card:focus-visible{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+        .hero-card svg{flex:0 0 44px;height:44px}
+        .hero-card b{display:block;font-family:var(--slab);font-size:1.25rem}
+        .hero-card span{font-size:.82rem;color:var(--ink-2)}
+        .hero-card.n{border-color:var(--nom-mid);background:var(--nom-soft);color:var(--ink);padding:16px}
+        .hero-card.a{border-color:var(--akk-mid);background:var(--akk-soft);color:var(--ink);padding:16px}
+        .hero-card.d{border-color:var(--dat-mid);background:var(--dat-soft);color:var(--ink);padding:16px}
+        .hero-card.g{border-color:var(--gen-mid);background:var(--gen-soft);color:var(--ink);padding:16px}
+        .hero-card.n b{color:var(--nom)} .hero-card.a b{color:var(--akk)} .hero-card.d b{color:var(--dat)} .hero-card.g b{color:var(--gen)}
+
+        /* ---------- toc ---------- */
+        nav.toc{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+        .toc-in{max-width:1180px;margin:0 auto;padding:0 12px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+        .toc-in::-webkit-scrollbar{display:none}
+        .toc a{display:flex;align-items:center;gap:6px;white-space:nowrap;padding:14px 12px;font-size:.8rem;font-weight:700;
+            color:var(--muted);text-decoration:none;border-bottom:3px solid transparent}
+        .toc a .num{font-family:var(--mono);font-size:.7rem;opacity:.7}
+        .toc a:hover{color:var(--ink)}
+        .toc a.on{color:var(--ink);border-bottom-color:var(--ink)}
+
+        /* ---------- sections ---------- */
+        section{padding-top:72px}
+        .sec-head{display:grid;gap:8px;margin-bottom:26px}
+        .sec-head .no{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+        .grid2{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr))}
+        .grid3{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr))}
+        .grid4{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+        .stack{display:grid;gap:18px}
+        .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px 24px;box-shadow:var(--shadow)}
+        .panel h3{margin-bottom:8px}
+        .panel.tint-n{background:var(--nom-soft);border-color:var(--nom-mid)}
+        .panel.tint-a{background:var(--akk-soft);border-color:var(--akk-mid)}
+        .panel.tint-d{background:var(--dat-soft);border-color:var(--dat-mid)}
+        .panel.tint-g{background:var(--gen-soft);border-color:var(--gen-mid)}
+        .panel.edge-n{border-top:5px solid var(--nom)} .panel.edge-a{border-top:5px solid var(--akk)}
+        .panel.edge-d{border-top:5px solid var(--dat)} .panel.edge-g{border-top:5px solid var(--gen)}
+        ul.clean{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+        ul.dots{margin:6px 0 0;padding-left:1.1em;display:grid;gap:6px}
+        .ex{font-family:var(--slab);font-size:1.18rem;line-height:1.5}
+        .ex + .en{display:block;margin-top:2px}
+        .exlist{display:grid;gap:14px;margin-top:10px}
+        .exlist li{list-style:none}
+        .exlist{padding:0}
+
+        /* trick box */
+        .trick{position:relative;border-radius:var(--r);padding:20px 22px 20px 74px;background:#FFFBEA;border:2px dashed #E6C65A}
+        .trick::before{content:"";position:absolute;left:20px;top:20px;width:38px;height:38px;border-radius:50%;
+            background:#F7D54A url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2315191F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z'/%3E%3C/svg%3E") center/22px no-repeat}
+        .trick h3{font-size:1.1rem;margin-bottom:6px}
+        .warn{position:relative;border-radius:var(--r);padding:20px 22px 20px 74px;background:#FFF1EF;border:2px solid #F3B2AA}
+        .warn::before{content:"!";position:absolute;left:20px;top:20px;width:38px;height:38px;border-radius:50%;
+            background:var(--akk);color:#fff;font-weight:800;font-size:1.4rem;display:grid;place-items:center;font-family:var(--slab)}
+        .warn h3{font-size:1.1rem;margin-bottom:6px;color:var(--akk)}
+
+        /* teacher script */
+        details.teach{border:1px solid var(--line);border-radius:12px;background:var(--surface-2);margin-top:22px}
+        details.teach summary{cursor:pointer;padding:12px 16px;font-weight:700;font-size:.85rem;color:var(--ink-2);list-style:none;display:flex;gap:8px;align-items:center}
+        details.teach summary::-webkit-details-marker{display:none}
+        details.teach summary::before{content:"▸";transition:transform .2s}
+        details.teach[open] summary::before{transform:rotate(90deg)}
+        details.teach .tbody{padding:0 18px 16px 34px;font-size:.92rem;color:var(--ink-2)}
+        details.teach ol{margin:0;padding-left:1.1em;display:grid;gap:6px}
+        body.clean-mode details.teach{display:none}
+
+        /* tables */
+        .tbl-wrap{overflow-x:auto;border-radius:var(--r);border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow)}
+        table.cases{border-collapse:collapse;width:100%;min-width:560px;font-size:1.02rem}
+        table.cases th,table.cases td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line)}
+        table.cases thead th{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:var(--surface-2)}
+        table.cases tbody th{font-family:var(--slab);font-size:1.05rem;width:150px}
+        table.cases td{font-family:var(--slab);font-size:1.2rem;cursor:pointer;transition:background .15s}
+        table.cases td .nn{font-family:var(--sans);font-size:.85rem;color:var(--muted);font-weight:400}
+        table.cases tr.rn th{color:var(--nom)} table.cases tr.ra th{color:var(--akk)}
+        table.cases tr.rd th{color:var(--dat)} table.cases tr.rg th{color:var(--gen)}
+        table.cases td.chg b{text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:4px}
+        table.cases tr.ra td.chg b{text-decoration-color:var(--akk)}
+        table.cases tr.rd td.chg b{text-decoration-color:var(--dat)}
+        table.cases tr.rg td.chg b{text-decoration-color:var(--gen)}
+        table.cases td.beat{background:#FFE98A!important;transform:scale(1.02)}
+        table.cases.hide-cells td:not(.open) b{color:transparent;background:var(--surface-2);border-radius:6px;box-shadow:inset 0 0 0 2px var(--line-strong)}
+        table.cases.hide-cells td:not(.open) .nn{visibility:hidden}
+        .tbl-tools{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+
+        /* buttons */
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 18px;border-radius:12px;
+            border:2px solid var(--line-strong);background:var(--surface);font-weight:700;font-size:.92rem;cursor:pointer;
+            transition:transform .1s ease, background .15s, border-color .15s;touch-action:manipulation;user-select:none}
+        .btn:hover{border-color:var(--ink-2)}
+        .btn:active{transform:scale(.97)}
+        .btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+        .btn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+        .btn.sm{min-height:40px;padding:6px 12px;font-size:.82rem;border-radius:10px}
+        .btn svg{width:18px;height:18px}
+        .seg{display:inline-flex;border:2px solid var(--line-strong);border-radius:12px;overflow:hidden;background:var(--surface)}
+        .seg button{border:0;background:none;padding:10px 16px;min-height:44px;font-weight:700;font-size:.88rem;cursor:pointer}
+        .seg button + button{border-left:2px solid var(--line-strong)}
+        .seg button.on{background:var(--ink);color:#fff}
+
+        /* ---------- theater / roles ---------- */
+        .roles{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+        .role{border-radius:var(--r);padding:20px;border:2px solid;display:grid;gap:8px;align-content:start;background:var(--surface)}
+        .role .ic{width:56px;height:56px}
+        .role h3{font-size:1.5rem}
+        .role .q{font-family:var(--slab);font-size:1.4rem;font-weight:700}
+        .role.n{border-color:var(--nom-mid);background:var(--nom-soft);color:var(--ink);padding:20px} .role.n h3,.role.n .q{color:var(--nom)}
+        .role.a{border-color:var(--akk-mid);background:var(--akk-soft);color:var(--ink);padding:20px} .role.a h3,.role.a .q{color:var(--akk)}
+        .role.d{border-color:var(--dat-mid);background:var(--dat-soft);color:var(--ink);padding:20px} .role.d h3,.role.d .q{color:var(--dat)}
+        .role.g{border-color:var(--gen-mid);background:var(--gen-soft);color:var(--ink);padding:20px} .role.g h3,.role.g .q{color:var(--gen)}
+        .role{font-weight:400}
+
+        /* stage animation */
+        .stage{position:relative;background:linear-gradient(#FFFDF7,#FFF6E5);border:1px solid var(--line);border-radius:var(--r);
+            padding:22px;overflow:hidden;box-shadow:var(--shadow)}
+        .stage-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:10px;min-height:190px;position:relative}
+        .actor{display:grid;justify-items:center;gap:6px;text-align:center}
+        .actor svg{width:110px;height:130px}
+        .actor .lbl{font-family:var(--slab);font-size:1.2rem;font-weight:700}
+        .gift{position:absolute;left:18%;bottom:88px;width:54px;height:54px;transition:left 1.2s cubic-bezier(.5,0,.3,1), bottom 1.2s cubic-bezier(.5,0,.3,1)}
+        .gift.fly{left:calc(82% - 54px);animation:hop 1.2s ease}
+        @keyframes hop{0%{transform:translateY(0)}50%{transform:translateY(-70px) rotate(-12deg)}100%{transform:translateY(0)}}
+        .stage-sent{margin-top:16px;text-align:center;font-family:var(--slab);font-size:clamp(1.3rem,2.8vw,1.9rem);font-weight:600}
+        .stage-sent span{transition:all .3s}
+        .stage-q{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
+
+        /* shuffler */
+        .shuffle{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;min-height:80px;align-items:center}
+        .blk{padding:12px 18px;border-radius:12px;font-family:var(--slab);font-size:clamp(1.3rem,2.6vw,1.8rem);font-weight:700;
+            background:var(--surface);border:2px solid var(--line-strong);box-shadow:var(--shadow)}
+        .blk.n{border-color:var(--nom-mid)} .blk.a{border-color:var(--akk-mid)} .blk.d{border-color:var(--dat-mid)}
+        .meaning{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:18px;font-size:1.2rem;font-weight:700}
+        .meaning .who{padding:8px 14px;border-radius:12px;background:var(--surface-2)}
+        .meaning svg{width:46px;height:24px}
+
+        /* bengali bridge */
+        .bridge{display:grid;grid-template-columns:auto 1fr;gap:10px 16px;align-items:baseline}
+        .bridge .bn{font-size:1.15rem}
+
+        /* builder */
+        .builder{display:grid;gap:16px}
+        .slots{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+        .slot{border-radius:var(--r);border:2px solid;padding:14px;display:grid;gap:10px;background:var(--surface)}
+        .slot.n{border-color:var(--nom-mid);background:var(--nom-soft);padding:14px;color:var(--ink)}
+        .slot.a{border-color:var(--akk-mid);background:var(--akk-soft);padding:14px;color:var(--ink)}
+        .slot.d{border-color:var(--dat-mid);background:var(--dat-soft);padding:14px;color:var(--ink)}
+        .slot.v{border-color:var(--line-strong);background:var(--surface-2)}
+        .slot .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+        .slot select{font:inherit;font-size:1.05rem;font-family:var(--slab);font-weight:600;min-height:48px;padding:6px 10px;border-radius:10px;
+            border:2px solid var(--line-strong);background:#fff;width:100%}
+        .toggle{display:inline-flex;align-items:center;gap:8px;font-size:.82rem;font-weight:700;cursor:pointer;user-select:none;min-height:40px}
+        .toggle input{width:22px;height:22px;accent-color:var(--ink)}
+        .out{background:var(--surface);border:2px solid var(--ink);border-radius:var(--r);padding:22px;text-align:center}
+        .out .sent{font-family:var(--slab);font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;line-height:1.35}
+        .out .sent span{display:inline-block;transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
+        .out .sent span.pop{transform:scale(1.08)}
+        .out .why{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;font-size:.88rem}
+        .out .why span{padding:4px 10px;border-radius:99px;background:var(--surface-2)}
+        .rule-note{margin-top:10px;font-size:.9rem;color:var(--ink-2)}
+
+        /* chips / lists of words */
+        .chips{display:flex;flex-wrap:wrap;gap:8px}
+        .chip{padding:6px 12px;border-radius:10px;background:var(--surface);border:1.5px solid var(--line-strong);font-family:var(--slab);font-size:1.05rem;font-weight:600}
+        .chip.n{border-color:var(--nom-mid)} .chip.a{border-color:var(--akk-mid)} .chip.d{border-color:var(--dat-mid)} .chip.g{border-color:var(--gen-mid)}
+        .chip small{font-family:var(--sans);font-weight:400;color:var(--muted);font-size:.78rem;margin-left:4px}
+
+        .mnemo{font-family:var(--slab);font-weight:700;font-size:clamp(2rem,5vw,3.4rem);letter-spacing:.06em;line-height:1}
+        .mnemo span{display:inline-block;transition:transform .15s, color .15s}
+        .mnemo span.beat{transform:translateY(-8px) scale(1.15);color:#E0A800!important}
+        .mnemo-sub{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-family:var(--slab);font-size:1.1rem}
+
+        /* room scene */
+        .room-wrap{display:grid;gap:16px;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}
+        .room{position:relative;aspect-ratio:16/10;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);
+            background:linear-gradient(#F4EEE2 0 72%, #E4D6BE 72% 100%);touch-action:none;user-select:none;box-shadow:var(--shadow)}
+        .room svg.furn{position:absolute;inset:0;width:100%;height:100%}
+        .zone{position:absolute;border-radius:12px;border:2px dashed transparent;transition:background .15s,border-color .15s}
+        .room.dragging .zone{border-color:rgba(8,120,127,.35);background:rgba(8,120,127,.06)}
+        .zone.hot{border-color:var(--dat)!important;background:rgba(8,120,127,.16)!important}
+        .zone .zl{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:.7rem;font-weight:800;color:var(--dat);
+            opacity:0;white-space:nowrap;background:#fff;padding:2px 6px;border-radius:6px}
+        .room.dragging .zone .zl,.room.showzones .zone .zl{opacity:.95}
+        .room.showzones .zone{border-color:rgba(8,120,127,.35)}
+        .cat{position:absolute;width:12%;aspect-ratio:1;cursor:grab;touch-action:none;z-index:5;
+            transition:left .45s cubic-bezier(.4,1.3,.5,1), top .45s cubic-bezier(.4,1.3,.5,1);filter:drop-shadow(0 4px 4px rgba(0,0,0,.18))}
+        .cat.drag{transition:none;cursor:grabbing;transform:scale(1.12)}
+        .cat.behind{z-index:1;opacity:.85}
+        .room-out{display:grid;gap:12px;align-content:start}
+        .room-line{border-radius:12px;padding:14px 16px;border:2px solid var(--line);background:var(--surface)}
+        .room-line .k{font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+        .room-line .s{font-family:var(--slab);font-size:1.35rem;font-weight:600;margin-top:4px}
+        .room-line.wohin{border-color:var(--akk-mid);background:var(--akk-soft)} .room-line.wohin .k{color:var(--akk)}
+        .room-line.wo{border-color:var(--dat-mid);background:var(--dat-soft)} .room-line.wo .k{color:var(--dat)}
+        .room-line.flash{animation:flash .6s ease}
+        @keyframes flash{0%{transform:scale(1)}40%{transform:scale(1.03)}100%{transform:scale(1)}}
+
+        /* flowchart */
+        .flow{display:grid;gap:16px}
+        .flow-q{font-family:var(--slab);font-size:clamp(1.3rem,2.6vw,1.8rem);font-weight:600}
+        .flow-opts{display:flex;flex-wrap:wrap;gap:10px}
+        .flow-opts .btn{min-height:58px;font-size:1rem}
+        .flow-trail{display:flex;flex-wrap:wrap;gap:6px;font-size:.8rem;color:var(--muted)}
+        .flow-trail span{padding:3px 10px;border-radius:99px;background:var(--surface-2)}
+        .flow-res{border-radius:var(--r);padding:22px;color:#fff;display:grid;gap:6px}
+        .flow-res b{font-family:var(--slab);font-size:2rem}
+        .flow-res.n{background:var(--nom)} .flow-res.a{background:var(--akk)} .flow-res.d{background:var(--dat)} .flow-res.g{background:var(--gen)}
+
+        /* ---------- exercises ---------- */
+        .tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+        .tabs .btn{min-height:52px}
+        .quiz{display:grid;gap:18px}
+        .qhead{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center}
+        .qcats{display:flex;flex-wrap:wrap;gap:6px}
+        .qcats .btn{min-height:40px;padding:6px 12px;font-size:.8rem}
+        .qcard{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:30px 26px;box-shadow:var(--shadow-lg);text-align:center}
+        .qsent{font-family:var(--slab);font-size:clamp(1.6rem,3.6vw,2.5rem);font-weight:600;line-height:1.35}
+        .qsent .gap{display:inline-block;min-width:3.2em;border-bottom:4px solid var(--ink);margin:0 .1em;color:var(--ink)}
+        .qsent .gap.ok{color:var(--ok);border-color:var(--ok)}
+        .qsent .gap.no{color:var(--bad);border-color:var(--bad)}
+        .qhint{margin-top:8px;color:var(--muted);font-size:.95rem}
+        .qopts{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px}
+        .qopts button{min-width:130px;min-height:64px;font-family:var(--slab);font-size:1.45rem;font-weight:700;border-radius:14px;
+            border:3px solid var(--line-strong);background:var(--surface);cursor:pointer;touch-action:manipulation}
+        .qopts button:hover:not(:disabled){border-color:var(--ink)}
+        .qopts button.right{background:var(--ok);border-color:var(--ok);color:#fff}
+        .qopts button.wrong{background:var(--bad);border-color:var(--bad);color:#fff;animation:shake .35s}
+        @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+        .qwhy{margin-top:20px;border-radius:12px;padding:14px 16px;text-align:left;font-size:1rem}
+        .qwhy.ok{background:var(--ok-soft)} .qwhy.no{background:var(--bad-soft)}
+        .qfoot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+        .score{font-family:var(--mono);font-size:.95rem;color:var(--ink-2)}
+        .streak{font-weight:800;color:#C88A00}
+
+        /* sort game */
+        .sort-pool{display:flex;flex-wrap:wrap;gap:10px;min-height:70px;padding:14px;border-radius:var(--r);background:var(--surface-2);border:2px dashed var(--line-strong)}
+        .card-w{padding:10px 16px;border-radius:12px;background:#fff;border:2px solid var(--line-strong);font-family:var(--slab);font-size:1.25rem;font-weight:700;
+            cursor:grab;touch-action:none;user-select:none;box-shadow:var(--shadow);min-height:48px;display:flex;align-items:center}
+        .card-w.sel{border-color:var(--ink);box-shadow:0 0 0 3px #FFE98A}
+        .card-w.ghost{position:fixed;z-index:200;pointer-events:none;transform:rotate(-3deg) scale(1.08)}
+        .card-w.ok{border-color:var(--ok);background:var(--ok-soft);cursor:default}
+        .card-w.no{animation:shake .35s;border-color:var(--bad)}
+        .buckets{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));margin-top:14px}
+        .bucket{border-radius:var(--r);border:3px solid;min-height:170px;padding:12px;display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:transform .15s}
+        .bucket.hot{transform:scale(1.02)}
+        .bucket h4{font-size:1.05rem}
+        .bucket .in{display:flex;flex-wrap:wrap;gap:6px}
+        .bucket .in .card-w{font-size:1rem;padding:6px 10px;min-height:0;box-shadow:none}
+        .bucket.a{border-color:var(--akk-mid);background:var(--akk-soft);padding:12px;color:var(--ink)} .bucket.a h4{color:var(--akk)}
+        .bucket.d{border-color:var(--dat-mid);background:var(--dat-soft);padding:12px;color:var(--ink)} .bucket.d h4{color:var(--dat)}
+        .bucket.g{border-color:var(--gen-mid);background:var(--gen-soft);padding:12px;color:var(--ink)} .bucket.g h4{color:var(--gen)}
+        .bucket.w{border-color:#E6C65A;background:#FFFBEA;padding:12px} .bucket.w h4{color:#8A6A00}
+        .bucket.ad{border-color:var(--line-strong);background:linear-gradient(135deg,var(--dat-soft) 50%,var(--akk-soft) 50%);padding:12px}
+
+        /* detective */
+        .det-sent{font-family:var(--slab);font-size:clamp(1.5rem,3.2vw,2.3rem);font-weight:600;line-height:2.1;text-align:center}
+        .det-sent .ph{display:inline-block;padding:0 .3em;border-radius:10px;border:3px dashed var(--line-strong);cursor:pointer;line-height:1.35;
+            touch-action:manipulation;user-select:none;position:relative;transition:background .15s}
+        .det-sent .ph[data-v="n"]{border:3px solid var(--nom);background:var(--nom-soft)}
+        .det-sent .ph[data-v="a"]{border:3px solid var(--akk);background:var(--akk-soft)}
+        .det-sent .ph[data-v="d"]{border:3px solid var(--dat);background:var(--dat-soft)}
+        .det-sent .ph[data-v="g"]{border:3px solid var(--gen);background:var(--gen-soft)}
+        .det-sent .ph .lab{position:absolute;left:50%;top:-1.25em;transform:translateX(-50%);font-family:var(--sans);font-size:.72rem;font-weight:800;
+            letter-spacing:.08em;padding:1px 8px;border-radius:99px;color:#fff;line-height:1.5;white-space:nowrap}
+        .det-sent .ph.right::after{content:"✓";position:absolute;right:-.5em;bottom:-.6em;background:var(--ok);color:#fff;border-radius:50%;width:1.3em;height:1.3em;
+            font-size:.6em;display:grid;place-items:center;font-family:var(--sans)}
+        .det-sent .ph.wrong::after{content:"✗";position:absolute;right:-.5em;bottom:-.6em;background:var(--bad);color:#fff;border-radius:50%;width:1.3em;height:1.3em;
+            font-size:.6em;display:grid;place-items:center;font-family:var(--sans)}
+        .legend{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+
+        /* cheat sheet */
+        .cheat{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+        .cheat .panel{padding:16px 18px}
+        .cheat h3{font-size:1.05rem}
+        .mini{border-collapse:collapse;width:100%;font-size:.95rem}
+        .mini td,.mini th{padding:4px 6px;border-bottom:1px solid var(--line);text-align:left}
+        .mini th{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+        .mini td{font-family:var(--slab)}
+
+        /* ---------- teacher dock ---------- */
+        .dock{position:fixed;right:14px;bottom:14px;z-index:120;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+        .dock-bar{display:flex;gap:6px;padding:8px;border-radius:18px;background:#fff;border:1px solid var(--line-strong);box-shadow:var(--shadow-lg);flex-wrap:wrap;justify-content:flex-end;max-width:calc(100vw - 28px)}
+        .dock-bar button{width:52px;height:52px;border-radius:14px;border:2px solid transparent;background:var(--surface-2);cursor:pointer;display:grid;place-items:center;touch-action:manipulation;position:relative}
+        .dock-bar button:hover{border-color:var(--line-strong)}
+        .dock-bar button.on{background:var(--ink);color:#fff}
+        .dock-bar button svg{width:24px;height:24px}
+        .dock-bar button[data-tip]:hover::after{content:attr(data-tip);position:absolute;bottom:62px;right:0;white-space:nowrap;background:var(--ink);color:#fff;
+            font-size:.72rem;font-weight:700;padding:5px 9px;border-radius:8px;pointer-events:none}
+        .dock-bar .sep{width:1px;background:var(--line);margin:4px 2px}
+        .dock.min .dock-bar > :not(.keep){display:none}
+        .pop{background:#fff;border:1px solid var(--line-strong);border-radius:18px;box-shadow:var(--shadow-lg);padding:16px;width:min(340px,calc(100vw - 28px))}
+        .pop h4{margin-bottom:10px}
+        .teams{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+        .team{border-radius:14px;padding:10px;text-align:center;border:2px solid}
+        .team.t1{border-color:var(--akk-mid);background:var(--akk-soft)} .team.t2{border-color:var(--dat-mid);background:var(--dat-soft)}
+        .team input{width:100%;border:0;background:transparent;text-align:center;font-weight:800;font-size:.95rem;font-family:var(--sans)}
+        .team .pts{font-family:var(--slab);font-size:2.6rem;font-weight:700;line-height:1.1}
+        .team .row{display:flex;gap:6px;justify-content:center}
+        .team .row button{width:48px;height:44px;border-radius:10px;border:2px solid var(--line-strong);background:#fff;font-weight:800;font-size:1.2rem;cursor:pointer}
+        .picker-name{font-family:var(--slab);font-size:2rem;font-weight:700;text-align:center;min-height:2.6rem;margin:8px 0}
+        .pop textarea{width:100%;min-height:70px;border-radius:10px;border:2px solid var(--line-strong);padding:8px;font:inherit;font-size:.9rem;resize:vertical}
+        .timer-big{position:fixed;inset:0;z-index:150;display:grid;place-items:center;background:rgba(250,248,243,.9);backdrop-filter:blur(3px)}
+        .timer-big .t{font-family:var(--mono);font-size:min(28vw,40vh);font-weight:600;line-height:1}
+        .timer-big .t.low{color:var(--akk)}
+        .timer-big .x{position:absolute;top:18px;right:18px}
+        .timer-chip{font-family:var(--mono);font-weight:700;padding:8px 14px;border-radius:12px;background:var(--ink);color:#fff;cursor:pointer}
+        .timer-chip.low{background:var(--akk)}
+
+        /* drawing overlay */
+        #ink{position:fixed;inset:0;z-index:110;pointer-events:none;touch-action:none}
+        body.drawing #ink{pointer-events:auto;cursor:crosshair}
+        .pen-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+        .swatch{width:40px;height:40px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px var(--line-strong);cursor:pointer}
+        .swatch.on{box-shadow:0 0 0 3px var(--ink)}
+
+        #confetti{position:fixed;inset:0;pointer-events:none;z-index:160}
+        .toast{position:fixed;left:50%;top:80px;transform:translateX(-50%);z-index:170;background:var(--ink);color:#fff;padding:10px 18px;border-radius:12px;font-weight:700;
+            box-shadow:var(--shadow-lg);transition:opacity .3s}
+
+        footer{border-top:1px solid var(--line);margin-top:80px;padding:28px 20px 120px;text-align:center;color:var(--muted);font-size:.85rem}
+
+        @media (max-width:860px){
+            .mast-in{grid-template-columns:1fr}
+            .room-wrap{grid-template-columns:1fr}
+            .trick,.warn{padding:64px 18px 18px}
+            .dock-bar button{width:46px;height:46px}
+        }
+        @media (max-width:520px){
+            .wrap{padding:0 16px 140px}
+            .hero-cards{grid-template-columns:1fr}
+            .panel{padding:18px}
+        }
+        @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+        @media print{
+            .dock,nav.toc,details.teach,#ink,.no-print,section:not(#spick){display:none!important}
+            header.mast{display:none}
+            section#spick{padding-top:0}
+            body{background:#fff}
+        }
+    </style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+        <symbol id="i-star" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#A35D00"/><path d="M24 10l4.1 8.6 9.4 1.2-6.9 6.5 1.8 9.3L24 31l-8.4 4.6 1.8-9.3-6.9-6.5 9.4-1.2z" fill="#fff"/></symbol>
+        <symbol id="i-target" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#C62F28"/><circle cx="24" cy="24" r="14" fill="#fff"/><circle cx="24" cy="24" r="8.5" fill="#C62F28"/><circle cx="24" cy="24" r="3.5" fill="#fff"/></symbol>
+        <symbol id="i-receive" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#08787F"/><path d="M13 27v6a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2v-6" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round"/><path d="M24 11v15m-6-6l6 6 6-6" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+        <symbol id="i-tag" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#6A44B3"/><path d="M13 14h11l11 11-10 10-12-12z" fill="#fff"/><circle cx="18.5" cy="19.5" r="2.6" fill="#6A44B3"/></symbol>
+        <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 6l3 3" stroke="currentColor" stroke-width="2"/></symbol>
+        <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 4l16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+        <symbol id="i-timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 9v4l3 2M9 2h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+        <symbol id="i-team" viewBox="0 0 24 24"><circle cx="8" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="9" r="2.6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M2 20c0-3.5 2.7-6 6-6s6 2.5 6 6M14 20c0-2.6 1.3-5 4-5s4 2.4 4 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+        <symbol id="i-dice" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="8" r="1.6" fill="currentColor"/><circle cx="16" cy="16" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="16" cy="8" r="1.6" fill="currentColor"/><circle cx="8" cy="16" r="1.6" fill="currentColor"/></symbol>
+        <symbol id="i-plus" viewBox="0 0 24 24"><text x="12" y="17" text-anchor="middle" font-family="Georgia,serif" font-size="15" font-weight="700" fill="currentColor">A+</text></symbol>
+        <symbol id="i-minus" viewBox="0 0 24 24"><text x="12" y="17" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="currentColor">A−</text></symbol>
+        <symbol id="i-full" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+        <symbol id="i-next" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+        <symbol id="i-prev" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+        <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+        <symbol id="i-teach" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 20h8M12 16v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+        <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="19" cy="12" r="2" fill="currentColor"/></symbol>
+        <symbol id="i-arrow" viewBox="0 0 46 24"><path d="M2 12h38m-9-8l9 8-9 8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    </defs>
+</svg>
+
+<header class="mast">
+    <div class="mast-in">
+        <div>
+            <p class="eyebrow">Deutsch · A1 → B1 · Die Fälle</p>
+            <h1><span class="tn">Wer?</span> <span class="ta">Wen?</span><br><span class="td">Wem?</span> <span class="tg">Wessen?</span></h1>
+            <p class="lead">Akkusativ, Dativ and Genitiv — explained like a play on a stage. Every noun in a German sentence has a <b>job</b>, and the little word in front of it (<i>der, den, dem, des…</i>) is its <b>costume</b>. Learn to read the costume, and German suddenly makes sense.</p>
+            <div class="meta">
+                <span class="pill">Tap anything coloured</span>
+                <span class="pill">Touch &amp; drag friendly</span>
+                <span class="pill">PageDown / clicker = next section</span>
+                <a class="pill" href="../artikel/">← Der / Die / Das</a>
+                <a class="pill" href="../test/">Tests →</a>
+            </div>
+        </div>
+        <div class="hero-cards">
+            <a class="hero-card n" href="#rollen"><svg><use href="#i-star"/></svg><div><b>Nominativ</b><span>the star — who does it</span></div></a>
+            <a class="hero-card a" href="#rollen"><svg><use href="#i-target"/></svg><div><b>Akkusativ</b><span>the target — what gets hit</span></div></a>
+            <a class="hero-card d" href="#rollen"><svg><use href="#i-receive"/></svg><div><b>Dativ</b><span>the receiver — to whom</span></div></a>
+            <a class="hero-card g" href="#genitiv"><svg><use href="#i-tag"/></svg><div><b>Genitiv</b><span>the owner — whose</span></div></a>
+        </div>
+    </div>
+    <div class="wrap" style="padding-bottom:28px">
+        <details class="teach">
+            <summary>Teacher script · a 3-session plan for this page</summary>
+            <div class="tbody">
+                <ol>
+                    <li><b>Session 1 (60 min):</b> §01 Why cases → §02 The four roles (play the stage animation, ask “Wer? Wen? Wem?”) → §03 Article tables (do the rap twice) → §04 Pronouns → play with the §05 Builder. Finish with 10 quiz questions from “Akkusativ” + “Dativ”.</li>
+                    <li><b>Session 2 (60 min):</b> §06 Verbs (the “gefallen flip” is the aha-moment) → §07 Prepositions (DOGFU + the Dativ song) → §08 Wechsel room: let each friend drag the cat and read both sentences aloud. Sort game on prepositions.</li>
+                    <li><b>Session 3 (60 min):</b> §09 Genitiv → §10 Noun endings → §11 B1 extras → §12 Traps. Case Detective + mixed quiz in two teams (use the team counter in the dock).</li>
+                    <li>Turn on <b>Rätselmodus</b> (eye icon in the dock) before you show an example — the answers become “?” blocks. Let the class guess, then tap to reveal.</li>
+                    <li>These grey “Teacher script” boxes can be hidden for a clean projection with the <b>screen icon</b> in the dock.</li>
+                </ol>
+            </div>
+        </details>
+    </div>
+</header>
+
+<nav class="toc" aria-label="Sections">
+    <div class="toc-in" id="toc">
+        <a href="#warum"><span class="num">01</span>Warum?</a>
+        <a href="#rollen"><span class="num">02</span>Die 4 Rollen</a>
+        <a href="#artikel"><span class="num">03</span>Artikel</a>
+        <a href="#pronomen"><span class="num">04</span>Pronomen</a>
+        <a href="#baukasten"><span class="num">05</span>Baukasten</a>
+        <a href="#verben"><span class="num">06</span>Verben</a>
+        <a href="#praep"><span class="num">07</span>Präpositionen</a>
+        <a href="#wechsel"><span class="num">08</span>Wo? / Wohin?</a>
+        <a href="#genitiv"><span class="num">09</span>Genitiv</a>
+        <a href="#endungen"><span class="num">10</span>Nomen-Endungen</a>
+        <a href="#b1"><span class="num">11</span>B1-Extras</a>
+        <a href="#fallen"><span class="num">12</span>Fallen</a>
+        <a href="#finder"><span class="num">13</span>Fall-Finder</a>
+        <a href="#ueben"><span class="num">14</span>Üben</a>
+        <a href="#spick"><span class="num">15</span>Spickzettel</a>
+    </div>
+</nav>
+
+<main class="wrap">
+
+    <!-- ====================================================== 01 -->
+    <section id="warum">
+        <div class="sec-head">
+            <span class="no">01 · Warum gibt es Fälle?</span>
+            <h2>English uses word order. German uses costumes.</h2>
+            <p class="lead">In English, <i>“The dog bites the man”</i> and <i>“The man bites the dog”</i> are different stories — only the <b>order</b> tells you who bites. In German, the <b>article</b> tells you. So you can move the words around and the story stays the same.</p>
+        </div>
+        <div class="panel">
+            <div class="shuffle" id="shuf"></div>
+            <div class="meaning" id="shufMeaning"></div>
+            <div class="tbl-tools" style="justify-content:center;margin-top:18px">
+                <button class="btn primary" id="shufMove">Wörter umstellen ⇄</button>
+                <button class="btn" id="shufSwap">Kostüme tauschen (der ↔ den)</button>
+            </div>
+            <p class="small muted" style="text-align:center">Move the words: the meaning stays. Swap the costumes: the meaning flips.</p>
+        </div>
+        <div class="grid2" style="margin-top:18px">
+            <div class="trick">
+                <h3>The one idea to remember today</h3>
+                <p>A German noun doesn’t tell you its job by <b>where</b> it stands, but by <b>what it wears</b>. <span class="a">den</span> Hund is always the target, even at the start of the sentence.</p>
+            </div>
+            <div class="panel">
+                <h3>বাংলা bridge <span class="en">— you already know cases!</span></h3>
+                <div class="bridge" style="margin-top:8px">
+                    <span class="tag g">Genitiv</span><span><span class="bn">বাবা<b>র</b> গাড়ি</span> = das Auto <span class="g">des</span> Vater<b>s</b> <span class="en">(-র / -এর = “whose”)</span></span>
+                    <span class="tag d">Dativ</span><span><span class="bn">ছেলেটা<b>কে</b> একটা বল দিলাম</span> = Ich gab <span class="d">dem</span> Jungen einen Ball</span>
+                    <span class="tag a">Akkusativ</span><span><span class="bn">ছেলেটা<b>কে</b> দেখলাম</span> = Ich sah <span class="a">den</span> Jungen</span>
+                </div>
+                <p class="small muted" style="margin-top:10px">Bengali uses <span class="bn">-কে</span> for both jobs. German splits it into two costumes: <b>Akkusativ</b> for the target, <b>Dativ</b> for the receiver.</p>
+            </div>
+        </div>
+        <details class="teach">
+            <summary>Teacher script</summary>
+            <div class="tbody"><ol>
+                <li>Ask: “In English, can I say <i>Man bites dog</i> and mean the dog bit?” — No. Now press <b>Wörter umstellen</b> a few times. The picture below never changes.</li>
+                <li>Press <b>Kostüme tauschen</b>: only der/den changed, and now the man bites. Let that land — that’s the whole reason cases exist.</li>
+                <li>For Bengali speakers, the bridge card is gold: they already use -র (Genitiv) every day.</li>
+            </ol></div>
+        </details>
+    </section>
+
+    <!-- ====================================================== 02 -->
+    <section id="rollen">
+        <div class="sec-head">
+            <span class="no">02 · Die vier Rollen</span>
+            <h2>Every sentence is a small theatre play</h2>
+            <p class="lead">There are four roles. Each role has a <b>question word</b>. Ask the question — the answer is the noun in that case.</p>
+        </div>
+        <div class="roles">
+            <div class="role n"><svg class="ic"><use href="#i-star"/></svg><h3>Nominativ</h3><div class="q">Wer? Was?</div><p><b>The star.</b> The one who does the action. Every sentence has one.</p><p class="ex"><span class="n">Der Vater</span> lacht.</p></div>
+            <div class="role a"><svg class="ic"><use href="#i-target"/></svg><h3>Akkusativ</h3><div class="q">Wen? Was?</div><p><b>The target.</b> What the action hits directly. Usually a thing.</p><p class="ex">Ich kaufe <span class="a">den Ball</span>.</p></div>
+            <div class="role d"><svg class="ic"><use href="#i-receive"/></svg><h3>Dativ</h3><div class="q">Wem?</div><p><b>The receiver.</b> Who gets something, or who it happens “to / for”. Usually a person.</p><p class="ex">Ich gebe <span class="d">dem Sohn</span> den Ball.</p></div>
+            <div class="role g"><svg class="ic"><use href="#i-tag"/></svg><h3>Genitiv</h3><div class="q">Wessen?</div><p><b>The owner.</b> A name tag: “whose is it?” = “of the …”.</p><p class="ex">der Ball <span class="g">des Opas</span></p></div>
+        </div>
+
+        <div class="stage" style="margin-top:20px" id="stage">
+            <div class="stage-row">
+                <div class="actor">
+                    <svg viewBox="0 0 110 130" aria-hidden="true"><circle cx="55" cy="30" r="20" fill="#F3D2B3" stroke="#15191F" stroke-width="2.5"/><circle cx="48" cy="28" r="2.2" fill="#15191F"/><circle cx="62" cy="28" r="2.2" fill="#15191F"/><path d="M47 37q8 6 16 0" stroke="#15191F" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M35 18q20-18 40 0" fill="#5B3A1E"/><path d="M22 128c0-38 14-60 33-60s33 22 33 60z" fill="#A35D00" stroke="#15191F" stroke-width="2.5"/><path d="M85 90l18-14" stroke="#15191F" stroke-width="7" stroke-linecap="round"/><path d="M85 90l18-14" stroke="#F3D2B3" stroke-width="4" stroke-linecap="round"/></svg>
+                    <span class="lbl tn">der Vater</span>
+                </div>
+                <div style="width:120px"></div>
+                <div class="actor">
+                    <svg viewBox="0 0 110 130" aria-hidden="true"><circle cx="55" cy="44" r="17" fill="#E8BE98" stroke="#15191F" stroke-width="2.5"/><circle cx="49" cy="42" r="2" fill="#15191F"/><circle cx="61" cy="42" r="2" fill="#15191F"/><path d="M48 50q7 6 14 0" stroke="#15191F" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M38 38q4-16 17-15 14 0 17 15-8-7-17-6-9 0-17 6z" fill="#2B2B2B"/><path d="M28 128c0-32 12-52 27-52s27 20 27 52z" fill="#08787F" stroke="#15191F" stroke-width="2.5"/><path d="M28 96l-16-10" stroke="#15191F" stroke-width="7" stroke-linecap="round"/><path d="M28 96l-16-10" stroke="#E8BE98" stroke-width="4" stroke-linecap="round"/></svg>
+                    <span class="lbl td">der Sohn</span>
+                </div>
+                <svg class="gift" id="gift" viewBox="0 0 54 54" aria-hidden="true"><circle cx="27" cy="27" r="24" fill="#C62F28" stroke="#15191F" stroke-width="2.5"/><path d="M5 22q22 10 44 0M5 32q22 10 44 0" stroke="#fff" stroke-width="3" fill="none"/><rect x="31" y="-2" width="24" height="14" rx="3" fill="#6A44B3" transform="rotate(20 31 0)"/><text x="41" y="10" font-size="8" fill="#fff" font-family="sans-serif" font-weight="700" transform="rotate(20 41 8)">Opa</text></svg>
+            </div>
+            <div class="stage-sent" id="stageSent">
+                <span data-r="n">Der Vater</span> gibt <span data-r="d">dem Sohn</span> <span data-r="a">den Ball</span> <span data-r="g">des Opas</span>.
+            </div>
+            <div class="stage-q">
+                <button class="btn primary" id="stagePlay">▶ Spielen</button>
+                <button class="btn" data-ask="n"><span class="tn">Wer</span> gibt?</button>
+                <button class="btn" data-ask="a"><span class="ta">Was</span> gibt er?</button>
+                <button class="btn" data-ask="d"><span class="td">Wem</span> gibt er den Ball?</button>
+                <button class="btn" data-ask="g"><span class="tg">Wessen</span> Ball?</button>
+            </div>
+        </div>
+
+        <div class="grid2" style="margin-top:18px">
+            <div class="trick">
+                <h3>The “to / for someone” test for Dativ</h3>
+                <p>If you can say it in English with <b>to</b> or <b>for</b> a person, that person is <span class="d">Dativ</span>: <i>I give the ball <b>to</b> the son</i> → <span class="d">dem Sohn</span>. <i>I buy a cake <b>for</b> my mum</i> → <span class="d">meiner Mutter</span>.</p>
+            </div>
+            <div class="trick">
+                <h3>Person or thing?</h3>
+                <p>When a sentence has <b>two</b> objects, it is almost always: <b>person = <span class="d">Dativ</span></b>, <b>thing = <span class="a">Akkusativ</span></b>. <span class="ex">Ich zeige <span class="d rv">dir</span> <span class="a rv">das Foto</span>.</span></p>
+            </div>
+        </div>
+        <details class="teach">
+            <summary>Teacher script</summary>
+            <div class="tbody"><ol>
+                <li>Press ▶ Spielen. Then tap each question button and have the class shout the answer <b>before</b> it lights up.</li>
+                <li>Key sentence to repeat: “Nominativ does, Akkusativ gets hit, Dativ receives, Genitiv owns.”</li>
+                <li>16-year-old version: “Star, Target, Receiver, Owner.” Point to the four colours — they stay the same on the whole page.</li>
+            </ol></div>
+        </details>
+    </section>
+
+    <!-- ====================================================== 03 -->
+    <section id="artikel">
+        <div class="sec-head">
+            <span class="no">03 · Die Artikel</span>
+            <h2>The costume table — and why it’s smaller than it looks</h2>
+            <p class="lead">Four cases × four genders = 16 boxes. But only a few boxes actually <b>change</b>. Underlined = different from Nominativ. Tap any cell to hear/see it highlighted.</p>
+        </div>
+        <div class="tbl-tools">
+            <div class="seg" id="artSeg">
+                <button class="on" data-set="der">der</button>
+                <button data-set="ein">ein</button>
+                <button data-set="kein">kein</button>
+                <button data-set="mein">mein</button>
+                <button data-set="dieser">dieser</button>
+            </div>
+            <button class="btn" id="artHide">Verstecken (quiz)</button>
+            <button class="btn primary" id="artRap">▶ Artikel-Rap</button>
+        </div>
+        <div class="tbl-wrap"><table class="cases" id="artTable"></table></div>
+        <p class="small muted" style="margin-top:8px" id="artNote"></p>
+
+        <div class="grid2" style="margin-top:22px">
+            <div class="panel">
+                <h3>The ending code <span class="en">— rap it in rows</span></h3>
+                <div class="stack" style="gap:10px;margin-top:10px" id="rapCode">
+                    <div><span class="tag n">Nom</span> <span class="mnemo tn" data-row="n"><span>r</span> <span>e</span> <span>s</span> <span>e</span></span> <span class="en">de<b>r</b> di<b>e</b> da<b>s</b> di<b>e</b></span></div>
+                    <div><span class="tag a">Akk</span> <span class="mnemo ta" data-row="a"><span>n</span> <span>e</span> <span>s</span> <span>e</span></span> <span class="en">de<b>n</b> di<b>e</b> da<b>s</b> di<b>e</b></span></div>
+                    <div><span class="tag d">Dat</span> <span class="mnemo td" data-row="d"><span>m</span> <span>r</span> <span>m</span> <span>n</span></span> <span class="en">de<b>m</b> de<b>r</b> de<b>m</b> de<b>n</b></span></div>
+                    <div><span class="tag g">Gen</span> <span class="mnemo tg" data-row="g"><span>s</span> <span>r</span> <span>s</span> <span>r</span></span> <span class="en">de<b>s</b> de<b>r</b> de<b>s</b> de<b>r</b></span></div>
+                </div>
+                <p class="small muted" style="margin-top:10px">Order is always: <b>maskulin · feminin · neutrum · Plural</b>. The same last letters come back in <i>ein-, kein-, mein-, dies-</i> words.</p>
+            </div>
+            <div class="stack">
+                <div class="trick">
+                    <h3>Shortcut 1 — Akkusativ is lazy</h3>
+                    <p>Only the <b>masculine</b> changes: <span class="n">der</span> → <span class="a">den</span>, <span class="n">ein</span> → <span class="a">einen</span>. <i>die, das,</i> and plural look exactly like the Nominativ.</p>
+                </div>
+                <div class="trick">
+                    <h3>Shortcut 2 — Dativ loves “m”</h3>
+                    <p>Masculine and neuter Dativ always end in <b>-m</b>: <span class="d">dem, einem, meinem, keinem</span>. Feminine ends in <b>-r</b> (<span class="d">der, einer</span>). Plural: <span class="d">den</span> + noun gets an extra <b>-n</b>: <span class="d">den Kinder<b>n</b></span>.</p>
+                </div>
+                <div class="trick">
+                    <h3>Shortcut 3 — “der” has three jobs</h3>
+                    <p><i>der</i> can be <span class="n">masc. Nominativ</span>, <span class="d">fem. Dativ</span> or <span class="g">fem./plural Genitiv</span>. So <i>der</i> ≠ automatically masculine! <span class="ex">Ich helfe <span class="d">der</span> Frau.</span></p>
+                </div>
+            </div>
+        </div>
+        <details class="teach">
+            <summary>Teacher script</summary>
+            <div class="tbody"><ol>
+                <li>Start the <b>Artikel-Rap</b> (turn sound on in the dock). Clap along: “r-e-s-e / n-e-s-e / m-r-m-n / s-r-s-r”. Do it twice; the second time, hide the table with <b>Verstecken</b>.</li>
+                <li>Switch der → ein → mein: the class should notice the <i>same last letters</i> come back every time. That’s the real lesson: one pattern, many words.</li>
+                <li>Only exception to point at: masculine and neuter <b>ein/kein/mein</b> have no ending in Nominativ (and neuter not in Akk either): <i>ein Mann, ein Kind</i>.</li>
+            </ol></div>
+        </details>
+    </section>
+
+    <!-- ====================================================== 04 -->
+    <section id="pronomen">
+        <div class="sec-head">
+            <span class="no">04 · Pronomen</span>
+            <h2>Pronouns wear costumes too</h2>
+            <p class="lead">Once you know a noun’s case, the pronoun follows automatically: <span class="a">den Mann</span> → <span class="a">ihn</span>, <span class="d">dem Mann</span> → <span class="d">ihm</span>.</p>
+        </div>
+        <div class="tbl-wrap">
+            <table class="cases" id="proTable">
+                <thead><tr><th></th><th>ich</th><th>du</th><th>er</th><th>sie</th><th>es</th><th>wir</th><th>ihr</th><th>sie / Sie</th></tr></thead>
+                <tbody>
+                <tr class="rn"><th>Nominativ</th><td><b>ich</b></td><td><b>du</b></td><td><b>er</b></td><td><b>sie</b></td><td><b>es</b></td><td><b>wir</b></td><td><b>ihr</b></td><td><b>sie / Sie</b></td></tr>
+                <tr class="ra"><th>Akkusativ</th><td class="chg"><b>mich</b></td><td class="chg"><b>dich</b></td><td class="chg"><b>ihn</b></td><td><b>sie</b></td><td><b>es</b></td><td class="chg"><b>uns</b></td><td class="chg"><b>euch</b></td><td><b>sie / Sie</b></td></tr>
+                <tr class="rd"><th>Dativ</th><td class="chg"><b>mir</b></td><td class="chg"><b>dir</b></td><td class="chg"><b>ihm</b></td><td class="chg"><b>ihr</b></td><td class="chg"><b>ihm</b></td><td class="chg"><b>uns</b></td><td class="chg"><b>euch</b></td><td class="chg"><b>ihnen / Ihnen</b></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tbl-tools"><button class="btn" id="proHide">Verstecken (quiz)</button></div>
+        <div class="grid3" style="margin-top:6px">
+            <div class="trick"><h3>mi<b>ch</b> vs. mi<b>r</b></h3><p><b>-ch</b> = Akkusativ (mi<b>ch</b>, di<b>ch</b>). <b>-r</b> = Dativ (mi<b>r</b>, di<b>r</b>). Hint: <b>D</b>ativ and mi<b>r</b>/di<b>r</b> — “to <b>m</b>e” sounds like <b>mir</b>.</p></div>
+            <div class="trick"><h3>ihn ↔ den, ihm ↔ dem</h3><p>The pronoun has the <b>same last letter</b> as the article: de<b>n</b> → ih<b>n</b>, de<b>m</b> → ih<b>m</b>, dene<b>n</b>/de<b>n</b> → ihne<b>n</b>.</p></div>
+            <div class="trick"><h3>uns &amp; euch are easy</h3><p><i>wir</i> and <i>ihr</i> use the <b>same</b> word for Akkusativ and Dativ. No thinking needed.</p></div>
+        </div>
+        <div class="panel" style="margin-top:18px">
+            <h3>Reflexiv: <i>mich</i> or <i>mir</i>?</h3>
+            <p>With <i>sich waschen, sich kämmen, sich putzen, sich kaufen …</i> the rule is simple: <b>if there is another Akkusativ thing in the sentence, the reflexive jumps to Dativ.</b></p>
+            <div class="grid2" style="margin-top:12px">
+                <ul class="exlist">
+                    <li><span class="ex">Ich wasche <span class="a rv">mich</span>.</span><span class="en">I wash myself. (I am the target)</span></li>
+                    <li><span class="ex">Du kämmst <span class="a rv">dich</span>.</span><span class="en">You comb yourself.</span></li>
+                </ul>
+                <ul class="exlist">
+                    <li><span class="ex">Ich wasche <span class="d rv">mir</span> <span class="a">die Hände</span>.</span><span class="en">The hands are the target now → I become the receiver.</span></li>
+                    <li><span class="ex">Du kämmst <span class="d rv">dir</span> <span class="a">die Haare</span>.</span><span class="en">You comb your hair.</span></li>
+                </ul>
+            </div>
+            <p class="small muted" style="margin-top:8px">Only <b>ich</b> and <b>du</b> show the difference (mich/mir, dich/dir). For er/sie/es/sie it’s always <b>sich</b>; for wir/ihr it’s <b>uns/euch</b>.</p>
+        </div>
+    </section>
+
+    <!-- ====================================================== 05 -->
+    <section id="baukasten">
+        <div class="sec-head">
+            <span class="no">05 · Satz-Baukasten</span>
+            <h2>Build your own sentence — the costumes change live</h2>
+            <p class="lead">Pick a giver, a receiver and a gift. Switch the article type, turn nouns into pronouns, or start the sentence with a different role. Watch the words re-order themselves.</p>
+        </div>
+        <div class="builder">
+            <div class="slots">
+                <div class="slot n"><div class="top"><span class="tag n">Nom · Wer?</span><label class="toggle"><input type="checkbox" id="bPn"> Pronomen</label></div><select id="bN"></select></div>
+                <div class="slot v"><div class="top"><span class="tag" style="background:var(--ink);color:#fff">Verb</span></div><select id="bV"></select></div>
+                <div class="slot d"><div class="top"><span class="tag d">Dat · Wem?</span><label class="toggle"><input type="checkbox" id="bPd"> Pronomen</label></div><select id="bD"></select></div>
+                <div class="slot a"><div class="top"><span class="tag a">Akk · Was?</span><label class="toggle"><input type="checkbox" id="bPa"> Pronomen</label></div><select id="bA"></select></div>
+            </div>
+            <div class="tbl-tools" style="margin:0">
+                <div class="seg" id="bArt"><button class="on" data-v="def">der / die / das</button><button data-v="indef">ein / eine</button><button data-v="poss">mein / meine</button></div>
+                <div class="seg" id="bFront"><button class="on" data-v="n">Start: Wer</button><button data-v="d">Start: Wem</button><button data-v="a">Start: Was</button></div>
+                <button class="btn" id="bRand">🎲 Zufall</button>
+            </div>
+            <div class="out">
+                <div class="sent" id="bOut"></div>
+                <div class="why" id="bWhy"></div>
+                <div class="rule-note" id="bRule"></div>
+            </div>
+        </div>
+        <div class="grid2" style="margin-top:18px">
+            <div class="trick">
+                <h3>Word order of two objects</h3>
+                <p><b>Two nouns:</b> Dativ before Akkusativ. <span class="ex">Ich gebe <span class="d">dem Kind</span> <span class="a">den Ball</span>.</span></p>
+                <p style="margin-top:6px"><b>A pronoun jumps ahead of a noun.</b> <span class="ex">Ich gebe <span class="d">ihm</span> <span class="a">den Ball</span>. · Ich gebe <span class="a">ihn</span> <span class="d">dem Kind</span>.</span></p>
+                <p style="margin-top:6px"><b>Two pronouns:</b> Akkusativ before Dativ. <span class="ex">Ich gebe <span class="a">ihn</span> <span class="d">ihm</span>.</span></p>
+            </div>
+            <div class="trick">
+                <h3>Easy memory hook</h3>
+                <p><b>Nouns:</b> <span class="d">D</span> before <span class="a">A</span> — like the alphabet backwards. <b>Pronouns:</b> <span class="a">A</span> before <span class="d">D</span> — like the alphabet. <b>Short beats long:</b> a small pronoun always goes before a full noun.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================== 06 -->
+    <section id="verben">
+        <div class="sec-head">
+            <span class="no">06 · Verben</span>
+            <h2>The verb decides the costume</h2>
+            <p class="lead">Most verbs want an <span class="a">Akkusativ</span> object. A smaller club of verbs wants <span class="d">Dativ</span>. A few want both. Learn the Dativ club — everything else is Akkusativ.</p>
+        </div>
+        <div class="grid2">
+            <div class="panel edge-a">
+                <h3><span class="ta">Akkusativ</span> — the default</h3>
+                <p>If a verb has one object and it isn’t on the Dativ list, it’s Akkusativ. <b>When in doubt: Akkusativ.</b></p>
+                <div class="chips" style="margin-top:12px">
+                    <span class="chip a">haben</span><span class="chip a">sehen</span><span class="chip a">kaufen</span><span class="chip a">brauchen</span><span class="chip a">suchen</span><span class="chip a">finden</span><span class="chip a">kennen</span><span class="chip a">lieben</span><span class="chip a">essen</span><span class="chip a">trinken</span><span class="chip a">lesen</span><span class="chip a">besuchen</span><span class="chip a">treffen</span><span class="chip a">bekommen</span><span class="chip a">es gibt</span>
+                </div>
+                <ul class="exlist" style="margin-top:14px">
+                    <li><span class="ex">Ich brauche <span class="a rv">einen</span> Stift.</span></li>
+                    <li><span class="ex">Es gibt hier <span class="a rv">keinen</span> Parkplatz.</span><span class="en">“es gibt” = there is/are → always Akkusativ.</span></li>
+                </ul>
+            </div>
+            <div class="panel edge-d">
+                <h3><span class="td">Dativ</span> — the club to memorise</h3>
+                <h4 style="margin-top:6px">People verbs <span class="en">(you do something <i>for / towards</i> a person)</span></h4>
+                <div class="chips" style="margin-top:8px">
+                    <span class="chip d">helfen</span><span class="chip d">danken</span><span class="chip d">antworten</span><span class="chip d">gratulieren</span><span class="chip d">glauben<small>jdm</small></span><span class="chip d">vertrauen</span><span class="chip d">zuhören</span><span class="chip d">zustimmen</span><span class="chip d">widersprechen</span><span class="chip d">folgen</span><span class="chip d">raten</span><span class="chip d">verzeihen</span><span class="chip d">begegnen</span><span class="chip d">gehorchen</span><span class="chip d">schaden</span><span class="chip d">ähneln</span>
+                </div>
+                <h4 style="margin-top:14px">“Flip” verbs <span class="en">(the thing is the subject, the person is Dativ)</span></h4>
+                <div class="chips" style="margin-top:8px">
+                    <span class="chip d">gefallen</span><span class="chip d">gehören</span><span class="chip d">schmecken</span><span class="chip d">passen</span><span class="chip d">stehen<small>= suit</small></span><span class="chip d">fehlen</span><span class="chip d">wehtun</span><span class="chip d">leidtun</span><span class="chip d">gelingen</span><span class="chip d">schwerfallen</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel" style="margin-top:18px">
+            <h3>The <i>gefallen</i> flip — the biggest aha-moment</h3>
+            <p>English and German look at “liking” from opposite sides. In German, the <b>thing</b> is the star (Nominativ) that “pleases” the <b>person</b> (Dativ).</p>
+            <div class="shuffle" id="flipBox" style="margin-top:16px"></div>
+            <div class="tbl-tools" style="justify-content:center">
+                <button class="btn primary" id="flipBtn">⟲ Flip to German</button>
+                <button class="btn" id="flipPl">Plural: die Schuhe</button>
+            </div>
+            <p class="small muted" style="text-align:center" id="flipNote">English: I (subject) like the jacket (object).</p>
+        </div>
+
+        <div class="grid2" style="margin-top:18px">
+            <div class="panel">
+                <h3><span class="td">Dativ</span> + <span class="ta">Akkusativ</span> — give-and-take verbs</h3>
+                <p>Someone gets something: person = Dativ, thing = Akkusativ.</p>
+                <div class="chips" style="margin-top:10px">
+                    <span class="chip">geben</span><span class="chip">schenken</span><span class="chip">zeigen</span><span class="chip">bringen</span><span class="chip">schicken</span><span class="chip">erklären</span><span class="chip">erzählen</span><span class="chip">empfehlen</span><span class="chip">leihen</span><span class="chip">sagen</span><span class="chip">schreiben</span><span class="chip">kaufen</span><span class="chip">wünschen</span><span class="chip">anbieten</span><span class="chip">erlauben</span><span class="chip">verbieten</span>
+                </div>
+                <ul class="exlist" style="margin-top:12px">
+                    <li><span class="ex">Kannst du <span class="d rv">mir</span> <span class="a rv">den Weg</span> erklären?</span></li>
+                    <li><span class="ex">Ich wünsche <span class="d rv">dir</span> <span class="a rv">einen schönen Tag</span>.</span></li>
+                </ul>
+            </div>
+            <div class="panel">
+                <h3>The “=” verbs: <i>sein, werden, bleiben, heißen</i></h3>
+                <p>These verbs are an <b>equals sign</b>. Both sides are the same person or thing, so both sides wear the <span class="n">Nominativ</span>.</p>
+                <ul class="exlist" style="margin-top:12px">
+                    <li><span class="ex"><span class="n">Er</span> ist <span class="n rv">ein guter Lehrer</span>.</span><span class="en">Er = ein guter Lehrer. ✗ “einen guten Lehrer”</span></li>
+                    <li><span class="ex"><span class="n">Mein Sohn</span> wird <span class="n rv">ein Arzt</span>.</span></li>
+                    <li><span class="ex"><span class="n">Du</span> bleibst <span class="n rv">mein bester Freund</span>.</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel" style="margin-top:18px">
+            <h3>Twin verbs — same meaning, different costume</h3>
+            <p>This is why you learn the case <b>with</b> the verb, not from the English meaning.</p>
+            <div class="tbl-wrap" style="margin-top:12px;box-shadow:none">
+                <table class="cases" style="min-width:520px">
+                    <thead><tr><th>Meaning</th><th>+ Dativ</th><th>+ Akkusativ</th></tr></thead>
+                    <tbody>
+                    <tr><th>help / support</th><td>Ich helfe <b class="d">dem</b> Freund.</td><td>Ich unterstütze <b class="a">den</b> Freund.</td></tr>
+                    <tr><th>answer</th><td>Ich antworte <b class="d">dem</b> Lehrer. <span class="nn">(person)</span></td><td>Ich beantworte <b class="a">die</b> Frage. <span class="nn">(thing)</span></td></tr>
+                    <tr><th>ask / answer</th><td>Ich antworte <b class="d">dir</b>.</td><td>Ich frage <b class="a">dich</b>.</td></tr>
+                    <tr><th>miss</th><td>Du fehlst <b class="d">mir</b>. <span class="nn">(flip!)</span></td><td>Ich vermisse <b class="a">dich</b>.</td></tr>
+                    <tr><th>congratulate</th><td>Ich gratuliere <b class="d">dir</b>.</td><td>Ich beglückwünsche <b class="a">dich</b>.</td></tr>
+                    <tr><th>believe</th><td>Ich glaube <b class="d">dir</b>. <span class="nn">(a person)</span></td><td>Ich glaube <b class="a">das</b> nicht. <span class="nn">(a thing)</span></td></tr>
+                    <tr><th>call</th><td>—</td><td>Ich rufe <b class="a">dich</b> an. <span class="nn">(not “dir”!)</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel tint-d" style="margin-top:18px">
+            <h3>“Mir ist …” — feelings with Dativ, no real subject</h3>
+            <p>How you <b>feel</b> is something that happens <b>to you</b> → Dativ.</p>
+            <div class="grid3" style="margin-top:12px">
+                <ul class="exlist"><li><span class="ex"><span class="d rv">Mir</span> ist kalt / warm / schlecht.</span><span class="en">I feel cold / hot / sick.</span></li><li><span class="ex"><span class="d rv">Mir</span> ist langweilig.</span><span class="en">I’m bored.</span></li></ul>
+                <ul class="exlist"><li><span class="ex">Wie geht es <span class="d rv">dir</span>?</span><span class="en">How are you?</span></li><li><span class="ex">Es tut <span class="d rv">mir</span> leid.</span><span class="en">I’m sorry.</span></li></ul>
+                <ul class="exlist"><li><span class="ex">Das ist <span class="d rv">mir</span> egal.</span><span class="en">I don’t care.</span></li><li><span class="ex"><span class="d rv">Mir</span> tut der Kopf weh.</span><span class="en">My head hurts.</span></li></ul>
+            </div>
+            <p class="small" style="margin-top:10px"><b>Careful:</b> <i>Ich bin kalt</i> means “I am a cold (unfriendly) person”. <i>Ich bin langweilig</i> = “I am a boring person”. 😄</p>
+        </div>
+        <details class="teach">
+            <summary>Teacher script</summary>
+            <div class="tbody"><ol>
+                <li>Show the Akk list quickly — “this is the normal world”. Spend your time on the Dativ club.</li>
+                <li>Do the <b>gefallen flip</b> slowly. Then press <b>Plural</b>: the verb becomes <i>gefallen</i> because the <i>shoes</i> are the subject. That proves the thing is the star.</li>
+                <li>Ask everyone to say “Mir ist kalt” and then “Ich bin kalt” — explain the difference. People remember jokes.</li>
+            </ol></div>
+        </details>
+    </section>
+
+    <!-- ====================================================== 07 -->
+    <section id="praep">
+        <div class="sec-head">
+            <span class="no">07 · Präpositionen</span>
+            <h2>Some little words always choose the costume</h2>
+            <p class="lead">After a preposition, the <b>preposition</b> decides the case — not the verb, not the movement. Learn three short lists and you are done with most of them.</p>
+        </div>
+        <div class="grid3">
+            <div class="panel edge-a">
+                <p class="eyebrow">Always Akkusativ</p>
+                <div class="mnemo ta" id="mnDogfu"><span>D</span><span>O</span><span>G</span><span>F</span><span>U</span></div>
+                <div class="mnemo-sub"><span><b>d</b>urch</span><span><b>o</b>hne</span><span><b>g</b>egen</span><span><b>f</b>ür</span><span><b>u</b>m</span><span class="muted">+ bis, entlang</span></div>
+                <ul class="exlist" style="margin-top:12px">
+                    <li><span class="ex">durch <span class="a rv">den</span> Park</span></li>
+                    <li><span class="ex">ohne <span class="a rv">meinen</span> Kaffee</span></li>
+                    <li><span class="ex">gegen <span class="a rv">den</span> Wind</span></li>
+                    <li><span class="ex">für <span class="a rv">dich</span></span></li>
+                    <li><span class="ex">um <span class="a rv">den</span> Tisch (herum)</span></li>
+                    <li><span class="ex"><span class="a rv">den</span> Fluss entlang</span><span class="en">entlang usually comes after the noun</span></li>
+                </ul>
+                <button class="btn sm" data-chant="mnDogfu" style="margin-top:12px">▶ Chant DOGFU</button>
+            </div>
+            <div class="panel edge-d">
+                <p class="eyebrow">Always Dativ</p>
+                <div class="mnemo td" id="mnDat" style="font-size:clamp(1.3rem,3vw,2rem);letter-spacing:0"><span>aus</span> · <span>bei</span> · <span>mit</span> · <span>nach</span> · <span>seit</span> · <span>von</span> · <span>zu</span></div>
+                <div class="mnemo-sub"><span class="muted">+ gegenüber, außer, ab</span></div>
+                <ul class="exlist" style="margin-top:12px">
+                    <li><span class="ex">aus <span class="d rv">der</span> Türkei</span></li>
+                    <li><span class="ex">bei <span class="d rv">meinen</span> Eltern</span></li>
+                    <li><span class="ex">mit <span class="d rv">dem</span> Bus</span></li>
+                    <li><span class="ex">nach <span class="d rv">dem</span> Essen</span></li>
+                    <li><span class="ex">seit <span class="d rv">einem</span> Jahr</span></li>
+                    <li><span class="ex">von <span class="d rv">meiner</span> Freundin</span></li>
+                    <li><span class="ex">zu <span class="d rv">dem</span> Arzt → <b>zum</b> Arzt</span></li>
+                </ul>
+                <button class="btn sm" data-chant="mnDat" style="margin-top:12px">▶ Sing the 7</button>
+            </div>
+            <div class="panel edge-g">
+                <p class="eyebrow">Genitiv (written German)</p>
+                <div class="mnemo tg" style="font-size:clamp(1.3rem,3vw,2rem);letter-spacing:0">wegen · trotz · während · statt</div>
+                <div class="mnemo-sub"><span class="muted">+ innerhalb, außerhalb</span></div>
+                <ul class="exlist" style="margin-top:12px">
+                    <li><span class="ex">wegen <span class="g rv">des</span> Regens</span><span class="en">because of the rain</span></li>
+                    <li><span class="ex">trotz <span class="g rv">der</span> Kälte</span><span class="en">despite the cold</span></li>
+                    <li><span class="ex">während <span class="g rv">der</span> Pause</span><span class="en">during the break</span></li>
+                    <li><span class="ex">statt <span class="g rv">eines</span> Autos</span><span class="en">instead of a car</span></li>
+                    <li><span class="ex">innerhalb <span class="g rv">einer</span> Woche</span><span class="en">within a week</span></li>
+                </ul>
+                <p class="small muted" style="margin-top:10px">In everyday speech you will often hear Dativ: <i>wegen dem Regen</i>. People understand it — but write Genitiv.</p>
+            </div>
+        </div>
+
+        <div class="grid2" style="margin-top:18px">
+            <div class="warn">
+                <h3>Movement does NOT make it Akkusativ</h3>
+                <p>With these fixed prepositions, movement doesn’t matter:</p>
+                <ul class="dots">
+                    <li><span class="ex">Ich gehe <b>zum</b> Arzt.</span> <span class="en">moving — still Dativ (zu)</span></li>
+                    <li><span class="ex">Ich fahre <b>nach</b> Hause.</span> <span class="en">moving — still Dativ (nach)</span></li>
+                    <li><span class="ex">Ich laufe <b>durch den</b> Park.</span> <span class="en">Akkusativ because of <i>durch</i>, not because of the running</span></li>
+                </ul>
+                <p style="margin-top:6px">The “Wo? / Wohin?” question is <b>only</b> for the nine two-way prepositions in §08.</p>
+            </div>
+            <div class="panel">
+                <h3>Contractions give the case away</h3>
+                <div class="grid2" style="gap:12px;margin-top:10px">
+                    <div>
+                        <p class="eyebrow td" style="color:var(--dat)">ends in -m / -r → Dativ</p>
+                        <ul class="clean" style="margin-top:6px">
+                            <li class="ex">an dem → <b class="td">am</b></li>
+                            <li class="ex">in dem → <b class="td">im</b></li>
+                            <li class="ex">bei dem → <b class="td">beim</b></li>
+                            <li class="ex">von dem → <b class="td">vom</b></li>
+                            <li class="ex">zu dem → <b class="td">zum</b></li>
+                            <li class="ex">zu der → <b class="td">zur</b></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="eyebrow" style="color:var(--akk)">ends in -s → Akkusativ</p>
+                        <ul class="clean" style="margin-top:6px">
+                            <li class="ex">an das → <b class="ta">ans</b></li>
+                            <li class="ex">in das → <b class="ta">ins</b></li>
+                            <li class="ex">auf das → <b class="ta">aufs</b></li>
+                            <li class="ex">für das → <b class="ta">fürs</b></li>
+                            <li class="ex">durch das → <b class="ta">durchs</b></li>
+                            <li class="ex">um das → <b class="ta">ums</b></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="trick" style="margin-top:18px">
+            <h3>nach Hause vs. zu Hause</h3>
+            <p><span class="ex">Ich gehe <b>nach Hause</b>.</span> (going home) · <span class="ex">Ich bin <b>zu Hause</b>.</span> (at home). Both are Dativ prepositions — the old Dativ “-e” in <i>Hause</i> is a fossil from older German. Just learn both as fixed phrases.</p>
+        </div>
+    </section>
+
+    <!-- ====================================================== 08 -->
+    <section id="wechsel">
+        <div class="sec-head">
+            <span class="no">08 · Wechselpräpositionen</span>
+            <h2>Wo? or Wohin? — drag the cat</h2>
+            <p class="lead">Nine prepositions can take <b>both</b> cases. Ask: is something <b>going to</b> a new place (<span class="a">Wohin? → Akkusativ</span>) or <b>staying</b> in a place (<span class="d">Wo? → Dativ</span>)? Drag the cat — or tap a spot — and read both sentences.</p>
+        </div>
+        <div class="chips" style="margin-bottom:16px">
+            <span class="chip">an</span><span class="chip">auf</span><span class="chip">hinter</span><span class="chip">in</span><span class="chip">neben</span><span class="chip">über</span><span class="chip">unter</span><span class="chip">vor</span><span class="chip">zwischen</span>
+        </div>
+        <div class="room-wrap">
+            <div class="room" id="room">
+                <svg class="furn" viewBox="0 0 1600 1000" preserveAspectRatio="none" aria-hidden="true">
+                    <!-- window -->
+                    <rect x="640" y="90" width="300" height="230" rx="10" fill="#DDEFF7" stroke="#8A7B63" stroke-width="10"/>
+                    <path d="M790 90v230M640 205h300" stroke="#8A7B63" stroke-width="8"/>
+                    <!-- picture -->
+                    <rect x="1150" y="130" width="200" height="150" rx="6" fill="#fff" stroke="#8A7B63" stroke-width="8"/>
+                    <path d="M1170 260l50-70 40 45 30-30 40 55z" fill="#9CC9A7"/><circle cx="1300" cy="175" r="16" fill="#F2C94C"/>
+                    <!-- lamp -->
+                    <path d="M375 0v210" stroke="#3A4250" stroke-width="5"/>
+                    <path d="M300 290q75-110 150 0z" fill="#F2C94C" stroke="#15191F" stroke-width="5"/>
+                    <!-- table -->
+                    <rect x="140" y="500" width="470" height="34" rx="6" fill="#B07A45" stroke="#15191F" stroke-width="5"/>
+                    <rect x="170" y="532" width="26" height="190" fill="#9A6838" stroke="#15191F" stroke-width="5"/>
+                    <rect x="554" y="532" width="26" height="190" fill="#9A6838" stroke="#15191F" stroke-width="5"/>
+                    <!-- box back -->
+                    <path d="M770 560l30-40h220l-30 40z" fill="#8A5B2B" stroke="#15191F" stroke-width="5"/>
+                    <!-- sofa -->
+                    <rect x="1060" y="420" width="360" height="150" rx="30" fill="#5B7FC7" stroke="#15191F" stroke-width="5"/>
+                    <rect x="1040" y="540" width="400" height="120" rx="24" fill="#6C8FD6" stroke="#15191F" stroke-width="5"/>
+                    <rect x="1030" y="500" width="60" height="170" rx="22" fill="#5B7FC7" stroke="#15191F" stroke-width="5"/>
+                    <rect x="1410" y="500" width="60" height="170" rx="22" fill="#5B7FC7" stroke="#15191F" stroke-width="5"/>
+                    <path d="M1070 660v55M1410 660v55" stroke="#15191F" stroke-width="10" stroke-linecap="round"/>
+                    <!-- rug -->
+                    <ellipse cx="1240" cy="870" rx="250" ry="70" fill="#E9B8A6" opacity=".7"/>
+                </svg>
+                <svg id="boxFront" viewBox="0 0 1600 1000" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none" aria-hidden="true">
+                    <path d="M770 560h220v160H770z" fill="#C08A4E" stroke="#15191F" stroke-width="5"/>
+                    <path d="M990 560l30-40v160l-30 40z" fill="#A87640" stroke="#15191F" stroke-width="5"/>
+                    <path d="M800 610h160" stroke="#8A5B2B" stroke-width="6"/>
+                </svg>
+                <div id="zones"></div>
+                <svg class="cat" id="cat" viewBox="0 0 100 100" aria-label="Katze">
+                    <path d="M78 78q22-4 14-30" stroke="#15191F" stroke-width="9" fill="none" stroke-linecap="round"/>
+                    <path d="M78 78q22-4 14-30" stroke="#E58A2E" stroke-width="5" fill="none" stroke-linecap="round"/>
+                    <ellipse cx="55" cy="75" rx="28" ry="20" fill="#E58A2E" stroke="#15191F" stroke-width="3"/>
+                    <path d="M24 30l4-20 14 12zM66 30l-4-20-14 12z" fill="#E58A2E" stroke="#15191F" stroke-width="3" stroke-linejoin="round"/>
+                    <circle cx="45" cy="40" r="22" fill="#E58A2E" stroke="#15191F" stroke-width="3"/>
+                    <circle cx="37" cy="38" r="3.2" fill="#15191F"/><circle cx="53" cy="38" r="3.2" fill="#15191F"/>
+                    <path d="M42 47l3 3 3-3" stroke="#15191F" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M20 45h12M20 51l12-2M70 45H58M70 51l-12-2" stroke="#15191F" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M40 92v-6M62 92v-6" stroke="#15191F" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="room-out">
+                <div class="room-line wohin" id="rWohin"><div class="k">Wohin? → Akkusativ · movement to a new place</div><div class="s" id="rWohinS">Drag the cat somewhere…</div></div>
+                <div class="room-line wo" id="rWo"><div class="k">Wo? → Dativ · position, staying</div><div class="s" id="rWoS">…and read both sentences.</div></div>
+                <p class="small" id="rNote" style="color:var(--ink-2)"></p>
+                <div class="tbl-tools" style="margin:0">
+                    <button class="btn sm" id="rZones">Show spots</button>
+                    <button class="btn sm" id="rTour">▶ Cat tour</button>
+                </div>
+                <p class="small muted">Also in the room: <i>Die Lampe hängt <b class="td">über dem</b> Tisch.</i> · <i>Das Bild hängt <b class="td">an der</b> Wand.</i></p>
+            </div>
+        </div>
+
+        <div class="grid2" style="margin-top:22px">
+            <div class="panel">
+                <h3>Verb pairs that give it away</h3>
+                <div class="tbl-wrap" style="margin-top:10px;box-shadow:none">
+                    <table class="cases" style="min-width:420px">
+                        <thead><tr><th>Wohin? → <span class="ta">Akk</span> <span class="nn">(you move it)</span></th><th>Wo? → <span class="td">Dat</span> <span class="nn">(it is there)</span></th></tr></thead>
+                        <tbody>
+                        <tr><td>legen <span class="nn">legte, gelegt</span></td><td>liegen <span class="nn">lag, gelegen</span></td></tr>
+                        <tr><td>stellen <span class="nn">stellte, gestellt</span></td><td>stehen <span class="nn">stand, gestanden</span></td></tr>
+                        <tr><td>(sich) setzen <span class="nn">setzte</span></td><td>sitzen <span class="nn">saß, gesessen</span></td></tr>
+                        <tr><td>hängen <span class="nn">hängte, gehängt</span></td><td>hängen <span class="nn">hing, gehangen</span></td></tr>
+                        <tr><td>stecken <span class="nn">steckte</span></td><td>stecken <span class="nn">steckte</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="small" style="margin-top:10px"><b>Trick:</b> the Wohin-verbs are regular (<i>-te</i>) and need an object you move: Ich lege <b>das Buch</b> auf <b class="ta">den</b> Tisch. The Wo-verbs are irregular and just describe a state: Das Buch liegt auf <b class="td">dem</b> Tisch.</p>
+            </div>
+            <div class="stack">
+                <div class="warn">
+                    <h3>Moving, but no new place → Dativ</h3>
+                    <p><span class="ex">Ich laufe <b class="td">im</b> Park.</span> — running around <i>inside</i> the park (Wo?)<br><span class="ex">Ich laufe <b class="ta">in den</b> Park.</span> — running <i>into</i> the park (Wohin?)</p>
+                </div>
+                <div class="warn">
+                    <h3>ankommen is an exception</h3>
+                    <p><span class="ex">Ich komme <b class="td">in der</b> Stadt an.</span> Arriving is a point, not a direction → Dativ (Wo kommst du an?).</p>
+                </div>
+                <div class="trick">
+                    <h3>Time → always Dativ</h3>
+                    <p>When <i>an, in, vor, zwischen</i> talk about time, it’s Dativ: <span class="ex"><b class="td">am</b> Montag, <b class="td">im</b> Mai, <b class="td">vor einer</b> Woche, <b class="td">in einem</b> Jahr.</span></p>
+                </div>
+            </div>
+        </div>
+        <details class="teach">
+            <summary>Teacher script</summary>
+            <div class="tbody"><ol>
+                <li>Hand the touchscreen to a friend: “Put the cat under the table.” They drag, you all read the Wohin sentence together, then the Wo sentence.</li>
+                <li>Point out: <i>die Kiste</i> and <i>das Sofa</i> don’t change in Akkusativ — but in Dativ they become <i>der Kiste / dem Sofa</i>. The masculine <i>Tisch</i> changes in both.</li>
+                <li>Use <b>Cat tour</b> as a quick quiz: turn on Rätselmodus-style guessing — let them say the sentence before you read it.</li>
+            </ol></div>
+        </details>
+    </section>
+
+    <!-- ====================================================== 09 -->
+    <section id="genitiv">
+        <div class="sec-head">
+            <span class="no">09 · Genitiv</span>
+            <h2>The owner’s name tag: <span class="tg">Wessen?</span></h2>
+            <p class="lead">Genitiv answers <b>whose?</b> In English you say <i>the teacher’s car</i> or <i>the car <b>of</b> the teacher</i>. German uses the second order: <b>thing first, owner after</b>.</p>
+        </div>
+        <div class="grid2">
+            <div class="panel edge-g">
+                <h3>How it looks</h3>
+                <div class="tbl-wrap" style="margin-top:10px;box-shadow:none">
+                    <table class="cases" style="min-width:420px">
+                        <thead><tr><th></th><th>owner in Genitiv</th></tr></thead>
+                        <tbody>
+                        <tr><th>maskulin</th><td>das Auto <b class="g">des</b> Vater<b>s</b> · <b class="g">eines</b> Mann<b>es</b></td></tr>
+                        <tr><th>feminin</th><td>das Auto <b class="g">der</b> Mutter · <b class="g">einer</b> Frau</td></tr>
+                        <tr><th>neutrum</th><td>das Auto <b class="g">des</b> Kind<b>es</b> · <b class="g">meines</b> Kind<b>es</b></td></tr>
+                        <tr><th>Plural</th><td>das Auto <b class="g">der</b> Eltern</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ul class="dots small" style="margin-top:10px">
+                    <li><b>Masculine &amp; neuter nouns get -s or -es.</b> Short nouns usually <b>-es</b> (des Mann<b>es</b>, des Tag<b>es</b>, des Buch<b>es</b>); longer ones <b>-s</b> (des Vater<b>s</b>, des Auto<b>s</b>, des Computer<b>s</b>).</li>
+                    <li>Nouns ending in <b>-s, -ß, -x, -z</b> always take <b>-es</b>: des Haus<b>es</b>, des Fuß<b>es</b>.</li>
+                    <li><b>Feminine and plural nouns get no ending.</b> Only the article shows it: <i>der</i>.</li>
+                </ul>
+            </div>
+            <div class="panel">
+                <h3>Genitiv-Maschine</h3>
+                <div class="tbl-tools" style="margin-top:6px">
+                    <select id="gThing" class="btn" style="font-family:var(--slab)"></select>
+                    <select id="gOwner" class="btn" style="font-family:var(--slab)"></select>
+                    <div class="seg" id="gArt"><button class="on" data-v="def">der</button><button data-v="indef">ein</button><button data-v="poss">mein</button></div>
+                </div>
+                <div class="out" style="margin-top:8px">
+                    <p class="eyebrow">Written German (Genitiv)</p>
+                    <div class="sent" id="gOut1"></div>
+                    <p class="eyebrow" style="margin-top:14px">Spoken German (von + Dativ)</p>
+                    <div class="sent" style="font-size:clamp(1.1rem,2.2vw,1.5rem)" id="gOut2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="grid3" style="margin-top:18px">
+            <div class="trick">
+                <h3>Names: just add -s</h3>
+                <p><span class="ex">Peter<b>s</b> Auto · Anna<b>s</b> Handy · Deutschland<b>s</b> Hauptstadt</span>. Here the owner comes <b>first</b>, like English — but <b>no apostrophe</b> in standard writing. Names ending in s/x/z get only an apostrophe: <span class="ex">Max’ Auto</span>.</p>
+            </div>
+            <div class="trick">
+                <h3>The spoken escape: von + Dativ</h3>
+                <p>In daily speech Germans often avoid Genitiv: <span class="ex">das Auto <b class="td">von meinem</b> Vater</span>. It is always correct and always understood. Great for speaking — but learn Genitiv for reading, letters and B1 exams.</p>
+            </div>
+            <div class="panel tint-g">
+                <h3>Fun fact for the class</h3>
+                <p>A famous German bestseller about language is called <b>„Der Dativ ist dem Genitiv sein Tod“</b> (Bastian Sick). The title is a joke: it uses the informal <i>dem … sein</i> (“the Genitiv his death”) instead of correct <i>der Tod des Genitivs</i>.</p>
+            </div>
+        </div>
+        <div class="panel" style="margin-top:18px">
+            <h3>Also Genitiv</h3>
+            <ul class="dots">
+                <li>After <b>wegen, trotz, während, statt, innerhalb, außerhalb</b> (see §07).</li>
+                <li>The question word <b>wessen</b>: <span class="ex">Wessen Tasche ist das? — Das ist die Tasche <b class="g">meiner</b> Schwester.</span></li>
+                <li>Relative pronouns <b>dessen / deren</b> (see §11): <span class="ex">der Mann, <b class="g">dessen</b> Auto hier steht</span>.</li>
+                <li>A few fixed expressions: <span class="ex"><b class="g">eines</b> Tages</span> (one day), <span class="ex"><b class="g">letzten</b> Endes</span> (in the end).</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ====================================================== 10 -->
+    <section id="endungen">
+        <div class="sec-head">
+            <span class="no">10 · Nomen-Endungen</span>
+            <h2>Sometimes the noun changes too</h2>
+            <p class="lead">Mostly only the article changes. But there are three situations where the <b>noun itself</b> gets an ending.</p>
+        </div>
+        <div class="grid3">
+            <div class="panel edge-d">
+                <h3>1 · Dativ plural: add <b>-n</b></h3>
+                <p><span class="ex">die Kinder → mit den Kinder<b class="td">n</b></span></p>
+                <p><span class="ex">die Freunde → mit meinen Freunde<b class="td">n</b></span></p>
+                <p class="small muted" style="margin-top:6px">Not if the plural already ends in <b>-n</b> or <b>-s</b>: mit den Frauen, mit den Autos.</p>
+            </div>
+            <div class="panel edge-g">
+                <h3>2 · Genitiv singular: <b>-s / -es</b></h3>
+                <p><span class="ex">des Vater<b class="tg">s</b>, des Kind<b class="tg">es</b></span></p>
+                <p class="small muted" style="margin-top:6px">Only masculine and neuter. Feminine never.</p>
+            </div>
+            <div class="panel edge-a">
+                <h3>3 · N-Deklination: <b>-n / -en</b></h3>
+                <p>Some masculine nouns add <b>-(e)n</b> in <b>every case except Nominativ singular</b>.</p>
+                <p><span class="ex">der Student → den Student<b class="ta">en</b>, dem Student<b class="td">en</b>, des Student<b class="tg">en</b></span></p>
+            </div>
+        </div>
+        <div class="panel" style="margin-top:18px">
+            <h3>Which nouns are N-Deklination? <span class="en">— tap a card to see the Akkusativ</span></h3>
+            <div class="grid3" style="margin-top:12px">
+                <div><h4>Masculine + <b>-e</b> (people &amp; animals)</h4><div class="chips flipchips" style="margin-top:8px" data-list="Junge|Jungen,Kollege|Kollegen,Kunde|Kunden,Neffe|Neffen,Löwe|Löwen,Affe|Affen,Franzose|Franzosen"></div></div>
+                <div><h4>Foreign endings <b>-ent, -ant, -ist, -oge, -at, -af</b></h4><div class="chips flipchips" style="margin-top:8px" data-list="Student|Studenten,Präsident|Präsidenten,Praktikant|Praktikanten,Elefant|Elefanten,Polizist|Polizisten,Tourist|Touristen,Biologe|Biologen,Soldat|Soldaten,Fotograf|Fotografen"></div></div>
+                <div><h4>Short list to memorise</h4><div class="chips flipchips" style="margin-top:8px" data-list="Herr|Herrn,Mensch|Menschen,Nachbar|Nachbarn,Bauer|Bauern,Held|Helden,Bär|Bären,Prinz|Prinzen"></div></div>
+            </div>
+            <p class="small" style="margin-top:14px"><b>Watch out:</b> <i>Herr</i> is <b>Herrn</b> in the singular (Ich spreche mit Herr<b>n</b> Müller) but <b>Herren</b> in the plural. A few nouns also add <b>-s</b> in Genitiv: <i>der Name → des Namens</i>, <i>der Gedanke → des Gedankens</i>.</p>
+        </div>
+        <div class="trick" style="margin-top:18px">
+            <h3>Quick detector</h3>
+            <p>Masculine + a <b>living being</b> + ends in <b>-e</b> or a “foreign job ending” (-ent, -ist, -ant…) → almost certainly N-Deklination. <span class="ex">Ich frage <b class="ta">den</b> Polizist<b>en</b>. Ich helfe <b class="td">dem</b> Kunde<b>n</b>.</span></p>
+        </div>
+    </section>
+
+    <!-- ====================================================== 11 -->
+    <section id="b1">
+        <div class="sec-head">
+            <span class="no">11 · B1-Extras</span>
+            <h2>Level up: where the cases hide at B1</h2>
+            <p class="lead">Same four costumes, new places: adjectives, relative clauses, verbs with fixed prepositions and time expressions.</p>
+        </div>
+
+        <div class="panel">
+            <h3>Adjective endings</h3>
+            <p>The golden rule: <b>the case signal must appear once.</b> If the article already shows it (<i>der, dem</i>), the adjective relaxes to <b>-e/-en</b>. If not (<i>ein</i>, no article), the adjective shows the signal itself.</p>
+            <div class="tbl-tools" style="margin-top:12px">
+                <div class="seg" id="adjSeg"><button class="on" data-v="def">der gute …</button><button data-v="indef">ein guter …</button><button data-v="none">guter … (no article)</button></div>
+            </div>
+            <div class="tbl-wrap"><table class="cases" id="adjTable"></table></div>
+            <div class="grid2" style="margin-top:14px">
+                <div class="trick"><h3>The -en shortcut</h3><p>With any article, <b>Dativ and Genitiv are always -en</b>: <span class="ex">mit dem gut<b>en</b> Freund, mit einer gut<b>en</b> Freundin, wegen des schlecht<b>en</b> Wetters.</span> Plural with an article: always -en.</p></div>
+                <div class="trick"><h3>No article? Adjective = article</h3><p>The adjective takes the ending of <i>der/die/das</i>: <span class="ex">mit kalt<b class="td">em</b> Wasser</span> (dem), <span class="ex">gut<b class="ta">en</b> Appetit</span> (den). Only exception: Genitiv masc./neut. is <b>-en</b>: <i>trotz schlecht<b>en</b> Wetters</i>.</p></div>
+            </div>
+        </div>
+
+        <div class="grid2" style="margin-top:18px">
+            <div class="panel">
+                <h3>Relative pronouns <span class="en">(der Mann, <i>der</i> …)</span></h3>
+                <div class="tbl-wrap" style="margin-top:10px;box-shadow:none">
+                    <table class="cases" style="min-width:400px">
+                        <thead><tr><th></th><th>m</th><th>f</th><th>n</th><th>Pl</th></tr></thead>
+                        <tbody>
+                        <tr class="rn"><th>Nom</th><td>der</td><td>die</td><td>das</td><td>die</td></tr>
+                        <tr class="ra"><th>Akk</th><td>den</td><td>die</td><td>das</td><td>die</td></tr>
+                        <tr class="rd"><th>Dat</th><td>dem</td><td>der</td><td>dem</td><td class="chg"><b>denen</b></td></tr>
+                        <tr class="rg"><th>Gen</th><td class="chg"><b>dessen</b></td><td class="chg"><b>deren</b></td><td class="chg"><b>dessen</b></td><td class="chg"><b>deren</b></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="small" style="margin-top:10px"><b>Trick:</b> gender &amp; number come from the noun <b>before</b> the comma; the case comes from the job <b>inside</b> the relative clause.</p>
+                <ul class="exlist">
+                    <li><span class="ex">Der Mann, <span class="a rv">den</span> ich gestern gesehen habe, …</span><span class="en">ich habe <b>den Mann</b> gesehen → Akk</span></li>
+                    <li><span class="ex">Der Mann, <span class="d rv">dem</span> ich helfe, …</span><span class="en">ich helfe <b>dem Mann</b> → Dat</span></li>
+                    <li><span class="ex">Die Freunde, mit <span class="d rv">denen</span> ich spiele, …</span></li>
+                    <li><span class="ex">Die Frau, <span class="g rv">deren</span> Sohn ich kenne, …</span></li>
+                </ul>
+            </div>
+            <div class="panel">
+                <h3>Verbs with a fixed preposition</h3>
+                <p class="small">These don’t follow Wo/Wohin — learn them as one unit. <b>Tip:</b> with <b>auf</b> and <b>über</b>, it’s almost always Akkusativ.</p>
+                <div class="grid2" style="gap:10px;margin-top:10px">
+                    <ul class="clean small">
+                        <li class="ex">warten auf <b class="ta">+A</b></li>
+                        <li class="ex">sich freuen auf <b class="ta">+A</b> <span class="en">(future)</span></li>
+                        <li class="ex">sich freuen über <b class="ta">+A</b> <span class="en">(now/past)</span></li>
+                        <li class="ex">sprechen über <b class="ta">+A</b></li>
+                        <li class="ex">sich ärgern über <b class="ta">+A</b></li>
+                        <li class="ex">denken an <b class="ta">+A</b></li>
+                        <li class="ex">sich erinnern an <b class="ta">+A</b></li>
+                        <li class="ex">sich interessieren für <b class="ta">+A</b></li>
+                        <li class="ex">sich kümmern um <b class="ta">+A</b></li>
+                        <li class="ex">bitten um <b class="ta">+A</b></li>
+                    </ul>
+                    <ul class="clean small">
+                        <li class="ex">Angst haben vor <b class="td">+D</b></li>
+                        <li class="ex">teilnehmen an <b class="td">+D</b></li>
+                        <li class="ex">träumen von <b class="td">+D</b></li>
+                        <li class="ex">sprechen mit <b class="td">+D</b></li>
+                        <li class="ex">fragen nach <b class="td">+D</b></li>
+                        <li class="ex">gehören zu <b class="td">+D</b></li>
+                        <li class="ex">einladen zu <b class="td">+D</b></li>
+                        <li class="ex">sich treffen mit <b class="td">+D</b></li>
+                        <li class="ex">abhängen von <b class="td">+D</b></li>
+                        <li class="ex">leiden unter <b class="td">+D</b></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid3" style="margin-top:18px">
+            <div class="panel edge-a">
+                <h3>Time without preposition → <span class="ta">Akk</span></h3>
+                <ul class="exlist"><li><span class="ex"><b class="ta">jeden</b> Tag</span></li><li><span class="ex"><b class="ta">nächsten</b> Montag</span></li><li><span class="ex"><b class="ta">letzte</b> Woche</span></li><li><span class="ex"><b class="ta">den</b> ganzen Abend</span></li></ul>
+            </div>
+            <div class="panel edge-d">
+                <h3>Time with preposition → <span class="td">Dat</span></h3>
+                <ul class="exlist"><li><span class="ex"><b class="td">am</b> Wochenende</span></li><li><span class="ex"><b class="td">im</b> Sommer</span></li><li><span class="ex"><b class="td">vor einem</b> Jahr</span></li><li><span class="ex"><b class="td">seit einer</b> Stunde</span></li></ul>
+            </div>
+            <div class="panel edge-g">
+                <h3>Question words</h3>
+                <ul class="exlist">
+                    <li><span class="ex"><b class="tn">Wer</b> kommt? · <b class="ta">Wen</b> siehst du? · <b class="td">Wem</b> hilfst du? · <b class="tg">Wessen</b> Buch?</span></li>
+                    <li><span class="ex">Person: <b>Auf wen</b> wartest du?</span></li>
+                    <li><span class="ex">Thing: <b>Worauf</b> wartest du?</span><span class="en">wo(r) + preposition for things</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel tint-d" style="margin-top:18px">
+            <h3>Adjectives that want a Dativ person</h3>
+            <p><span class="ex">Das ist <b class="td">mir</b> zu teuer. · Das ist <b class="td">mir</b> wichtig. · Ist <b class="td">dir</b> das klar? · Er ist <b class="td">seinem</b> Vater ähnlich.</span></p>
+            <p class="small muted" style="margin-top:6px">Same logic as “Mir ist kalt”: the person experiences the feeling → Dativ.</p>
+        </div>
+    </section>
+
+    <!-- ====================================================== 12 -->
+    <section id="fallen">
+        <div class="sec-head">
+            <span class="no">12 · Die Fallen</span>
+            <h2>Traps &amp; exceptions — tap a card to fix it</h2>
+            <p class="lead">These are the mistakes almost every learner makes. Read the wrong sentence aloud, let the class find the problem, then tap.</p>
+        </div>
+        <div class="grid3" id="traps"></div>
+    </section>
+
+    <!-- ====================================================== 13 -->
+    <section id="finder">
+        <div class="sec-head">
+            <span class="no">13 · Der Fall-Finder</span>
+            <h2>Stuck? Ask these questions in this order</h2>
+            <p class="lead">Point at one noun in a sentence. Then answer the questions — the finder tells you the case and why. It’s the same thinking a German native does in a split second.</p>
+        </div>
+        <div class="panel flow" id="flow"></div>
+    </section>
+
+    <!-- ====================================================== 14 -->
+    <section id="ueben">
+        <div class="sec-head">
+            <span class="no">14 · Üben</span>
+            <h2>Übungen — play them as a class</h2>
+            <p class="lead">Split into two teams, use the team counter in the dock (people icon), and let each team take turns on the touchscreen.</p>
+        </div>
+        <div class="tabs" id="exTabs">
+            <button class="btn on" data-tab="quiz">Artikel-Blitz (quiz)</button>
+            <button class="btn" data-tab="sort">Sortieren (drag)</button>
+            <button class="btn" data-tab="det">Fall-Detektiv</button>
+        </div>
+
+        <div id="tab-quiz" class="quiz">
+            <div class="qhead">
+                <div class="qcats" id="qcats"></div>
+                <span class="score" id="qscore"></span>
+            </div>
+            <div class="qcard">
+                <div class="qsent" id="qsent"></div>
+                <div class="qhint" id="qhint"></div>
+                <div class="qopts" id="qopts"></div>
+                <div class="qwhy" id="qwhy" hidden></div>
+            </div>
+            <div class="qfoot">
+                <span class="streak" id="qstreak"></span>
+                <button class="btn primary" id="qnext">Nächste Frage →</button>
+            </div>
+        </div>
+
+        <div id="tab-sort" hidden>
+            <div class="tbl-tools" style="margin-top:0">
+                <div class="seg" id="sortSeg"><button class="on" data-v="prep">Präpositionen</button><button data-v="verb">Verben</button></div>
+                <button class="btn" id="sortReset">Neu mischen</button>
+                <span class="score" id="sortScore" style="align-self:center"></span>
+            </div>
+            <p class="small muted" style="margin-bottom:10px">Drag a card into a box — or tap a card, then tap a box.</p>
+            <div class="sort-pool" id="sortPool"></div>
+            <div class="buckets" id="sortBuckets"></div>
+        </div>
+
+        <div id="tab-det" hidden>
+            <div class="panel" style="text-align:center">
+                <p class="small muted">Tap each framed part to cycle its case: <span class="tag n">Nom</span> → <span class="tag a">Akk</span> → <span class="tag d">Dat</span> → <span class="tag g">Gen</span>. Then press <b>Prüfen</b>.</p>
+                <div class="det-sent" id="detSent" style="margin-top:26px"></div>
+                <div class="qwhy" id="detWhy" hidden style="margin-top:18px"></div>
+                <div class="tbl-tools" style="justify-content:center;margin-top:18px">
+                    <button class="btn" id="detPrev">← Zurück</button>
+                    <button class="btn primary" id="detCheck">Prüfen ✓</button>
+                    <button class="btn" id="detShow">Lösung</button>
+                    <button class="btn" id="detNext">Weiter →</button>
+                </div>
+                <p class="score" id="detCount" style="margin-top:10px"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================== 15 -->
+    <section id="spick">
+        <div class="sec-head">
+            <span class="no">15 · Spickzettel</span>
+            <h2>Everything on one page</h2>
+            <p class="lead">Screenshot it, or <button class="btn sm no-print" onclick="window.print()">🖨 print just this cheat sheet</button></p>
+        </div>
+        <div class="cheat">
+            <div class="panel edge-n"><h3>The 4 roles</h3>
+                <table class="mini"><tr><td class="tn"><b>Nom</b></td><td>Wer? Was?</td><td>star / doer</td></tr><tr><td class="ta"><b>Akk</b></td><td>Wen? Was?</td><td>target</td></tr><tr><td class="td"><b>Dat</b></td><td>Wem?</td><td>receiver (to/for)</td></tr><tr><td class="tg"><b>Gen</b></td><td>Wessen?</td><td>owner (of)</td></tr></table>
+            </div>
+            <div class="panel"><h3>Articles (m · f · n · pl)</h3>
+                <table class="mini"><tr><td class="tn">Nom</td><td>der die das die</td></tr><tr><td class="ta">Akk</td><td><b>den</b> die das die</td></tr><tr><td class="td">Dat</td><td>dem der dem den+n</td></tr><tr><td class="tg">Gen</td><td>des+s der des+s der</td></tr></table>
+                <p class="small muted" style="margin-top:6px">r e s e · n e s e · m r m n · s r s r</p>
+            </div>
+            <div class="panel"><h3>Pronouns</h3>
+                <table class="mini"><tr><th></th><th>Akk</th><th>Dat</th></tr><tr><td>ich</td><td>mich</td><td>mir</td></tr><tr><td>du</td><td>dich</td><td>dir</td></tr><tr><td>er / es</td><td>ihn / es</td><td>ihm</td></tr><tr><td>sie</td><td>sie</td><td>ihr</td></tr><tr><td>wir / ihr</td><td>uns / euch</td><td>uns / euch</td></tr><tr><td>sie / Sie</td><td>sie / Sie</td><td>ihnen / Ihnen</td></tr></table>
+            </div>
+            <div class="panel edge-a"><h3>Prepositions</h3>
+                <p><b class="ta">Akk:</b> durch, ohne, gegen, für, um, bis, entlang</p>
+                <p style="margin-top:4px"><b class="td">Dat:</b> aus, bei, mit, nach, seit, von, zu, gegenüber, außer, ab</p>
+                <p style="margin-top:4px"><b class="tg">Gen:</b> wegen, trotz, während, statt</p>
+                <p style="margin-top:4px"><b>Wo/Wohin:</b> an, auf, hinter, in, neben, über, unter, vor, zwischen — Wohin = Akk, Wo = Dat</p>
+            </div>
+            <div class="panel edge-d"><h3>Dativ verbs</h3>
+                <p>helfen, danken, antworten, gratulieren, glauben, vertrauen, zuhören, folgen, gefallen, gehören, schmecken, passen, fehlen, wehtun, leidtun</p>
+                <p class="small muted" style="margin-top:6px">+ “Mir ist kalt”, “Wie geht es dir?”, “Es tut mir leid”</p>
+            </div>
+            <div class="panel"><h3>Word order &amp; traps</h3>
+                <ul class="dots small"><li>Nouns: Dat → Akk · Pronouns: Akk → Dat</li><li>sein / werden / bleiben / heißen → Nom</li><li>es gibt → Akk</li><li>fragen, anrufen, vermissen → Akk</li><li>Dat plural: noun + n</li><li>N-Dekl: den Studenten, dem Herrn</li><li>Time: jeden Tag (Akk) · am Montag (Dat)</li></ul>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    Built for teaching with love · <a href="../artikel/">Der / Die / Das</a> · <a href="../test/">Tests</a> · <a href="/">mjashohan.github.io</a>
+</footer>
+
+<!-- ====================================================== teacher dock -->
+<canvas id="ink"></canvas>
+<canvas id="confetti"></canvas>
+
+<div class="dock min" id="dock">
+    <div class="pop" id="popPen" hidden>
+        <h4>Stift — draw on the screen</h4>
+        <div class="pen-bar">
+            <button class="swatch on" data-c="#C62F28" style="background:#C62F28" aria-label="Rot"></button>
+            <button class="swatch" data-c="#08787F" style="background:#08787F" aria-label="Türkis"></button>
+            <button class="swatch" data-c="#A35D00" style="background:#A35D00" aria-label="Gold"></button>
+            <button class="swatch" data-c="#6A44B3" style="background:#6A44B3" aria-label="Lila"></button>
+            <button class="swatch" data-c="hl" style="background:linear-gradient(135deg,#FFE14D,#FFF3A0)" aria-label="Textmarker"></button>
+            <button class="btn sm" id="penClear">Löschen</button>
+        </div>
+        <p class="small muted" style="margin-top:8px">Draw with your finger or mouse. Scrolling is paused while the pen is on.</p>
+    </div>
+    <div class="pop" id="popTeams" hidden>
+        <h4>Team-Punkte</h4>
+        <div class="teams">
+            <div class="team t1"><input value="Team Akkusativ" aria-label="Team 1 name"><div class="pts" id="t1">0</div><div class="row"><button data-t="1" data-d="-1">−</button><button data-t="1" data-d="1">+</button></div></div>
+            <div class="team t2"><input value="Team Dativ" aria-label="Team 2 name"><div class="pts" id="t2">0</div><div class="row"><button data-t="2" data-d="-1">−</button><button data-t="2" data-d="1">+</button></div></div>
+        </div>
+        <button class="btn sm" id="teamReset" style="margin-top:10px">Reset</button>
+    </div>
+    <div class="pop" id="popPick" hidden>
+        <h4>Wer ist dran? — random picker</h4>
+        <textarea id="pickNames" placeholder="Names, separated by commas or new lines"></textarea>
+        <div class="picker-name" id="pickOut">?</div>
+        <button class="btn primary" id="pickGo" style="width:100%">🎲 Pick someone</button>
+    </div>
+    <div class="pop" id="popTimer" hidden>
+        <h4>Timer</h4>
+        <div class="tbl-tools" style="margin:0">
+            <button class="btn sm" data-sec="30">30 s</button>
+            <button class="btn sm" data-sec="60">1 min</button>
+            <button class="btn sm" data-sec="120">2 min</button>
+            <button class="btn sm" data-sec="300">5 min</button>
+        </div>
+        <label class="toggle" style="margin-top:6px"><input type="checkbox" id="timerBig" checked> Show big on screen</label>
+    </div>
+    <span class="timer-chip" id="timerChip" hidden></span>
+    <div class="dock-bar" id="dockBar">
+        <button data-act="prev" class="keep" data-tip="Previous section (PageUp)"><svg><use href="#i-prev"/></svg></button>
+        <button data-act="next" class="keep" data-tip="Next section (PageDown)"><svg><use href="#i-next"/></svg></button>
+        <span class="sep keep"></span>
+        <button data-act="pen" class="keep" data-tip="Pen (P)"><svg><use href="#i-pen"/></svg></button>
+        <button data-act="quiz" class="keep" data-tip="Rätselmodus: hide answers (R)"><svg><use href="#i-eye"/></svg></button>
+        <button data-act="clean" data-tip="Hide teacher scripts"><svg><use href="#i-teach"/></svg></button>
+        <button data-act="teams" data-tip="Team points"><svg><use href="#i-team"/></svg></button>
+        <button data-act="pick" data-tip="Random picker"><svg><use href="#i-dice"/></svg></button>
+        <button data-act="timer" data-tip="Timer"><svg><use href="#i-timer"/></svg></button>
+        <button data-act="sound" data-tip="Sound on/off"><svg><use href="#i-sound"/></svg></button>
+        <button data-act="smaller" data-tip="Smaller text"><svg><use href="#i-minus"/></svg></button>
+        <button data-act="bigger" data-tip="Bigger text"><svg><use href="#i-plus"/></svg></button>
+        <button data-act="full" data-tip="Fullscreen (F)"><svg><use href="#i-full"/></svg></button>
+        <button data-act="min" class="keep" data-tip="Hide/show toolbar"><svg><use href="#i-dots"/></svg></button>
+    </div>
+</div>
+<div class="timer-big" id="timerOverlay" hidden><div class="t" id="timerBigT">0:00</div><button class="btn x" id="timerStop">Stop ✕</button></div>
+
+<script>
+    (function(){
+        "use strict";
+        var $=function(s,r){return (r||document).querySelector(s)};
+        var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+        function store(k,v){try{if(v===undefined){return localStorage.getItem("faelle:"+k)}localStorage.setItem("faelle:"+k,v)}catch(e){return null}}
+        function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+        function pick(a){return a[Math.floor(Math.random()*a.length)]}
+        function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+        function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+        var CASE={n:"Nominativ",a:"Akkusativ",d:"Dativ",g:"Genitiv"};
+        var SHORT={n:"Nom",a:"Akk",d:"Dat",g:"Gen"};
+
+        /* ================= sound ================= */
+        var soundOn = store("sound")!=="0";
+        var AC=null;
+        function ac(){ if(!AC){ try{AC=new (window.AudioContext||window.webkitAudioContext)()}catch(e){} } if(AC&&AC.state==="suspended")AC.resume(); return AC }
+        function tone(f,d,type,vol,when){ if(!soundOn)return; var c=ac(); if(!c)return; var t=c.currentTime+(when||0);
+            var o=c.createOscillator(),g=c.createGain(); o.type=type||"sine"; o.frequency.setValueAtTime(f,t);
+            g.gain.setValueAtTime(vol||.15,t); g.gain.exponentialRampToValueAtTime(.0001,t+d); o.connect(g); g.connect(c.destination); o.start(t); o.stop(t+d+.02) }
+        function kick(){ if(!soundOn)return; var c=ac(); if(!c)return; var t=c.currentTime; var o=c.createOscillator(),g=c.createGain();
+            o.frequency.setValueAtTime(150,t); o.frequency.exponentialRampToValueAtTime(40,t+.15); g.gain.setValueAtTime(.5,t); g.gain.exponentialRampToValueAtTime(.001,t+.2);
+            o.connect(g); g.connect(c.destination); o.start(t); o.stop(t+.22) }
+        function hat(delay){ if(!soundOn)return; var c=ac(); if(!c)return; var t=c.currentTime+(delay||0); var len=c.sampleRate*.05; var b=c.createBuffer(1,len,c.sampleRate); var d=b.getChannelData(0);
+            for(var i=0;i<len;i++)d[i]=(Math.random()*2-1)*(1-i/len); var s=c.createBufferSource(); s.buffer=b; var f=c.createBiquadFilter(); f.type="highpass"; f.frequency.value=6000;
+            var g=c.createGain(); g.gain.value=.18; s.connect(f); f.connect(g); g.connect(c.destination); s.start(t) }
+        function ding(){ tone(880,.18,"sine",.14); tone(1320,.3,"sine",.12,.09) }
+        function buzz(){ tone(140,.28,"sawtooth",.07) }
+        function pop(){ tone(620,.08,"triangle",.1) }
+
+        /* ================= toast & confetti ================= */
+        var toastEl=null,toastT=0;
+        function toast(msg){ if(!toastEl){toastEl=document.createElement("div");toastEl.className="toast";document.body.appendChild(toastEl)}
+            toastEl.textContent=msg; toastEl.style.opacity=1; clearTimeout(toastT); toastT=setTimeout(function(){toastEl.style.opacity=0},1600) }
+        var cf=$("#confetti"),cfx=cf.getContext("2d"),parts=[],cfRun=false;
+        function confetti(){ cf.width=innerWidth; cf.height=innerHeight; var cols=["#A35D00","#C62F28","#08787F","#6A44B3","#F2C94C"];
+            for(var i=0;i<140;i++)parts.push({x:innerWidth/2+(Math.random()-.5)*200,y:innerHeight*.35,vx:(Math.random()-.5)*16,vy:-Math.random()*14-4,r:Math.random()*6+4,c:pick(cols),a:Math.random()*6,l:90+Math.random()*40});
+            if(!cfRun){cfRun=true;requestAnimationFrame(cfStep)} }
+        function cfStep(){ cfx.clearRect(0,0,cf.width,cf.height); parts=parts.filter(function(p){return p.l>0});
+            parts.forEach(function(p){p.vy+=.45;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.a+=.2;p.l--; cfx.save();cfx.translate(p.x,p.y);cfx.rotate(p.a);cfx.fillStyle=p.c;cfx.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);cfx.restore()});
+            if(parts.length)requestAnimationFrame(cfStep); else {cfRun=false;cfx.clearRect(0,0,cf.width,cf.height)} }
+
+        /* ================= declension engine ================= */
+// gender index: 0 m, 1 f, 2 n, 3 plural
+        var END={ // endings added to a stem
+            der:{n:["der","die","das","die"],a:["den","die","das","die"],d:["dem","der","dem","den"],g:["des","der","des","der"]},
+            ein:{n:["ein","eine","ein",null],a:["einen","eine","ein",null],d:["einem","einer","einem",null],g:["eines","einer","eines",null]}
+        };
+        var POSS={n:["","e","","e"],a:["en","e","","e"],d:["em","er","em","en"],g:["es","er","es","er"]};
+        var DIES={n:["er","e","es","e"],a:["en","e","es","e"],d:["em","er","em","en"],g:["es","er","es","er"]};
+        function article(type,c,gi){
+            if(type==="der"||type==="def")return END.der[c][gi];
+            if(type==="ein"||type==="indef")return END.ein[c][gi];
+            if(type==="kein")return "kein"+POSS[c][gi];
+            if(type==="mein"||type==="poss")return "mein"+POSS[c][gi];
+            if(type==="dieser")return "dies"+DIES[c][gi];
+        }
+        function nounForm(N,c){
+            if(N.g===3) return c==="d" ? (N.dat||N.de+"n") : N.de;
+            if(N.obl && c!=="n") return N.obl;
+            if(c==="g" && N.g!==1) return N.gen||N.de+"s";
+            return N.de;
+        }
+        function phrase(type,c,N){ var art=article(type,c,N.g); var nf=nounForm(N,c); return art ? art+" "+nf : nf }
+        var PRON={n:["er","sie","es","sie"],a:["ihn","sie","es","sie"],d:["ihm","ihr","ihm","ihnen"]};
+
+        /* ================= 01 shuffler ================= */
+        (function(){
+            var box=$("#shuf"), mean=$("#shufMeaning"); var swapped=false, orders=[[0,1,2],[2,1,0]], oi=0;
+            function parts(){ return swapped ? [["Der Mann","n"],["beißt",""],["den Hund","a"]] : [["Der Hund","n"],["beißt",""],["den Mann","a"]] }
+            function render(anim){
+                var p=parts(), o=orders[oi]; var first=null;
+                var rects={}; $$(".blk",box).forEach(function(b){rects[b.dataset.k]=b.getBoundingClientRect()});
+                box.innerHTML="";
+                o.forEach(function(i,pos){ var t=p[i][0]; if(pos===0)t=cap(t); else if(i!==1)t=t.charAt(0).toLowerCase()+t.slice(1);
+                    var el=document.createElement("span"); el.className="blk "+p[i][1]; el.dataset.k=i; el.innerHTML=colorArt(t,p[i][1]); box.appendChild(el) });
+                var dot=document.createElement("span"); dot.className="blk"; dot.textContent="."; dot.style.border="0";dot.style.boxShadow="none";dot.style.background="none";dot.style.padding="0"; box.appendChild(dot);
+                if(anim){ $$(".blk",box).forEach(function(b){ var r0=rects[b.dataset.k]; if(!r0)return; var r1=b.getBoundingClientRect();
+                    b.animate([{transform:"translate("+(r0.left-r1.left)+"px,"+(r0.top-r1.top)+"px)"},{transform:"none"}],{duration:520,easing:"cubic-bezier(.4,1.3,.5,1)"}) }) }
+                var biter = swapped?"Mann":"Hund", victim = swapped?"Hund":"Mann";
+                mean.innerHTML='<span class="who">'+(biter==="Hund"?"🐕 dog":"🧔 man")+'</span><svg style="color:var(--akk)"><use href="#i-arrow"/></svg><span class="who">'+(victim==="Hund"?"🐕 dog":"🧔 man")+'</span><span class="small muted" style="font-weight:600">'+(swapped?"The man bites the dog!":"The dog bites the man.")+'</span>';
+            }
+            function colorArt(t,c){ if(!c)return esc(t); var sp=t.split(" "); return '<span class="t'+c+'">'+esc(sp[0])+'</span> '+esc(sp.slice(1).join(" ")) }
+            $("#shufMove").onclick=function(){ oi=(oi+1)%2; pop(); render(true) };
+            $("#shufSwap").onclick=function(){ swapped=!swapped; pop(); render(true); if(swapped)toast("Only the costume changed — now the man bites!") };
+            render(false);
+        })();
+
+        /* ================= 02 stage ================= */
+        (function(){
+            var gift=$("#gift"), sent=$("#stageSent");
+            function light(r){ $$("span[data-r]",sent).forEach(function(s){ if(!r||s.dataset.r===r){s.className=s.dataset.r;s.style.opacity=1} else {s.className="";s.style.opacity=.35} }) }
+            $("#stagePlay").onclick=function(){ gift.style.transition="none"; gift.style.animation="none"; gift.classList.remove("fly"); void gift.offsetWidth; gift.style.transition=""; gift.style.animation=""; light(null);
+                $$("span[data-r]",sent).forEach(function(s){s.className="";s.style.opacity=1});
+                var seq=["n","d","a","g"], i=0; gift.classList.add("fly"); tone(520,.15,"triangle",.1); setTimeout(function(){tone(780,.2,"triangle",.1)},1100);
+                (function step(){ if(i>=seq.length){ setTimeout(function(){light(null)},500); return } light(seq[i]); pop(); i++; setTimeout(step,850) })();
+            };
+            $$("[data-ask]").forEach(function(b){ b.onclick=function(){ light(b.dataset.ask); pop() } });
+            light(null);
+        })();
+
+        /* ================= 03 article table ================= */
+        var ART_NOUNS=[{de:"Mann",g:0,gen:"Mannes"},{de:"Frau",g:1},{de:"Kind",g:2,gen:"Kindes"},{de:"Kinder",g:3,dat:"Kindern"}];
+        var artSet="der";
+        function renderArt(){
+            var t=$("#artTable"), rows=["n","a","d","g"], html='<thead><tr><th></th><th>maskulin</th><th>feminin</th><th>neutrum</th><th>Plural</th></tr></thead><tbody>';
+            rows.forEach(function(c){ html+='<tr class="r'+c+'"><th>'+CASE[c]+'</th>';
+                ART_NOUNS.forEach(function(N,gi){
+                    var art=article(artSet,c,gi), nomArt=article(artSet,"n",gi);
+                    var nf=nounForm(N,c);
+                    if(art===null){ html+='<td data-c="'+c+'" data-g="'+gi+'"><b>—</b> <span class="nn">'+esc(nf)+'</span></td>'; return }
+                    var chg=(c!=="n" && art!==nomArt);
+                    var nounHtml=esc(nf); if(nf!==N.de){ nounHtml=esc(N.de)+'<b style="color:inherit">'+esc(nf.slice(N.de.length))+'</b>' }
+                    html+='<td class="'+(chg?"chg":"")+'" data-c="'+c+'" data-g="'+gi+'"><b>'+esc(art)+'</b> <span class="nn">'+nounHtml+'</span></td>';
+                });
+                html+='</tr>' });
+            t.innerHTML=html+'</tbody>';
+            var notes={der:"The definite article. Also add -n to the noun in Dativ plural and -(e)s in Genitiv masc./neut.",
+                ein:"“ein” has no plural — use kein or mein to see the plural. Masculine & neuter Nominativ have no ending (ein Mann, ein Kind).",
+                kein:"kein = no / not a. Exactly the ein-endings, plus a plural that works like die/den/der.",
+                mein:"Works for all possessives: mein, dein, sein, ihr, unser, euer (→ eure, eurem), Ihr.",
+                dieser:"dieser = this. Same endings as der/die/das (r-e-s-e …) — also jeder, welcher, jener."};
+            $("#artNote").textContent=notes[artSet];
+        }
+        $$("#artSeg button").forEach(function(b){ b.onclick=function(){ $$("#artSeg button").forEach(function(x){x.classList.toggle("on",x===b)}); artSet=b.dataset.set; renderArt(); pop() } });
+        $("#artHide").onclick=function(){ var t=$("#artTable"); var on=t.classList.toggle("hide-cells"); $$("td",t).forEach(function(td){td.classList.remove("open")}); this.classList.toggle("on",on); this.textContent=on?"Alle zeigen":"Verstecken (quiz)" };
+        $("#artTable").addEventListener("click",function(e){ var td=e.target.closest("td"); if(!td)return; td.classList.add("open"); td.classList.add("beat"); pop(); setTimeout(function(){td.classList.remove("beat")},300) });
+        $("#proHide").onclick=function(){ var t=$("#proTable"); var on=t.classList.toggle("hide-cells"); $$("td",t).forEach(function(td){td.classList.remove("open")}); this.classList.toggle("on",on); this.textContent=on?"Alle zeigen":"Verstecken (quiz)" };
+        $("#proTable").addEventListener("click",function(e){ var td=e.target.closest("td"); if(!td)return; td.classList.add("open"); pop() });
+        renderArt();
+
+        var rapping=false;
+        function beatRun(steps,bpm,done){ // steps: array of functions(on)
+            var ms=60000/bpm, i=0;
+            (function next(){ if(i>=steps.length){ if(done)done(); return } kick(); hat(ms/2000); steps[i](); i++; setTimeout(next,ms) })();
+        }
+        $("#artRap").onclick=function(){
+            if(rapping)return; rapping=true; var btn=this; btn.textContent="♪ …";
+            var steps=[]; ["n","a","d","g"].forEach(function(c){ for(var gi=0;gi<4;gi++)(function(c,gi){ steps.push(function(){
+                $$("#artTable td.beat, .mnemo span.beat").forEach(function(x){x.classList.remove("beat")});
+                var td=$('#artTable td[data-c="'+c+'"][data-g="'+gi+'"]'); if(td)td.classList.add("beat");
+                var m=$$('.mnemo[data-row="'+c+'"] span')[gi]; if(m)m.classList.add("beat");
+            })})(c,gi) });
+            steps.push(function(){ $$("#artTable td.beat, .mnemo span.beat").forEach(function(x){x.classList.remove("beat")}) });
+            beatRun([function(){},function(){},function(){},function(){}].concat(steps),112,function(){ rapping=false; btn.textContent="▶ Artikel-Rap" });
+            if(!soundOn)toast("Tip: turn on sound in the dock for the beat");
+        };
+        $$("[data-chant]").forEach(function(b){ b.onclick=function(){ var spans=$$("#"+b.dataset.chant+" span"); var steps=[];
+            for(var r=0;r<2;r++)spans.forEach(function(s){ steps.push(function(){ spans.forEach(function(x){x.classList.remove("beat")}); s.classList.add("beat") }) });
+            beatRun(steps.concat([function(){spans.forEach(function(x){x.classList.remove("beat")})}]),120) } });
+
+        /* ================= 05 builder ================= */
+        var PEOPLE=[{de:"Vater",g:0,gen:"Vaters"},{de:"Mutter",g:1},{de:"Kind",g:2,gen:"Kindes"},{de:"Lehrer",g:0,gen:"Lehrers"},{de:"Lehrerin",g:1},
+            {de:"Student",g:0,obl:"Studenten",nd:1},{de:"Nachbar",g:0,obl:"Nachbarn",nd:1},{de:"Junge",g:0,obl:"Jungen",nd:1},{de:"Herr",g:0,obl:"Herrn",nd:1},
+            {de:"Oma",g:1},{de:"Chef",g:0,gen:"Chefs"},{de:"Kinder",g:3,dat:"Kindern"},{de:"Freunde",g:3,dat:"Freunden"},{de:"Eltern",g:3,dat:"Eltern"}];
+        var THINGS=[{de:"Hund",g:0,gen:"Hundes"},{de:"Ball",g:0,gen:"Balls"},{de:"Kuchen",g:0,gen:"Kuchens"},{de:"Blume",g:1},{de:"Tasche",g:1},{de:"Uhr",g:1},
+            {de:"Buch",g:2,gen:"Buches"},{de:"Fahrrad",g:2,gen:"Fahrrads"},{de:"Handy",g:2,gen:"Handys"},{de:"Schuhe",g:3,dat:"Schuhen"},{de:"Blumen",g:3,dat:"Blumen"}];
+        var VERBS=[["gibt","geben"],["schenkt","schenken"],["zeigt","zeigen"],["bringt","bringen"],["kauft","kaufen"],["schickt","schicken"]];
+        var GL=["m","f","n","Pl"];
+        (function(){
+            var sN=$("#bN"),sD=$("#bD"),sA=$("#bA"),sV=$("#bV"),art="def",front="n",prev={};
+            function fill(sel,list){ list.forEach(function(N,i){ var o=document.createElement("option"); o.value=i; o.textContent=(N.g===3?"die":["der","die","das"][N.g])+" "+N.de+(N.nd?"  (N-Dekl.)":""); sel.appendChild(o) }) }
+            fill(sN,PEOPLE); fill(sD,PEOPLE); fill(sA,THINGS);
+            VERBS.forEach(function(v,i){ var o=document.createElement("option"); o.value=i; o.textContent=v[1]; sV.appendChild(o) });
+            sN.value=0; sD.value=7; sA.value=0; sV.value=1;
+            function render(){
+                var N=PEOPLE[+sN.value], D=PEOPLE[+sD.value], A=THINGS[+sA.value], V=VERBS[+sV.value];
+                var pn=$("#bPn").checked, pd=$("#bPd").checked, pa=$("#bPa").checked;
+                var parts={
+                    n:{c:"n",p:pn,t:pn?PRON.n[N.g]:phrase(art,"n",N)},
+                    d:{c:"d",p:pd,t:pd?PRON.d[D.g]:phrase(art,"d",D)},
+                    a:{c:"a",p:pa,t:pa?PRON.a[A.g]:phrase(art,"a",A)}
+                };
+                var verb=V[N.g===3?1:0];
+                var rest=["n","d","a"].filter(function(k){return k!==front}).map(function(k){return parts[k]});
+                var rank=function(x){ return x.p ? {n:0,a:1,d:2}[x.c] : {n:3,d:4,a:5}[x.c] };
+                rest.sort(function(x,y){return rank(x)-rank(y)});
+                var seq=[parts[front],{c:"v",t:verb}].concat(rest);
+                var html=seq.map(function(x,i){ var t=x.t; if(i===0)t=cap(t); else if(x.c!=="v" && x.p && t!=="Ihnen")t=t.toLowerCase();
+                    var changed = prev[x.c]!==undefined && prev[x.c]!==x.t;
+                    return x.c==="v" ? '<span>'+esc(t)+'</span>' : '<span class="'+x.c+(changed?" pop":"")+'">'+esc(t)+'</span>' }).join(" ")+".";
+                $("#bOut").innerHTML=html;
+                setTimeout(function(){ $$("#bOut .pop").forEach(function(s){s.classList.remove("pop")}) },350);
+                prev={n:parts.n.t,d:parts.d.t,a:parts.a.t};
+                $("#bWhy").innerHTML='<span><b class="tn">Wer?</b> '+esc(parts.n.t)+'</span><span><b class="td">Wem?</b> '+esc(parts.d.t)+'</span><span><b class="ta">Was?</b> '+esc(parts.a.t)+'</span>';
+                // explain order
+                var o=rest.filter(function(x){return x.c!=="n"}); var note="";
+                if(o.length===2){ var x=o[0],y=o[1];
+                    if(!x.p&&!y.p) note="Two nouns → Dativ before Akkusativ.";
+                    else if(x.p&&y.p) note="Two pronouns → Akkusativ before Dativ.";
+                    else note="A pronoun comes before a noun.";
+                } else note="Moved to the front for emphasis — the verb still stays in position 2, and the costumes still tell you who does what.";
+                var extras=[];
+                if(!pd && D.nd) extras.push("N-Deklination: "+D.de+" → "+D.obl+" in Dativ.");
+                if(!pd && D.g===3 && D.dat!==D.de) extras.push("Dativ plural: "+D.de+" → "+D.dat+".");
+                if(!pa && A.g===0) extras.push("Masculine Akkusativ: "+(art==="def"?"der → den":art==="indef"?"ein → einen":"mein → meinen")+".");
+                if(art==="indef" && (N.g===3||D.g===3||A.g===3)) extras.push("“ein” has no plural, so plural nouns stand without an article.");
+                if(N.g===3) extras.push("Plural subject → plural verb ("+verb+").");
+                $("#bRule").textContent=note+(extras.length?" · "+extras.join(" · "):"");
+            }
+            [sN,sD,sA,sV,$("#bPn"),$("#bPd"),$("#bPa")].forEach(function(el){ el.addEventListener("change",function(){pop();render()}) });
+            $$("#bArt button").forEach(function(b){ b.onclick=function(){ $$("#bArt button").forEach(function(x){x.classList.toggle("on",x===b)}); art=b.dataset.v; pop(); render() } });
+            $$("#bFront button").forEach(function(b){ b.onclick=function(){ $$("#bFront button").forEach(function(x){x.classList.toggle("on",x===b)}); front=b.dataset.v; pop(); render() } });
+            $("#bRand").onclick=function(){ var a=Math.floor(Math.random()*PEOPLE.length), d; do{d=Math.floor(Math.random()*PEOPLE.length)}while(d===a);
+                sN.value=a; sD.value=d; sA.value=Math.floor(Math.random()*THINGS.length); sV.value=Math.floor(Math.random()*VERBS.length); pop(); render() };
+            render();
+        })();
+
+        /* ================= 06 gefallen flip ================= */
+        (function(){
+            var box=$("#flipBox"), de=false, pl=false;
+            function render(anim){
+                var rects={}; $$(".blk",box).forEach(function(b){rects[b.dataset.k]=b.getBoundingClientRect()});
+                var items;
+                if(!de) items=[["p","I","n"],["v","like",""],["t",pl?"the shoes":"the jacket","a"]];
+                else items=[["t",pl?"Die Schuhe":"Die Jacke","n"],["v",pl?"gefallen":"gefällt",""],["p","mir","d"]];
+                box.innerHTML=items.map(function(x){ return '<span class="blk '+x[2]+'" data-k="'+x[0]+'">'+esc(x[1])+(x[2]?' <span class="tag '+x[2]+'" style="font-size:.5em">'+SHORT[x[2]]+'</span>':'')+'</span>' }).join("");
+                if(anim) $$(".blk",box).forEach(function(b){ var r0=rects[b.dataset.k]; if(!r0)return; var r1=b.getBoundingClientRect();
+                    b.animate([{transform:"translate("+(r0.left-r1.left)+"px,"+(r0.top-r1.top)+"px) rotate(-8deg)"},{transform:"none"}],{duration:650,easing:"cubic-bezier(.4,1.3,.5,1)"}) });
+                $("#flipNote").innerHTML = de ? "German: <b>"+(pl?"the shoes":"the jacket")+"</b> is the subject (Nominativ) and “pleases” <b>me</b> (Dativ). Literally: “"+(pl?"The shoes please":"The jacket pleases")+" me.”"+(pl?" The verb is plural because the shoes are the subject!":"") : "English: I (subject) like "+(pl?"the shoes":"the jacket")+" (object).";
+                $("#flipBtn").textContent = de ? "⟲ Back to English" : "⟲ Flip to German";
+                $("#flipPl").textContent = pl ? "Singular: die Jacke" : "Plural: die Schuhe";
+            }
+            $("#flipBtn").onclick=function(){ de=!de; pop(); render(true) };
+            $("#flipPl").onclick=function(){ pl=!pl; pop(); render(true) };
+            render(false);
+        })();
+
+        /* ================= 08 room ================= */
+        (function(){
+            var room=$("#room"), cat=$("#cat"), zl=$("#zones");
+            // zones in viewBox units (1600×1000): x,y,w,h ; cat: cx, bottom, behind?
+            var Z=[
+                {k:"auf",   x:150,y:300,w:450,h:195, cx:375,b:505, go:"Die Katze springt auf den Tisch.", be:"Die Katze sitzt auf dem Tisch.", na:"den", nd:"dem", note:"der Tisch is masculine → it changes in both cases: den / dem."},
+                {k:"unter", x:190,y:545,w:360,h:180, cx:375,b:722, go:"Die Katze kriecht unter den Tisch.", be:"Die Katze liegt unter dem Tisch.", na:"den", nd:"dem", note:"kriechen = crawl. Masculine: den → dem."},
+                {k:"an",    x:285,y:150,w:180,h:145, cx:375,b:470, go:"Die Katze springt an die Lampe.", be:"Die Katze hängt an der Lampe.", na:"die", nd:"der", note:"die Lampe is feminine: no change in Akkusativ (die), but Dativ → der."},
+                {k:"zwischen", x:612,y:560,w:150,h:360, cx:688,b:800, go:"Die Katze läuft zwischen den Tisch und die Kiste.", be:"Die Katze sitzt zwischen dem Tisch und der Kiste.", na:"den … die", nd:"dem … der", note:"zwischen needs two things — both get the case."},
+                {k:"in",    x:775,y:560,w:220,h:165, cx:870,b:650, back:1, go:"Die Katze springt in die Kiste.", be:"Die Katze sitzt in der Kiste.", na:"die", nd:"der", note:"die Kiste: Akkusativ die = Nominativ. Dativ: der Kiste."},
+                {k:"hinter",x:775,y:360,w:245,h:195, cx:985,b:600, back:1, small:1, go:"Die Katze läuft hinter die Kiste.", be:"Die Katze versteckt sich hinter der Kiste.", na:"die", nd:"der", note:"Behind the box — you only see the top of the cat!"},
+                {k:"aufs",  x:1050,y:360,w:400,h:190, cx:1240,b:585, go:"Die Katze springt auf das Sofa. (aufs Sofa)", be:"Die Katze schläft auf dem Sofa.", na:"das", nd:"dem", note:"das Sofa: Akkusativ looks the same (das). Dativ → dem."},
+                {k:"vor",   x:1030,y:740,w:440,h:250, cx:1240,b:950, go:"Die Katze legt sich vor das Sofa.", be:"Die Katze liegt vor dem Sofa.", na:"das", nd:"dem", note:"sich legen (Wohin) vs. liegen (Wo)."},
+                {k:"neben", x:1475,y:470,w:125,h:480, cx:1505,b:725, go:"Die Katze setzt sich neben das Sofa.", be:"Die Katze sitzt neben dem Sofa.", na:"das", nd:"dem", note:"sich setzen (Wohin) vs. sitzen (Wo)."}
+            ];
+            Z.forEach(function(z,i){ var d=document.createElement("div"); d.className="zone"; d.dataset.i=i;
+                d.style.left=(z.x/16)+"%"; d.style.top=(z.y/10)+"%"; d.style.width=(z.w/16)+"%"; d.style.height=(z.h/10)+"%";
+                d.innerHTML='<span class="zl">'+z.be.replace(/^Die Katze \S+( sich)? /,"").replace(".","")+'</span>'; zl.appendChild(d) });
+            var CW=12, CH=19.2; // cat size in % (w of width, h of height)
+            function placeAt(z){ var sc=z.small?.7:1; cat.style.width=(CW*sc)+"%"; cat.style.left=(z.cx/16-CW*sc/2)+"%"; cat.style.top=(z.b/10-CH*sc)+"%"; cat.classList.toggle("behind",!!z.back) }
+            function hi(s,c){ // highlight preposition + article (+ second one for zwischen, "und die/der")
+                var out=esc(s).replace(/\b(auf|unter|an|zwischen|in|hinter|vor|neben)\s(den|dem|die|der|das)\s(\w+)/,'<span class="'+c+'">$1 $2 $3</span>');
+                out=out.replace(/und\s(die|der)\sKiste/,'<span class="'+c+'">und $1 Kiste</span>');
+                return out }
+            var cur=-1;
+            function choose(i,silent){ var z=Z[i]; cur=i; placeAt(z);
+                $("#rWohinS").innerHTML=hi(z.go,"a"); $("#rWoS").innerHTML=hi(z.be,"d"); $("#rNote").textContent=z.note;
+                ["#rWohin","#rWo"].forEach(function(s){ var e=$(s); e.classList.remove("flash"); void e.offsetWidth; e.classList.add("flash") });
+                if(!silent){ tone(660,.1,"triangle",.1); tone(990,.14,"triangle",.1,.08) } }
+            // initial position: on the floor, left
+            cat.style.left="2%"; cat.style.top="76%";
+            var drag=null;
+            function zoneAt(x,y){ var r=room.getBoundingClientRect(); var ux=(x-r.left)/r.width*1600, uy=(y-r.top)/r.height*1000;
+                for(var i=Z.length-1;i>=0;i--){ var z=Z[i]; if(ux>=z.x&&ux<=z.x+z.w&&uy>=z.y&&uy<=z.y+z.h)return i } return -1 }
+            cat.addEventListener("pointerdown",function(e){ e.preventDefault(); cat.setPointerCapture(e.pointerId); var r=cat.getBoundingClientRect();
+                drag={dx:e.clientX-r.left,dy:e.clientY-r.top}; cat.classList.add("drag"); cat.classList.remove("behind"); room.classList.add("dragging") });
+            cat.addEventListener("pointermove",function(e){ if(!drag)return; var r=room.getBoundingClientRect();
+                cat.style.left=((e.clientX-drag.dx-r.left)/r.width*100)+"%"; cat.style.top=((e.clientY-drag.dy-r.top)/r.height*100)+"%";
+                var zi=zoneAt(e.clientX,e.clientY); $$(".zone",zl).forEach(function(z){z.classList.toggle("hot",+z.dataset.i===zi)}) });
+            function end(e){ if(!drag)return; drag=null; cat.classList.remove("drag"); room.classList.remove("dragging"); $$(".zone",zl).forEach(function(z){z.classList.remove("hot")});
+                var zi=zoneAt(e.clientX,e.clientY); if(zi<0){ var cr=cat.getBoundingClientRect(); zi=zoneAt(cr.left+cr.width/2,cr.top+cr.height*.8) }
+                if(zi>=0)choose(zi); else if(cur>=0)placeAt(Z[cur]); }
+            cat.addEventListener("pointerup",end); cat.addEventListener("pointercancel",end);
+            room.addEventListener("click",function(e){ if(e.target.closest("#cat"))return; var zi=zoneAt(e.clientX,e.clientY); if(zi>=0)choose(zi) });
+            $("#rZones").onclick=function(){ var on=room.classList.toggle("showzones"); this.classList.toggle("on",on) };
+            var touring=false;
+            $("#rTour").onclick=function(){ if(touring)return; touring=true; var i=0, btn=this; btn.textContent="■ …";
+                (function step(){ if(i>=Z.length){touring=false;btn.textContent="▶ Cat tour";return} choose(i); i++; setTimeout(step,2600) })() };
+        })();
+
+        /* ================= 09 Genitiv machine ================= */
+        (function(){
+            var things=[{de:"Auto",g:2},{de:"Tasche",g:1},{de:"Hund",g:0},{de:"Handy",g:2},{de:"Idee",g:1},{de:"Zimmer",g:2},{de:"Schlüssel",g:0}];
+            var owners=PEOPLE.slice().concat([{de:"Peter",name:1},{de:"Anna",name:1},{de:"Max",name:1,sx:1}]);
+            var sT=$("#gThing"), sO=$("#gOwner"), art="def";
+            things.forEach(function(t,i){ var o=document.createElement("option"); o.value=i; o.textContent=["der","die","das"][t.g]+" "+t.de; sT.appendChild(o) });
+            owners.forEach(function(t,i){ var o=document.createElement("option"); o.value=i; o.textContent=t.name?t.de+" (Name)":(t.g===3?"die":["der","die","das"][t.g])+" "+t.de; sO.appendChild(o) });
+            sO.value=0;
+            function vonPhrase(O){ var p=phrase(art,"d",O); // contract von dem → vom
+                if(art==="def" && (O.g===0||O.g===2)) return "vom "+nounForm(O,"d"); return "von "+p }
+            function render(){
+                var T=things[+sT.value], O=owners[+sO.value], tArt=["der","die","das"][T.g];
+                var o1,o2;
+                if(O.name){ o1='<span class="g">'+esc(O.sx?O.de+"’":O.de+"s")+'</span> '+esc(T.de)+' <span class="small muted">(or: '+tArt+' '+esc(T.de)+' <span class="g">'+esc(O.sx?O.de+"’":O.de+"s")+'</span> — less common)</span>';
+                    o2=tArt+' '+esc(T.de)+' <span class="d">von '+esc(O.de)+'</span>'; }
+                else if(art==="indef" && O.g===3){ o1=tArt+' '+esc(T.de)+' <span class="small muted">— Genitiv plural needs an article; use “von” →</span> <span class="d">von '+esc(nounForm(O,"d"))+'</span>';
+                    o2=tArt+' '+esc(T.de)+' <span class="d">von '+esc(nounForm(O,"d"))+'</span>'; }
+                else { o1=tArt+' '+esc(T.de)+' <span class="g">'+esc(phrase(art,"g",O))+'</span>'; o2=tArt+' '+esc(T.de)+' <span class="d">'+esc(vonPhrase(O))+'</span>' }
+                $("#gOut1").innerHTML=o1; $("#gOut2").innerHTML=o2;
+            }
+            [sT,sO].forEach(function(s){s.addEventListener("change",function(){pop();render()})});
+            $$("#gArt button").forEach(function(b){ b.onclick=function(){ $$("#gArt button").forEach(function(x){x.classList.toggle("on",x===b)}); art=b.dataset.v; pop(); render() } });
+            render();
+        })();
+
+        /* ================= 10 flip chips ================= */
+        $$(".flipchips").forEach(function(box){ box.dataset.list.split(",").forEach(function(p){ var a=p.split("|"); var b=document.createElement("button");
+            b.className="chip"; b.style.cursor="pointer"; b.innerHTML='der '+esc(a[0]); b.dataset.on="0";
+            b.onclick=function(){ var on=b.dataset.on==="1"; b.dataset.on=on?"0":"1"; b.innerHTML=on?'der '+esc(a[0]):'<span class="ta">den</span> '+esc(a[0])+'<b class="ta">'+esc(a[1].slice(a[0].length))+'</b>'; b.classList.toggle("a",!on); pop() };
+            box.appendChild(b) }) });
+
+        /* ================= 11 adjective table ================= */
+        (function(){
+            var nouns=[{de:"Wein",g:0,gen:"Weins"},{de:"Milch",g:1},{de:"Bier",g:2,gen:"Biers"},{de:"Äpfel",g:3,dat:"Äpfeln"}];
+            var E={
+                def:{n:["e","e","e","en"],a:["en","e","e","en"],d:["en","en","en","en"],g:["en","en","en","en"]},
+                indef:{n:["er","e","es","en"],a:["en","e","es","en"],d:["en","en","en","en"],g:["en","en","en","en"]},
+                none:{n:["er","e","es","e"],a:["en","e","es","e"],d:["em","er","em","en"],g:["en","er","en","er"]}
+            };
+            var mode="def";
+            function render(){ var h='<thead><tr><th></th><th>maskulin</th><th>feminin</th><th>neutrum</th><th>Plural</th></tr></thead><tbody>';
+                ["n","a","d","g"].forEach(function(c){ h+='<tr class="r'+c+'"><th>'+CASE[c]+'</th>';
+                    nouns.forEach(function(N,gi){ var art="";
+                        if(mode==="def")art=article("der",c,gi)+" ";
+                        if(mode==="indef")art=(gi===3?article("kein",c,gi):article("ein",c,gi))+" ";
+                        var e=E[mode][c][gi]; var signal = mode==="none" ? !(c==="g"&&(gi===0||gi===2)) : !(e==="e"||e==="en");
+                        h+='<td>'+esc(art)+'gut<b style="text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:4px;text-decoration-color:'+(signal?"var(--"+{n:"nom",a:"akk",d:"dat",g:"gen"}[c]+")":"var(--line-strong)")+'">'+e+'</b> <span class="nn">'+esc(nounForm(N,c))+'</span></td>' });
+                    h+='</tr>' });
+                $("#adjTable").innerHTML=h+'</tbody>' }
+            $$("#adjSeg button").forEach(function(b){ b.onclick=function(){ $$("#adjSeg button").forEach(function(x){x.classList.toggle("on",x===b)}); mode=b.dataset.v; pop(); render() } });
+            render();
+        })();
+
+        /* ================= 12 traps ================= */
+        (function(){
+            var T=[
+                ["Ich helfe dich.","Ich helfe <b class='td'>dir</b>.","helfen always takes Dativ — even though English “help him” feels like a direct object."],
+                ["Ich frage dir.","Ich frage <b class='ta'>dich</b>.","fragen takes Akkusativ. (Its partner antworten takes Dativ: Ich antworte dir.)"],
+                ["Ich rufe dir morgen an.","Ich rufe <b class='ta'>dich</b> morgen an.","anrufen + Akkusativ. You call a person directly — they are the target."],
+                ["Ich gefalle die Jacke.","Die Jacke gefällt <b class='td'>mir</b>.","gefallen flips: the jacket is the subject, the person is Dativ."],
+                ["Ich bin kalt.","<b class='td'>Mir</b> ist kalt.","Feelings happen to you → Dativ. “Ich bin kalt” = I am a cold person."],
+                ["Es gibt ein Supermarkt.","Es gibt <b class='ta'>einen</b> Supermarkt.","es gibt always takes Akkusativ → masculine ein → einen."],
+                ["Er ist einen guten Freund.","Er ist <b class='tn'>ein guter</b> Freund.","sein is an equals sign → Nominativ on both sides."],
+                ["Ich gehe zu den Arzt.","Ich gehe <b class='td'>zum</b> Arzt.","zu is always Dativ, movement or not. zu + dem = zum."],
+                ["Ich sehe den Student.","Ich sehe den <b class='ta'>Studenten</b>.","N-Deklination: Student gets -en in every case except Nominativ."],
+                ["Ich spiele mit den Kinder.","Ich spiele mit den <b class='td'>Kindern</b>.","Dativ plural: the noun gets an extra -n."],
+                ["Das ist Peter's Auto.","Das ist <b class='tg'>Peters</b> Auto.","Genitiv of names: just -s, no apostrophe in standard German."],
+                ["Ich vermisse dir.","Ich vermisse <b class='ta'>dich</b>. / Du fehlst <b class='td'>mir</b>.","vermissen + Akk. The flip verb fehlen uses Dativ."],
+                ["Ich warte auf dem Bus.","Ich warte auf <b class='ta'>den</b> Bus.","warten auf is a fixed verb: always Akkusativ (you don’t stand on the bus!)."],
+                ["Ich lege das Buch auf dem Tisch.","Ich lege das Buch auf <b class='ta'>den</b> Tisch.","legen = movement to a new place → Wohin? → Akkusativ."],
+                ["Ich komme in die Stadt an.","Ich komme in <b class='td'>der</b> Stadt an.","ankommen is a point of arrival → Dativ (Wo?)."],
+                ["Wegen dem Wetter … (in a letter)","Wegen <b class='tg'>des</b> Wetter<b class='tg'>s</b> …","Spoken German often uses Dativ; in writing, wegen takes Genitiv."]
+            ];
+            var box=$("#traps");
+            T.forEach(function(t){ var b=document.createElement("button"); b.className="panel"; b.style.textAlign="left"; b.style.cursor="pointer"; b.style.minHeight="150px"; b.style.fontFamily="inherit"; b.style.display="flex"; b.style.flexDirection="column"; b.style.justifyContent="flex-start"; b.style.color="inherit";
+                function front(){ b.innerHTML='<p class="eyebrow" style="color:var(--bad)">✗ Falsch</p><p class="ex" style="margin-top:6px;text-decoration:line-through;text-decoration-color:rgba(198,47,40,.5)">'+esc(t[0])+'</p><p class="small muted" style="margin-top:10px">Tap to fix →</p>'; b.style.background=""; b.dataset.s="0" }
+                function back(){ b.innerHTML='<p class="eyebrow" style="color:var(--ok)">✓ Richtig</p><p class="ex" style="margin-top:6px">'+t[1]+'</p><p class="small" style="margin-top:10px;color:var(--ink-2)">'+t[2]+'</p>'; b.style.background="var(--ok-soft)"; b.dataset.s="1" }
+                b.onclick=function(){ b.animate([{transform:"rotateY(0)"},{transform:"rotateY(90deg)"},{transform:"rotateY(0)"}],{duration:420}); setTimeout(function(){ if(b.dataset.s==="1")front(); else {back(); ding()} },210) };
+                front(); box.appendChild(b) });
+        })();
+
+        /* ================= 13 flow ================= */
+        (function(){
+            var F={
+                start:{q:"Is there a preposition right before the noun?",o:[["Ja — a preposition","prep"],["Nein","doer"]]},
+                prep:{q:"Which preposition is it?",o:[["durch · ohne · gegen · für · um · bis · entlang","R:a:The preposition always takes Akkusativ (DOGFU).:für meinen Vater · durch den Park"],
+                        ["aus · bei · mit · nach · seit · von · zu · gegenüber · außer","R:d:The preposition always takes Dativ — even with movement.:mit dem Bus · zum Arzt"],
+                        ["wegen · trotz · während · statt","R:g:Genitiv preposition (in speech often Dativ).:wegen des Regens"],
+                        ["an · auf · hinter · in · neben · über · unter · vor · zwischen","wechsel"]]},
+                wechsel:{q:"Is it part of a fixed verb or a time expression?",o:[["Fixed verb (warten auf, denken an, Angst vor …)","R:?:Learn it with the verb (see §11). Rule of thumb: auf / über → Akkusativ; vor / an with a feeling or taking part → often Dativ.:warten auf den Bus · Angst vor dem Hund"],
+                        ["Time (am Montag, vor einer Woche)","R:d:Time with an / in / vor → Dativ.:am Wochenende · vor einem Jahr"],["No — it’s about a place","place"]]},
+                place:{q:"Wohin? (going to a new place) or Wo? (staying there, or moving around inside it)?",o:[["Wohin? →","R:a:Direction to a new place → Akkusativ.:Ich lege das Buch auf den Tisch."],["Wo? •","R:d:Position → Dativ.:Das Buch liegt auf dem Tisch."]]},
+                doer:{q:"Is this noun the one doing the action (Wer?) — or does it come after sein / werden / bleiben / heißen?",o:[["Ja","R:n:The star of the sentence, or the other side of an “=” verb → Nominativ.:Der Hund bellt. · Er ist ein guter Freund."],["Nein","owner"]]},
+                owner:{q:"Does it answer “whose?” — the X of this noun?",o:[["Ja","R:g:Owner → Genitiv.:das Auto meines Vaters"],["Nein","datverb"]]},
+                datverb:{q:"Is the verb in the Dativ club (helfen, danken, gefallen, gehören, antworten …) or a feeling like “Mir ist kalt”?",o:[["Ja","R:d:Dativ verb → the person is Dativ.:Ich helfe dem Mann. · Mir ist kalt."],["Nein","two"]]},
+                two:{q:"Are there two objects — someone gets something?",o:[["Ja","twowhich"],["Nein","time"]]},
+                twowhich:{q:"Is your noun the person who receives, or the thing?",o:[["The person (receiver)","R:d:Receiver → Dativ.:Ich gebe dem Kind den Ball."],["The thing","R:a:The thing being given → Akkusativ.:Ich gebe dem Kind den Ball."]]},
+                time:{q:"Is it a time expression without preposition (jeden Tag, nächste Woche)?",o:[["Ja","R:a:Time without a preposition → Akkusativ.:Ich lerne jeden Tag."],["Nein","R:a:Default: a normal object → Akkusativ. (When in doubt: Akkusativ!):Ich sehe den Hund."]]}
+            };
+            var el=$("#flow"), trail=[];
+            function show(k){
+                if(k.indexOf("R:")===0){ var p=k.split(":"); var c=p[1];
+                    var name=c==="?"?"Check the verb":CASE[c];
+                    el.innerHTML='<div class="flow-trail">'+trail.map(function(t){return "<span>"+esc(t)+"</span>"}).join("")+'</div>'+
+                        '<div class="flow-res '+(c==="?"?"":c)+'" style="'+(c==="?"?"background:var(--ink)":"")+'"><span class="eyebrow" style="color:rgba(255,255,255,.8)">Ergebnis</span><b>'+name+'</b><span>'+esc(p[2])+'</span><span class="de" style="opacity:.9">'+esc(p.slice(3).join(":"))+'</span></div>'+
+                        '<div><button class="btn primary" id="flowRe">↺ Neue Frage</button></div>';
+                    $("#flowRe").onclick=function(){trail=[];show("start")}; if(c!=="?")ding(); return }
+                var n=F[k];
+                el.innerHTML='<div class="flow-trail">'+(trail.length?trail.map(function(t){return "<span>"+esc(t)+"</span>"}).join(""):"<span>Schritt 1</span>")+'</div><div class="flow-q">'+esc(n.q)+'</div><div class="flow-opts"></div>'+
+                    (trail.length?'<div><button class="btn sm" id="flowRe">↺ Neu starten</button></div>':'');
+                var o=$(".flow-opts",el);
+                n.o.forEach(function(x){ var b=document.createElement("button"); b.className="btn"; b.textContent=x[0]; b.onclick=function(){ trail.push(x[0].length>28?x[0].slice(0,26)+"…":x[0]); pop(); show(x[1]) }; o.appendChild(b) });
+                var re=$("#flowRe"); if(re)re.onclick=function(){trail=[];show("start")};
+            }
+            show("start");
+        })();
+
+        /* ================= 14a quiz ================= */
+        var Q=[
+            // akk
+            ["akk","Ich sehe ___ Hund.",["der","den","dem"],"den","sehen + Akkusativ. Masculine der → den."],
+            ["akk","Ich kaufe ___ Tasche.",["die","der","den"],"die","Feminine doesn’t change in Akkusativ."],
+            ["akk","Wir brauchen ___ neuen Tisch.",["ein","einen","einem"],"einen","brauchen + Akk. Masculine ein → einen."],
+            ["akk","Es gibt hier ___ Supermarkt.",["ein","einen","einem"],"einen","es gibt always takes Akkusativ."],
+            ["akk","Ich habe ___ Bruder und zwei Schwestern.",["ein","einen","einem"],"einen","haben + Akk."],
+            ["akk","Sie liest ___ Buch.",["das","dem","den"],"das","Neuter doesn’t change in Akkusativ."],
+            ["akk","Kennst du ___ Mann dort?",["der","den","dem"],"den","kennen + Akk."],
+            // dat
+            ["dat","Ich gebe ___ Kind einen Apfel.",["das","dem","den"],"dem","Wem gebe ich den Apfel? The receiver → Dativ."],
+            ["dat","Er schenkt ___ Freundin Blumen.",["seine","seiner","seinen"],"seiner","The receiver is feminine → Dativ -er."],
+            ["dat","Wir zeigen ___ Gästen die Stadt.",["die","den","der"],"den","Dativ plural: den + noun with -n (Gästen)."],
+            ["dat","Kannst du ___ Mutter das Rezept schicken?",["deine","deiner","deinen"],"deiner","Person = Dativ, thing = Akkusativ."],
+            ["dat","Wir bringen ___ Oma Kuchen.",["die","der","dem"],"der","Feminine Dativ → der."],
+            // verbs
+            ["verb","Ich helfe ___ Mann.",["den","dem"],"dem","helfen + Dativ — always."],
+            ["verb","Das Buch gehört ___.",["ich","mich","mir"],"mir","gehören + Dativ: the book belongs to me."],
+            ["verb","Die Jacke gefällt ___ Frau.",["die","der","den"],"der","gefallen flip: the jacket is the subject, the person is Dativ."],
+            ["verb","Kannst du ___ bitte antworten?",["mich","mir"],"mir","antworten + Dativ."],
+            ["verb","Ich danke ___ für die Hilfe.",["dich","dir"],"dir","danken + Dativ."],
+            ["verb","Ich frage ___ Lehrer.",["den","dem"],"den","Trap! fragen takes Akkusativ."],
+            ["verb","Ruf ___ morgen an!",["mich","mir"],"mich","anrufen + Akkusativ."],
+            ["verb","Die Schuhe passen ___ nicht.",["mich","mir"],"mir","passen + Dativ (flip verb)."],
+            ["verb","Wie geht es ___?",["du","dich","dir"],"dir","Fixed phrase with Dativ."],
+            ["verb","Es tut ___ leid.",["mich","mir"],"mir","leidtun + Dativ."],
+            ["verb","___ ist kalt.",["Ich","Mich","Mir"],"Mir","Feelings → Dativ. “Ich bin kalt” means you are an unfriendly person!"],
+            ["verb","Das Essen schmeckt ___ Kindern.",["die","den","der"],"den","schmecken + Dativ; Dativ plural den Kindern."],
+            ["verb","Ich gratuliere ___ zum Geburtstag.",["dich","dir"],"dir","gratulieren + Dativ."],
+            ["verb","Er unterstützt ___ Freund.",["seinen","seinem"],"seinen","unterstützen = support → Akkusativ (while helfen = Dativ)."],
+            ["verb","Ich besuche ___ Onkel.",["meinen","meinem"],"meinen","besuchen + Akkusativ."],
+            ["verb","Er ist ___ guter Lehrer.",["ein","einen","einem"],"ein","sein = equals sign → Nominativ."],
+            ["verb","Er bleibt ___ Freund.",["mein","meinen","meinem"],"mein","bleiben = equals sign → Nominativ."],
+            ["verb","Ich glaube ___ nicht.",["dich","dir"],"dir","jemandem glauben = believe a person → Dativ."],
+            ["verb","Ich wünsche ___ viel Glück.",["dich","dir"],"dir","Person = Dativ, thing (Glück) = Akkusativ."],
+            ["verb","Ich vermisse ___.",["dich","dir"],"dich","vermissen + Akkusativ."],
+            ["verb","Du fehlst ___.",["mich","mir"],"mir","fehlen flips: “you are missing to me” → Dativ."],
+            // prep
+            ["prep","Das Geschenk ist für ___ Vater.",["meinen","meinem"],"meinen","für → always Akkusativ."],
+            ["prep","Ich fahre mit ___ Bus.",["den","dem"],"dem","mit → always Dativ."],
+            ["prep","Wir gehen durch ___ Park.",["den","dem"],"den","durch → always Akkusativ."],
+            ["prep","Er kommt aus ___ Türkei.",["die","der"],"der","aus → always Dativ; feminine → der."],
+            ["prep","Seit ___ Jahr lerne ich Deutsch.",["ein","einem","einen"],"einem","seit → always Dativ."],
+            ["prep","Ich gehe zu ___ Arzt.",["den","dem"],"dem","zu → Dativ even with movement (zum Arzt)."],
+            ["prep","Ohne ___ Handy gehe ich nie raus.",["mein","meinem"],"mein","ohne → Akkusativ; neuter doesn’t change."],
+            ["prep","Nach ___ Unterricht gehen wir essen.",["den","dem"],"dem","nach → always Dativ."],
+            ["prep","Wir sind gegen ___ Plan.",["den","dem"],"den","gegen → always Akkusativ."],
+            ["prep","Ich wohne bei ___ Eltern.",["meine","meinen"],"meinen","bei → Dativ; plural → meinen."],
+            ["prep","Das Hotel liegt gegenüber ___ Bahnhof.",["den","dem"],"dem","gegenüber → Dativ."],
+            ["prep","Außer ___ Bruder kommen alle.",["meinen","meinem"],"meinem","außer → Dativ."],
+            ["prep","Er läuft um ___ See.",["den","dem"],"den","um → always Akkusativ."],
+            // wechsel
+            ["wechsel","Ich lege das Buch auf ___ Tisch.",["den","dem"],"den","legen → Wohin? → Akkusativ."],
+            ["wechsel","Das Buch liegt auf ___ Tisch.",["den","dem"],"dem","liegen → Wo? → Dativ."],
+            ["wechsel","Wir gehen in ___ Kino.",["das","dem"],"das","Wohin? → Akkusativ (ins Kino)."],
+            ["wechsel","Wir sind in ___ Kino.",["das","dem"],"dem","Wo? → Dativ (im Kino)."],
+            ["wechsel","Er hängt das Bild an ___ Wand.",["die","der"],"die","hängen (hängte) → Wohin? → Akkusativ."],
+            ["wechsel","Das Bild hängt an ___ Wand.",["die","der"],"der","hängen (hing) → Wo? → Dativ."],
+            ["wechsel","Die Katze springt unter ___ Bett.",["das","dem"],"das","Movement to a new place → Akkusativ."],
+            ["wechsel","Ich jogge jeden Morgen drei Runden in ___ Park.",["den","dem"],"dem","Moving around inside the park — no new place → Dativ (im Park)."],
+            ["wechsel","Ich komme um 8 Uhr in ___ Stadt an.",["die","der"],"der","ankommen → Dativ (point of arrival)."],
+            ["wechsel","Vor ___ Woche war ich in Berlin.",["eine","einer"],"einer","Time with vor → Dativ."],
+            ["wechsel","An ___ Wochenende fahren wir weg.",["das","dem"],"dem","Time with an → Dativ (am Wochenende)."],
+            ["wechsel","Stell die Flasche in ___ Kühlschrank!",["den","dem"],"den","stellen → Wohin? → Akkusativ."],
+            ["wechsel","Die Lampe hängt über ___ Tisch.",["den","dem"],"dem","Wo? → Dativ."],
+            ["wechsel","Setz dich neben ___ Mann!",["den","dem"],"den","sich setzen → Wohin? → Akkusativ."],
+            // pron
+            ["pron","Ich sehe ___. (er)",["er","ihn","ihm"],"ihn","sehen + Akk: er → ihn."],
+            ["pron","Ich helfe ___. (sie, eine Frau)",["sie","ihr","ihnen"],"ihr","helfen + Dat: sie → ihr."],
+            ["pron","Wir geben ___ das Geld. (sie, Plural)",["sie","ihr","ihnen"],"ihnen","Receiver, plural → ihnen."],
+            ["pron","Ich wasche ___ die Hände.",["mich","mir"],"mir","die Hände is already the Akkusativ → reflexive becomes Dativ."],
+            ["pron","Ich wasche ___.",["mich","mir"],"mich","No other object → reflexive is Akkusativ."],
+            ["pron","Ich rufe ___ morgen an. (ihr)",["euch","ihr","euer"],"euch","anrufen + Akk: ihr → euch."],
+            ["pron","Gibst du mir das Buch? – Ja, ich gebe ___ dir.",["es","ihm","ihn"],"es","das Buch → es. Two pronouns: Akk before Dat."],
+            ["pron","Ich putze ___ die Zähne.",["mich","mir"],"mir","die Zähne is the Akkusativ → reflexive Dativ."],
+            ["pron","Ich kaufe ___ ein neues Handy.",["mich","mir"],"mir","I buy something for myself → Dativ."],
+            // gen
+            ["gen","Das ist das Auto ___ Lehrers.",["der","des","dem"],"des","Owner, masculine → des + -s."],
+            ["gen","Das Handy ___ Frau ist kaputt.",["die","der","des"],"der","Owner, feminine → der."],
+            ["gen","Wegen ___ Regens bleiben wir zu Hause.",["der","des","dem"],"des","wegen + Genitiv."],
+            ["gen","Trotz ___ Kälte gehen wir spazieren.",["die","der","des"],"der","trotz + Genitiv; feminine → der."],
+            ["gen","Während ___ Pause trinke ich Kaffee.",["die","der","dem"],"der","während + Genitiv."],
+            ["gen","Das ist ___ Buch.",["Peters","Peter","des Peters"],"Peters","Names: just -s, no apostrophe."],
+            ["gen","Die Farbe ___ Autos gefällt mir.",["des","dem","das"],"des","Owner, neuter → des + -s."],
+            ["gen","Das ist die Meinung ___ Kinder.",["der","den","des"],"der","Genitiv plural → der."],
+            // ndekl
+            ["ndekl","Ich sehe den ___.",["Student","Studenten"],"Studenten","N-Deklination: -en in all cases except Nominativ."],
+            ["ndekl","Wir helfen dem ___.",["Junge","Jungen"],"Jungen","N-Deklination: masculine + -e → Jungen."],
+            ["ndekl","Ich habe mit ___ Müller gesprochen.",["Herr","Herrn"],"Herrn","Herr → Herrn in the singular (not Nominativ)."],
+            ["ndekl","Das ist das Büro des ___.",["Präsident","Präsidenten"],"Präsidenten","N-Deklination also in Genitiv (no -s!)."],
+            ["ndekl","Ich spiele mit den ___.",["Kinder","Kindern"],"Kindern","Dativ plural: noun + -n."],
+            ["ndekl","Ich schreibe meinen ___.",["Freunde","Freunden"],"Freunden","schreiben + Dativ person; Dativ plural → -n."],
+            ["ndekl","Er fragt den ___.",["Polizist","Polizisten"],"Polizisten","-ist nouns are N-Deklination."],
+            // b1
+            ["b1","Der Mann, ___ ich helfe, ist nett.",["den","dem","der"],"dem","Inside the clause: ich helfe dem Mann → Dativ."],
+            ["b1","Der Film, ___ ich gesehen habe, war gut.",["der","den","dem"],"den","Inside the clause: ich habe den Film gesehen → Akk."],
+            ["b1","Die Freunde, mit ___ ich spiele, sind nett.",["den","denen","die"],"denen","Relative Dativ plural = denen."],
+            ["b1","Der Mann, ___ Auto hier steht, ist mein Nachbar.",["der","dessen","deren"],"dessen","Genitiv relative, masculine → dessen."],
+            ["b1","Die Frau, ___ Sohn ich kenne, ist Ärztin.",["dessen","deren","der"],"deren","Genitiv relative, feminine → deren."],
+            ["b1","Ich warte auf ___ Bus.",["den","dem"],"den","warten auf + Akkusativ (fixed)."],
+            ["b1","Ich habe Angst vor ___ Hund.",["den","dem"],"dem","Angst vor + Dativ (fixed)."],
+            ["b1","Ich denke oft an ___ Urlaub.",["den","dem"],"den","denken an + Akkusativ (fixed)."],
+            ["b1","Er nimmt an ___ Kurs teil.",["den","dem"],"dem","teilnehmen an + Dativ (fixed)."],
+            ["b1","Wir sprechen über ___ Film.",["den","dem"],"den","über = about → Akkusativ."],
+            ["b1","Ich freue mich auf ___ Wochenende.",["das","dem"],"das","sich freuen auf + Akk."],
+            ["b1","Ich träume von ___ Reise.",["eine","einer"],"einer","von → always Dativ."],
+            ["b1","Ich trinke gern kalt___ Wasser.",["es","em","en"],"es","No article, neuter Akkusativ → adjective shows -es."],
+            ["b1","Ich spreche mit dem nett___ Nachbarn.",["e","en","em"],"en","With an article in Dativ → always -en."]
+        ];
+        var QCATS=[["all","Alle"],["akk","Akkusativ"],["dat","Dativ"],["verb","Verben"],["prep","Präpositionen"],["wechsel","Wo/Wohin"],["pron","Pronomen"],["gen","Genitiv"],["ndekl","Nomen-Endungen"],["b1","B1"]];
+        (function(){
+            var cat="all", deck=[], cur=null, answered=false, right=0, total=0, streak=0;
+            var cats=$("#qcats");
+            QCATS.forEach(function(c){ var b=document.createElement("button"); b.className="btn"+(c[0]==="all"?" on":""); b.textContent=c[1]+(c[0]==="all"?"":" ("+Q.filter(function(q){return q[0]===c[0]}).length+")"); b.onclick=function(){ $$("button",cats).forEach(function(x){x.classList.toggle("on",x===b)}); cat=c[0]; deck=[]; next() }; cats.appendChild(b) });
+            function refill(){ deck=shuffle(Q.filter(function(q){return cat==="all"||q[0]===cat})) }
+            function next(){ if(!deck.length)refill(); cur=deck.pop(); answered=false;
+                var parts=cur[1].split("___"), hint="";
+                var m=parts[1].match(/\s\(([^)]+)\)\s*$/); if(m){ hint=m[1]; parts[1]=parts[1].replace(m[0],"") }
+                var joinL=/\S$/.test(parts[0]), joinR=/^\w/.test(parts[1]);
+                $("#qsent").innerHTML=esc(parts[0])+'<span class="gap" id="qgap">&nbsp;</span>'+esc(parts[1]);
+                $("#qhint").textContent=hint?"Hinweis: "+hint:(joinL||joinR?"Fill in the ending":"");
+                var o=$("#qopts"); o.innerHTML="";
+                shuffle(cur[2]).forEach(function(opt,i){ var b=document.createElement("button"); b.textContent=joinL&&!joinR?"-"+opt:opt; b.dataset.v=opt; b.onclick=function(){answer(opt)}; o.appendChild(b) });
+                $("#qwhy").hidden=true; score(); }
+            function answer(opt){ if(answered)return; answered=true; total++; var ok=opt===cur[3]; if(ok){right++;streak++}else streak=0;
+                $$("#qopts button").forEach(function(b){ b.disabled=true; if(b.dataset.v===cur[3])b.className="right"; else if(b.dataset.v===opt)b.className="wrong" });
+                var g=$("#qgap"); g.textContent=cur[3]; g.className="gap "+(ok?"ok":"no");
+                var w=$("#qwhy"); w.hidden=false; w.className="qwhy "+(ok?"ok":"no"); w.innerHTML="<b>"+(ok?"Richtig! ":"Leider nicht — richtig ist „"+esc(cur[3])+"“. ")+"</b>"+esc(cur[4]);
+                if(ok){ ding(); if(streak>0&&streak%5===0){confetti(); toast(streak+" in a row! 🔥")} } else buzz();
+                score() }
+            function score(){ $("#qscore").textContent=right+" / "+total+" richtig"; $("#qstreak").textContent=streak>=2?"Serie: "+streak+" ✦":"" }
+            $("#qnext").onclick=function(){ pop(); next() };
+            document.addEventListener("keydown",function(e){ if($("#tab-quiz").hidden||isTyping(e))return; var r=$("#tab-quiz").getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight)return;
+                var n=parseInt(e.key,10); if(n>=1&&n<=4){ var b=$$("#qopts button")[n-1]; if(b)b.click() } if(e.key==="Enter"&&answered){ e.preventDefault(); next() } });
+            next();
+        })();
+        function isTyping(e){ var t=e.target; return t && (t.tagName==="INPUT"||t.tagName==="TEXTAREA"||t.tagName==="SELECT"||t.isContentEditable) }
+
+        /* ================= 14b sort game ================= */
+        (function(){
+            var DECKS={
+                prep:{b:[["a","Akkusativ"],["d","Dativ"],["g","Genitiv"],["w","Wo/Wohin (beide)"]],
+                    items:[["durch","a"],["für","a"],["gegen","a"],["ohne","a"],["um","a"],["bis","a"],["aus","d"],["bei","d"],["mit","d"],["nach","d"],["seit","d"],["von","d"],["zu","d"],["gegenüber","d"],["außer","d"],
+                        ["wegen","g"],["trotz","g"],["während","g"],["statt","g"],["an","w"],["auf","w"],["hinter","w"],["in","w"],["neben","w"],["über","w"],["unter","w"],["vor","w"],["zwischen","w"]]},
+                verb:{b:[["a","+ Akkusativ"],["d","+ Dativ"],["ad","+ Dativ + Akkusativ"]],
+                    items:[["sehen","a"],["kaufen","a"],["brauchen","a"],["fragen","a"],["anrufen","a"],["besuchen","a"],["vermissen","a"],["unterstützen","a"],["kennen","a"],["bekommen","a"],
+                        ["helfen","d"],["danken","d"],["gefallen","d"],["gehören","d"],["antworten","d"],["gratulieren","d"],["schmecken","d"],["passen","d"],["fehlen","d"],["folgen","d"],["vertrauen","d"],["zuhören","d"],
+                        ["geben","ad"],["schenken","ad"],["zeigen","ad"],["erklären","ad"],["schicken","ad"],["bringen","ad"],["empfehlen","ad"],["leihen","ad"]]}
+            };
+            var deckK="prep", sel=null, ok=0, bad=0;
+            var pool=$("#sortPool"), bk=$("#sortBuckets");
+            function start(){ ok=0; bad=0; sel=null; var D=DECKS[deckK];
+                bk.innerHTML=D.b.map(function(b){return '<div class="bucket '+b[0]+'" data-b="'+b[0]+'"><h4>'+b[1]+'</h4><div class="in"></div></div>'}).join("");
+                pool.innerHTML=""; shuffle(D.items).slice(0,16).forEach(function(it){ var c=document.createElement("div"); c.className="card-w"; c.textContent=it[0]; c.dataset.b=it[1]; pool.appendChild(c); bindCard(c) });
+                $$(".bucket",bk).forEach(function(b){ b.onclick=function(){ if(sel)drop(sel,b) } }); upd() }
+            function upd(){ $("#sortScore").textContent="✓ "+ok+"   ✗ "+bad }
+            function drop(c,b){ if(!c||!b)return; c.classList.remove("sel"); sel=null;
+                if(c.dataset.b===b.dataset.b){ c.classList.add("ok"); $(".in",b).appendChild(c); ok++; ding(); c.onpointerdown=null;
+                    if(!$$(".card-w",pool).length){ confetti(); toast(bad===0?"Perfekt! Alles richtig!":"Fertig! "+ok+" richtig, "+bad+" Fehler") } }
+                else { bad++; buzz(); c.classList.remove("no"); void c.offsetWidth; c.classList.add("no") }
+                upd() }
+            function bindCard(c){
+                c.onpointerdown=function(e){ if(c.classList.contains("ok"))return; e.preventDefault(); var sx=e.clientX, sy=e.clientY, ghost=null, moved=false;
+                    function mv(ev){ var dx=ev.clientX-sx, dy=ev.clientY-sy; if(!moved && Math.abs(dx)+Math.abs(dy)>8){ moved=true; ghost=c.cloneNode(true); ghost.classList.add("ghost"); document.body.appendChild(ghost); c.style.opacity=.3 }
+                        if(ghost){ ghost.style.left=(ev.clientX-ghost.offsetWidth/2)+"px"; ghost.style.top=(ev.clientY-ghost.offsetHeight/2)+"px";
+                            var under=document.elementFromPoint(ev.clientX,ev.clientY); var b=under&&under.closest(".bucket"); $$(".bucket",bk).forEach(function(x){x.classList.toggle("hot",x===b)}) } }
+                    function up(ev){ document.removeEventListener("pointermove",mv); document.removeEventListener("pointerup",up); document.removeEventListener("pointercancel",up);
+                        $$(".bucket",bk).forEach(function(x){x.classList.remove("hot")});
+                        if(ghost){ ghost.remove(); c.style.opacity=""; var under=document.elementFromPoint(ev.clientX,ev.clientY); var b=under&&under.closest(".bucket"); if(b)drop(c,b) }
+                        else { if(sel===c){ c.classList.remove("sel"); sel=null } else { if(sel)sel.classList.remove("sel"); sel=c; c.classList.add("sel"); pop() } } }
+                    document.addEventListener("pointermove",mv); document.addEventListener("pointerup",up); document.addEventListener("pointercancel",up) } }
+            $$("#sortSeg button").forEach(function(b){ b.onclick=function(){ $$("#sortSeg button").forEach(function(x){x.classList.toggle("on",x===b)}); deckK=b.dataset.v; start() } });
+            $("#sortReset").onclick=start;
+            start();
+        })();
+
+        /* ================= 14c detective ================= */
+        (function(){
+            var S=[
+                [[["Der Lehrer","n"]," erklärt ",["den Schülern","d"]," ",["die Grammatik","a"],"."],"Wer erklärt? der Lehrer. Wem? den Schülern (Dativ plural + n). Was? die Grammatik."],
+                [[["Mein Bruder","n"]," schenkt ",["meiner Mutter","d"]," ",["einen Hund","a"],"."],"Giver = Nom, receiver = Dat, gift = Akk."],
+                [[["Den Film","a"]," hat ",["meine Schwester","n"]," schon gesehen."],"den = Akkusativ even at the front. My sister does the seeing → Nominativ."],
+                [[["Das Auto","n"]," ",["meines Vaters","g"]," ist neu."],"Wessen Auto? meines Vaters → Genitiv (-s)."],
+                [[["Mir","d"]," gefällt ",["die Musik","n"],"."],"gefallen flip: the music is the subject (Nom); the person who likes it is Dativ."],
+                [[["Ich","n"]," frage ",["den Verkäufer","a"]," ",["nach dem Preis","d"],"."],"fragen + Akk. nach → always Dativ."],
+                [[["Wir","n"]," helfen ",["unserem Nachbarn","d"],"."],"helfen + Dativ. Nachbar is N-Deklination → Nachbarn."],
+                [[["Der Hund","n"]," ",["des Nachbarn","g"]," bellt ",["jeden Morgen","a"],"."],"jeden Morgen = time without preposition → Akkusativ!"],
+                [[["Er","n"]," ist ",["ein guter Freund","n"],"."],"sein = equals sign → both sides Nominativ."],
+                [[["Es","n"]," gibt ",["keinen Zucker","a"]," mehr."],"es gibt + Akkusativ. „es“ is the grammatical subject."],
+                [[["Wegen des Staus","g"]," kommt ",["der Bus","n"]," zu spät."],"wegen + Genitiv. The bus comes → Nominativ."],
+                [[["Dem Kind","d"]," tut ",["der Bauch","n"]," weh."],"wehtun: the belly (Nom) hurts to the child (Dat)."],
+                [[["Ich","n"]," lege ",["das Handy","a"]," ",["auf den Tisch","a"],"."],"legen → Wohin? → auf den Tisch (Akk). The phone is the object → Akk."],
+                [[["Das Handy","n"]," liegt ",["auf dem Tisch","d"],"."],"liegen → Wo? → Dativ."],
+                [[["Die Kinder","n"]," spielen ",["mit dem Ball","d"]," ",["im Garten","d"],"."],"mit → Dativ. im = in dem → Wo? → Dativ."],
+                [["Kannst ",["du","n"]," ",["mir","d"]," ",["das Salz","a"]," geben?"],"du = the doer. mir = receiver (Dat). das Salz = the thing (Akk)."]
+            ];
+            var idx=0, order=["","n","a","d","g"];
+            function render(){ var s=S[idx]; var h="";
+                s[0].forEach(function(p,i){ if(typeof p==="string")h+=esc(p); else h+='<span class="ph" data-i="'+i+'" data-v="">'+esc(p[0])+'<span class="lab" hidden></span></span>' });
+                $("#detSent").innerHTML=h; $("#detWhy").hidden=true; $("#detCount").textContent="Satz "+(idx+1)+" / "+S.length;
+                $$("#detSent .ph").forEach(function(ph){ ph.onclick=function(){ var v=ph.dataset.v; var nv=order[(order.indexOf(v)+1)%order.length]; if(nv==="")nv="n"; set(ph,nv); pop() } }) }
+            function set(ph,v){ ph.dataset.v=v; ph.classList.remove("right","wrong"); var l=$(".lab",ph); if(v){ l.hidden=false; l.textContent=SHORT[v]; l.style.background="var(--"+{n:"nom",a:"akk",d:"dat",g:"gen"}[v]+")" } else l.hidden=true }
+            $("#detCheck").onclick=function(){ var s=S[idx], all=true;
+                $$("#detSent .ph").forEach(function(ph){ var want=s[0][+ph.dataset.i][1]; var ok=ph.dataset.v===want; ph.classList.toggle("right",ok); ph.classList.toggle("wrong",!ok); if(!ok)all=false });
+                var w=$("#detWhy"); w.hidden=false; w.className="qwhy "+(all?"ok":"no"); w.innerHTML="<b>"+(all?"Perfekt! ":"Noch nicht ganz. ")+"</b>"+(all?esc(s[1]):"Tap the red ones again — or press Lösung.");
+                if(all){ding();confetti()}else buzz() };
+            $("#detShow").onclick=function(){ var s=S[idx]; $$("#detSent .ph").forEach(function(ph){ set(ph,s[0][+ph.dataset.i][1]); ph.classList.add("right") }); var w=$("#detWhy"); w.hidden=false; w.className="qwhy ok"; w.innerHTML=esc(s[1]) };
+            $("#detNext").onclick=function(){ idx=(idx+1)%S.length; pop(); render() };
+            $("#detPrev").onclick=function(){ idx=(idx-1+S.length)%S.length; pop(); render() };
+            render();
+        })();
+
+        /* tabs */
+        $$("#exTabs button").forEach(function(b){ b.onclick=function(){ $$("#exTabs button").forEach(function(x){x.classList.toggle("on",x===b)});
+            ["quiz","sort","det"].forEach(function(k){ $("#tab-"+k).hidden=(k!==b.dataset.tab) }); pop() } });
+
+        /* ================= Rätselmodus reveal ================= */
+        document.addEventListener("click",function(e){ if(!document.body.classList.contains("quizmode"))return; var r=e.target.closest(".rv"); if(!r)return; r.classList.toggle("shown"); if(r.classList.contains("shown"))pop() });
+
+        /* ================= toc scroll-spy ================= */
+        var SECS=$$("main section"), TOC=$$("#toc a");
+        function curSec(){ var y=scrollY+100, idx=0; SECS.forEach(function(s,i){ if(s.offsetTop<=y)idx=i });
+            if(innerHeight+scrollY>=document.documentElement.scrollHeight-4)idx=SECS.length-1; if(scrollY<SECS[0].offsetTop-200)idx=-1; return idx }
+        var lastSec=-2;
+        function spy(){ var i=curSec(); if(i===lastSec)return; lastSec=i; TOC.forEach(function(a,j){a.classList.toggle("on",j===i)});
+            if(i>=0){ var a=TOC[i], bar=$("#toc"); var l=a.offsetLeft-bar.clientWidth/2+a.clientWidth/2; bar.scrollTo({left:l,behavior:"smooth"}) } }
+        addEventListener("scroll",spy,{passive:true}); spy();
+        function goSec(d){ var i=curSec(); var n=Math.max(0,Math.min(SECS.length-1,i+d)); if(i<0&&d<0)return scrollTo({top:0,behavior:"smooth"}); SECS[n].scrollIntoView({behavior:"smooth"}) }
+
+        /* ================= pen ================= */
+        var ink=$("#ink"), ictx=ink.getContext("2d"), penColor="#C62F28", drawing=false, lastP=null;
+        function sizeInk(){ var d=devicePixelRatio||1; var img=null; ink.width=innerWidth*d; ink.height=innerHeight*d; ink.style.width=innerWidth+"px"; ink.style.height=innerHeight+"px"; ictx.setTransform(d,0,0,d,0,0); ictx.lineCap="round"; ictx.lineJoin="round" }
+        sizeInk(); addEventListener("resize",sizeInk);
+        ink.addEventListener("pointerdown",function(e){ drawing=true; lastP=[e.clientX,e.clientY]; ink.setPointerCapture(e.pointerId); dot(e) });
+        ink.addEventListener("pointermove",function(e){ if(!drawing)return; var p=[e.clientX,e.clientY]; stroke(lastP,p,e.pressure); lastP=p });
+        ink.addEventListener("pointerup",function(){drawing=false}); ink.addEventListener("pointercancel",function(){drawing=false});
+        function styleInk(pr){ if(penColor==="hl"){ ictx.globalCompositeOperation="multiply"; ictx.strokeStyle="rgba(255,225,77,.5)"; ictx.lineWidth=26 } else { ictx.globalCompositeOperation="source-over"; ictx.strokeStyle=penColor; ictx.lineWidth=4+(pr&&pr!==.5?pr*4:1) } }
+        function stroke(a,b,pr){ styleInk(pr); ictx.beginPath(); ictx.moveTo(a[0],a[1]); ictx.lineTo(b[0],b[1]); ictx.stroke() }
+        function dot(e){ stroke([e.clientX,e.clientY],[e.clientX+.1,e.clientY+.1],e.pressure) }
+        function clearInk(){ ictx.save(); ictx.setTransform(1,0,0,1,0,0); ictx.clearRect(0,0,ink.width,ink.height); ictx.restore() }
+        $$(".swatch").forEach(function(s){ s.onclick=function(){ $$(".swatch").forEach(function(x){x.classList.toggle("on",x===s)}); penColor=s.dataset.c } });
+        $("#penClear").onclick=clearInk;
+        function setPen(on){ document.body.classList.toggle("drawing",on); $('[data-act="pen"]').classList.toggle("on",on); if(!on){ clearInk(); closePops() } else openPop("popPen") }
+
+        /* ================= dock ================= */
+        var POPBTN={popTeams:"teams",popPick:"pick",popTimer:"timer"};
+        function closePops(){ $$(".dock .pop").forEach(function(p){p.hidden=true}); $$('[data-act="teams"],[data-act="pick"],[data-act="timer"]').forEach(function(b){b.classList.remove("on")}) }
+        function openPop(id){ var p=$("#"+id), willOpen=p.hidden; closePops(); if(willOpen){ p.hidden=false; if(POPBTN[id])$('[data-act="'+POPBTN[id]+'"]').classList.add("on") } }
+        var fs=parseInt(store("fs")||"19",10); if(!(fs>=14&&fs<=32))fs=19; document.documentElement.style.setProperty("--fs",fs+"px");
+        function setFs(d){ fs=Math.max(14,Math.min(32,fs+d)); document.documentElement.style.setProperty("--fs",fs+"px"); store("fs",String(fs)); toast("Textgröße "+fs+"px") }
+        function setSoundBtn(){ var b=$('[data-act="sound"]'); b.classList.toggle("on",soundOn); b.style.opacity=soundOn?1:.55 }
+        setSoundBtn();
+        $("#dockBar").addEventListener("click",function(e){ var b=e.target.closest("button"); if(!b)return; var a=b.dataset.act;
+            if(a==="next")goSec(1); else if(a==="prev")goSec(-1);
+            else if(a==="pen")setPen(!document.body.classList.contains("drawing"));
+            else if(a==="quiz"){ var on=document.body.classList.toggle("quizmode"); b.classList.toggle("on",on); if(!on)$$(".rv.shown").forEach(function(x){x.classList.remove("shown")}); toast(on?"Rätselmodus an — tap the ? blocks":"Rätselmodus aus") }
+            else if(a==="clean"){ var on2=document.body.classList.toggle("clean-mode"); b.classList.toggle("on",on2); toast(on2?"Teacher scripts hidden":"Teacher scripts visible") }
+            else if(a==="teams")openPop("popTeams"); else if(a==="pick")openPop("popPick"); else if(a==="timer")openPop("popTimer");
+            else if(a==="sound"){ soundOn=!soundOn; store("sound",soundOn?"1":"0"); setSoundBtn(); if(soundOn)ding(); toast(soundOn?"Ton an":"Ton aus") }
+            else if(a==="bigger")setFs(2); else if(a==="smaller")setFs(-2);
+            else if(a==="full"){ try{ if(document.fullscreenElement)document.exitFullscreen(); else document.documentElement.requestFullscreen() }catch(err){} }
+            else if(a==="min"){ var mn=$("#dock").classList.toggle("min"); b.classList.toggle("on",!mn); closePops() }
+        });
+// teams
+        var teams=[0,0]; try{ var tj=JSON.parse(store("teams")||"null"); if(tj&&tj.length===2)teams=tj }catch(e){}
+        var tnames=$$(".team input"); try{ var tn=JSON.parse(store("tnames")||"null"); if(tn)tn.forEach(function(v,i){ if(tnames[i])tnames[i].value=v }) }catch(e){}
+        tnames.forEach(function(inp){ inp.addEventListener("input",function(){ store("tnames",JSON.stringify(tnames.map(function(x){return x.value}))) }) });
+        function showTeams(){ $("#t1").textContent=teams[0]; $("#t2").textContent=teams[1]; store("teams",JSON.stringify(teams)) }
+        $$(".team .row button").forEach(function(b){ b.onclick=function(){ var t=+b.dataset.t-1, d=+b.dataset.d; teams[t]=Math.max(0,teams[t]+d); showTeams(); if(d>0){ding(); var el=$("#t"+(t+1)); el.animate([{transform:"scale(1.4)"},{transform:"scale(1)"}],{duration:350})} } });
+        $("#teamReset").onclick=function(){ teams=[0,0]; showTeams() }; showTeams();
+// picker
+        var pn=$("#pickNames"); pn.value=store("names")||""; pn.addEventListener("input",function(){store("names",pn.value)});
+        var lastPick="";
+        $("#pickGo").onclick=function(){ var names=pn.value.split(/[,\n]/).map(function(s){return s.trim()}).filter(Boolean); if(!names.length){ $("#pickOut").textContent="Add names ↑"; return }
+            var out=$("#pickOut"), n=0, total=16+Math.floor(Math.random()*8), final;
+            do{ final=pick(names) }while(names.length>1 && final===lastPick); lastPick=final;
+            (function spin(){ if(n>=total){ out.textContent=final; ding(); confetti(); return } out.textContent=names[n%names.length]; tone(300+n*25,.05,"square",.04); n++; setTimeout(spin,40+n*n*.9) })() };
+// timer
+        var tLeft=0, tInt=0;
+        function fmt(s){ return Math.floor(s/60)+":"+("0"+s%60).slice(-2) }
+        function tRender(){ var c=$("#timerChip"), big=$("#timerBigT"); c.textContent="⏱ "+fmt(tLeft); big.textContent=fmt(tLeft); var low=tLeft<=10; c.classList.toggle("low",low); big.classList.toggle("low",low) }
+        function tStop(){ clearInterval(tInt); tInt=0; $("#timerChip").hidden=true; $("#timerOverlay").hidden=true }
+        $$("#popTimer [data-sec]").forEach(function(b){ b.onclick=function(){ tStop(); tLeft=+b.dataset.sec; tRender(); $("#timerChip").hidden=false; $("#timerOverlay").hidden=!$("#timerBig").checked; closePops();
+            tInt=setInterval(function(){ tLeft--; tRender(); if(tLeft<=5&&tLeft>0)tone(880,.08,"square",.06);
+                if(tLeft<=0){ clearInterval(tInt); tInt=0; tone(660,.3,"square",.1); tone(440,.5,"square",.1,.3); $("#timerOverlay").hidden=false; $("#timerBigT").textContent="Zeit!"; setTimeout(tStop,2500) } },1000) } });
+        $("#timerChip").onclick=function(){ $("#timerOverlay").hidden=!$("#timerOverlay").hidden };
+        $("#timerStop").onclick=tStop;
+        $("#timerOverlay").addEventListener("click",function(e){ if(e.target===this)this.hidden=true });
+
+        /* keyboard: clickers send PageDown / PageUp */
+        document.addEventListener("keydown",function(e){ if(isTyping(e))return;
+            if(e.key==="PageDown"){ e.preventDefault(); goSec(1) }
+            else if(e.key==="PageUp"){ e.preventDefault(); goSec(-1) }
+            else if(e.key==="p"||e.key==="P"){ setPen(!document.body.classList.contains("drawing")) }
+            else if(e.key==="r"||e.key==="R"){ $('[data-act="quiz"]').click() }
+            else if(e.key==="f"||e.key==="F"){ $('[data-act="full"]').click() }
+            else if(e.key==="Escape"){ if(document.body.classList.contains("drawing"))setPen(false); closePops(); if(tInt===0)$("#timerOverlay").hidden=true }
+        });
+    })();
+</script>
+</body>
+</html>
