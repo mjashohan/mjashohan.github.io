@@ -21,6 +21,7 @@ import ForkRightIcon from '@mui/icons-material/ForkRight';
 import LaunchIcon from '@mui/icons-material/Launch';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import CodeIcon from '@mui/icons-material/Code';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { motion } from 'framer-motion';
 import { useGithubRepos } from '../hooks/useGithubRepos.js';
 import { personal } from '../data/personal.js';
@@ -177,6 +178,14 @@ function RepoCard({ repo, index }) {
                         >
                             {repo.name}
                         </Typography>
+                        {repo.private && (
+                            <Tooltip title="Private repository — source not public">
+                                <LockOutlinedIcon
+                                    aria-label="Private repository"
+                                    sx={{ fontSize: 14, color: 'text.secondary', flexShrink: 0 }}
+                                />
+                            </Tooltip>
+                        )}
                     </Stack>
 
                     <Typography
@@ -210,14 +219,18 @@ function RepoCard({ repo, index }) {
                                 <Typography variant="caption">{repo.language}</Typography>
                             </Stack>
                         )}
-                        <Stack direction="row" spacing={0.4} alignItems="center">
-                            <StarBorderIcon sx={{ fontSize: 14 }} />
-                            <Typography variant="caption">{repo.stargazers_count}</Typography>
-                        </Stack>
-                        <Stack direction="row" spacing={0.4} alignItems="center">
-                            <ForkRightIcon sx={{ fontSize: 14 }} />
-                            <Typography variant="caption">{repo.forks_count}</Typography>
-                        </Stack>
+                        {!repo.private && (
+                            <>
+                                <Stack direction="row" spacing={0.4} alignItems="center">
+                                    <StarBorderIcon sx={{ fontSize: 14 }} />
+                                    <Typography variant="caption">{repo.stargazers_count}</Typography>
+                                </Stack>
+                                <Stack direction="row" spacing={0.4} alignItems="center">
+                                    <ForkRightIcon sx={{ fontSize: 14 }} />
+                                    <Typography variant="caption">{repo.forks_count}</Typography>
+                                </Stack>
+                            </>
+                        )}
                     </Stack>
 
                     {repo.topics?.length > 0 && (
@@ -253,16 +266,30 @@ function RepoCard({ repo, index }) {
                         >
                             ↻ {formatDate(repo.pushed_at)}
                         </Typography>
-                        <Button
-                            href={repo.html_url}
-                            target="_blank"
-                            rel="noopener"
-                            size="small"
-                            endIcon={<LaunchIcon sx={{ fontSize: 14 }} />}
-                            sx={{ fontSize: '0.78rem', minWidth: 0, px: 1 }}
-                        >
-                            View
-                        </Button>
+                        {repo.private ? (
+                            <Stack
+                                direction="row"
+                                spacing={0.5}
+                                alignItems="center"
+                                sx={{ color: 'text.secondary', px: 1, py: 0.5 }}
+                            >
+                                <LockOutlinedIcon sx={{ fontSize: 14 }} />
+                                <Typography variant="caption" sx={{ fontSize: '0.78rem' }}>
+                                    Private
+                                </Typography>
+                            </Stack>
+                        ) : (
+                            <Button
+                                href={repo.html_url}
+                                target="_blank"
+                                rel="noopener"
+                                size="small"
+                                endIcon={<LaunchIcon sx={{ fontSize: 14 }} />}
+                                sx={{ fontSize: '0.78rem', minWidth: 0, px: 1 }}
+                            >
+                                View
+                            </Button>
+                        )}
                     </Stack>
                 </CardContent>
             </Card>

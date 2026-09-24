@@ -9,7 +9,7 @@ export default function ProjectsSection() {
       <SectionHeader
         tag="03. What I've built"
         title="Projects"
-        subtitle="Open-source repos pulled live from GitHub, plus deeper writeups of thesis and research work."
+        subtitle="Repos pulled from GitHub (private ones are listed without a source link), plus deeper writeups of thesis and research work."
       />
 
       <GithubCarousel />

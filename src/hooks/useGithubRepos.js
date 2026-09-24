@@ -1,5 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { personal } from '../data/personal.js';
+// Build-time snapshot of private repos (see scripts/fetch-private-repos.mjs).
+import privateRepos from '../data/privateRepos.json';
 
 const CACHE_KEY = `gh_repos_${personal.githubUser}`;
 const CACHE_TTL_MS = 1000 * 60 * 30; // 30 min
@@ -10,7 +12,8 @@ const EXCLUDED = new Set(['mjashohan.github.io']);
 /**
  * Fetches public repos for the configured GitHub user, sorted by most-recently
  * pushed (so newly-updated repos float to the front), and exposes a sync()
- * function that the UI can call to force a refresh.
+ * function that the UI can call to force a refresh. Private repos from the
+ * build-time snapshot are merged in, flagged with `private: true`.
  */
 export function useGithubRepos() {
   const [repos, setRepos] = useState([]);
@@ -75,5 +78,12 @@ export function useGithubRepos() {
     fetchRepos();
   }, [fetchRepos]);
 
-  return { repos, loading, error, lastSynced, sync };
+  const merged = useMemo(() => {
+    // If a private repo has since gone public, the live entry wins.
+    const publicNames = new Set(repos.map((r) => r.name));
+    return [...repos, ...privateRepos.filter((r) => !publicNames.has(r.name) && !EXCLUDED.has(r.name))]
+      .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at));
+  }, [repos]);
+
+  return { repos: merged, loading, error, lastSynced, sync };
 }
