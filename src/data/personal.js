@@ -5,7 +5,7 @@ export const personal = {
   title: 'Software Engineer',
   tagline: ['I build webapps and softwares.', 'Java · Liferay · Spring Boot · React'],
   location: 'Essen, Germany',
-  email: 'mjashohan@gmail.com',
+  email: 'me@mjashohan.com',
   phone: '+49 1522 8363090',
   github: 'https://github.com/mjashohan',
   githubUser: 'mjashohan',
