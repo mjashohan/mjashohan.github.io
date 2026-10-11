@@ -14,7 +14,7 @@ export const personal = {
   // and change the line below to './avatar.jpg'.
   avatar: './shohan.jpg',
   // TODO: Write your "about me" intro here. Keep it 2–4 sentences.
-  about: `Hi, I'm Md Jahan Ali Shohan. I am a Software Engineer based in Essen  who loves bridging the gap between digital code and the physical world. By day, I build robust, full-stack web applications using Java, Liferay, Spring Boot, and React. But my tech journey goes way beyond the browser. I have built everything from complex web applications to IoT based smart systems and underwater rovers! I have recently picked up a hobby on Home Labs and I am really loving it. I love to code and I love to cook. Whether I am developing a system or cooking up a dish I make sure to give my best in it. In every aspect of my life, I am always chasing the next big challenge`,
+  about: `Hello, I am Md Jahan Ali Shohan, a Germany-based Software Engineer passionate about transforming complex code into real-world, physical innovations. My technical foundation centers on Java, Liferay, Spring Boot, and React, complemented by hands-on experience with IoT systems and underwater robotics. Currently, I am expanding my expertise through active projects in homelab management and DevOps practices. I bring precision and high standards to every endeavor; from software architecture to culinary arts; and thrive when solving demanding technical challenges.`,
   lastUpdated: {
     date: '11/10/2026',
     place: 'Essen',
