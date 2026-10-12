@@ -24,7 +24,7 @@ import CodeIcon from '@mui/icons-material/Code';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { motion } from 'framer-motion';
 import { useGithubRepos } from '../hooks/useGithubRepos.js';
-import { personal } from '../data/personal.js';
+import { useI18n } from '../i18n/I18nProvider.jsx';
 
 // Subset of common GitHub language colors so chips feel authentic.
 const LANGUAGE_COLORS = {
@@ -53,28 +53,30 @@ const LANGUAGE_COLORS = {
 // Responsive card width — used by both the real cards and skeleton placeholders.
 const CARD_WIDTH = { xs: 280, sm: 300, md: 320 };
 
-const formatDate = (iso) => {
+const formatDate = (iso, locale) => {
     if (!iso) return '';
     const d = new Date(iso);
-    return d.toLocaleDateString('en-GB', {
+    return d.toLocaleDateString(locale, {
         day: '2-digit',
         month: 'short',
         year: 'numeric',
     });
 };
 
-const formatLastSynced = (ts) => {
-    if (!ts) return 'never';
+const formatLastSynced = (ts, g) => {
+    if (!ts) return g.never;
     const seconds = Math.round((Date.now() - ts) / 1000);
-    if (seconds < 60) return 'just now';
+    if (seconds < 60) return g.justNow;
     const minutes = Math.round(seconds / 60);
-    if (minutes < 60) return `${minutes} min ago`;
+    if (minutes < 60) return g.minAgo(minutes);
     const hours = Math.round(minutes / 60);
-    if (hours < 24) return `${hours} h ago`;
-    return formatDate(new Date(ts).toISOString());
+    if (hours < 24) return g.hAgo(hours);
+    return formatDate(new Date(ts).toISOString(), g.dateLocale);
 };
 
 function RepoCard({ repo, index }) {
+    const { t } = useI18n();
+    const g = t.github;
     const langColor = LANGUAGE_COLORS[repo.language] || '#8892b0';
     return (
         <motion.div
@@ -179,9 +181,9 @@ function RepoCard({ repo, index }) {
                             {repo.name}
                         </Typography>
                         {repo.private && (
-                            <Tooltip title="Private repository — source not public">
+                            <Tooltip title={g.privateTooltip}>
                                 <LockOutlinedIcon
-                                    aria-label="Private repository"
+                                    aria-label={g.privateAria}
                                     sx={{ fontSize: 14, color: 'text.secondary', flexShrink: 0 }}
                                 />
                             </Tooltip>
@@ -201,7 +203,7 @@ function RepoCard({ repo, index }) {
                             overflow: 'hidden',
                         }}
                     >
-                        {repo.description || 'No description provided.'}
+                        {repo.description || g.noDescription}
                     </Typography>
 
                     <Stack
@@ -264,7 +266,7 @@ function RepoCard({ repo, index }) {
                                 fontSize: '0.7rem',
                             }}
                         >
-                            ↻ {formatDate(repo.pushed_at)}
+                            ↻ {formatDate(repo.pushed_at, g.dateLocale)}
                         </Typography>
                         {repo.private ? (
                             <Stack
@@ -275,7 +277,7 @@ function RepoCard({ repo, index }) {
                             >
                                 <LockOutlinedIcon sx={{ fontSize: 14 }} />
                                 <Typography variant="caption" sx={{ fontSize: '0.78rem' }}>
-                                    Private
+                                    {g.private}
                                 </Typography>
                             </Stack>
                         ) : (
@@ -287,7 +289,7 @@ function RepoCard({ repo, index }) {
                                 endIcon={<LaunchIcon sx={{ fontSize: 14 }} />}
                                 sx={{ fontSize: '0.78rem', minWidth: 0, px: 1 }}
                             >
-                                View
+                                {g.view}
                             </Button>
                         )}
                     </Stack>
@@ -298,6 +300,9 @@ function RepoCard({ repo, index }) {
 }
 
 export default function GithubCarousel() {
+    const { t, content } = useI18n();
+    const g = t.github;
+    const { personal } = content;
     const { repos, loading, error, lastSynced, sync } = useGithubRepos();
     const scrollerRef = useRef(null);
     const [syncing, setSyncing] = useState(false);
@@ -335,10 +340,10 @@ export default function GithubCarousel() {
                         variant="h5"
                         sx={{ fontWeight: 700, fontSize: { xs: '1.1rem', sm: '1.3rem' } }}
                     >
-                        GitHub Repositories
+                        {g.heading}
                     </Typography>
                     <Chip
-                        label={`${repos.length} ${repos.length === 1 ? 'repo' : 'repos'}`}
+                        label={`${repos.length} ${repos.length === 1 ? g.repo : g.repos}`}
                         size="small"
                         sx={{
                             bgcolor: 'rgba(100, 255, 218, 0.08)',
@@ -365,14 +370,14 @@ export default function GithubCarousel() {
                             fontSize: '0.72rem',
                         }}
                     >
-                        synced {formatLastSynced(lastSynced)}
+                        {g.synced} {formatLastSynced(lastSynced, g)}
                     </Typography>
-                    <Tooltip title="Pull latest from GitHub">
+                    <Tooltip title={g.syncTooltip}>
             <span>
               <Button
                   onClick={handleSync}
                   disabled={loading || syncing}
-                  aria-label="Sync repositories from GitHub"
+                  aria-label={g.syncAria}
                   startIcon={
                       syncing || loading ? (
                           <CircularProgress size={14} sx={{ color: 'primary.main' }} />
@@ -387,27 +392,27 @@ export default function GithubCarousel() {
                       fontSize: '0.78rem',
                   }}
               >
-                Sync
+                {g.sync}
               </Button>
             </span>
                     </Tooltip>
 
                     {/* Hide chevron arrows on touch devices — users swipe instead */}
-                    <Tooltip title="Scroll left">
+                    <Tooltip title={g.scrollLeft}>
                         <IconButton
                             onClick={() => scrollBy(-340)}
                             size="small"
-                            aria-label="Scroll repositories left"
+                            aria-label={g.scrollLeftAria}
                             sx={{ display: { xs: 'none', md: 'inline-flex' } }}
                         >
                             <ChevronLeftIcon />
                         </IconButton>
                     </Tooltip>
-                    <Tooltip title="Scroll right">
+                    <Tooltip title={g.scrollRight}>
                         <IconButton
                             onClick={() => scrollBy(340)}
                             size="small"
-                            aria-label="Scroll repositories right"
+                            aria-label={g.scrollRightAria}
                             sx={{ display: { xs: 'none', md: 'inline-flex' } }}
                         >
                             <ChevronRightIcon />
@@ -425,7 +430,7 @@ export default function GithubCarousel() {
                         border: '1px solid rgba(255, 126, 95, 0.2)',
                     }}
                 >
-                    Couldn't reach GitHub: {error}.{' '}
+                    {g.errorPrefix} {error}.{' '}
                     <Box
                         component="a"
                         href={personal.github}
@@ -433,7 +438,7 @@ export default function GithubCarousel() {
                         rel="noopener"
                         sx={{ color: 'primary.main' }}
                     >
-                        View repositories on GitHub →
+                        {g.errorLink}
                     </Box>
                 </Alert>
             )}

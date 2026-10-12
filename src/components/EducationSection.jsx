@@ -2,12 +2,14 @@ import { Box, Card, CardContent, Chip, Stack, Typography } from '@mui/material';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import { motion } from 'framer-motion';
 import SectionHeader from './SectionHeader.jsx';
-import { education } from '../data/education.js';
+import { useI18n } from '../i18n/I18nProvider.jsx';
 
 export default function EducationSection() {
+  const { t, content } = useI18n();
+  const { education } = content;
   return (
       <Box id="education" component="section" sx={{ py: { xs: 5, sm: 6, md: 10 }, scrollMarginTop: 96 }}>
-      <SectionHeader tag="02. Where I have studied" title="Education" />
+      <SectionHeader tag={t.education.tag} title={t.education.title} />
 
       <Stack spacing={3}>
         {education.map((edu, idx) => (
@@ -95,7 +97,7 @@ export default function EducationSection() {
                     fontWeight: 600,
                   }}
                 >
-                  Focus areas
+                  {t.education.focusAreas}
                 </Typography>
 
                 <Stack direction="row" spacing={0.8} flexWrap="wrap" useFlexGap sx={{ mt: 1 }}>

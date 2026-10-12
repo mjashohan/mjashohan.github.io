@@ -2,15 +2,17 @@ import { Box, Card, CardContent, Chip, Stack, Typography } from '@mui/material';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import { motion } from 'framer-motion';
 import SectionHeader from './SectionHeader.jsx';
-import { experience } from '../data/experience.js';
+import { useI18n } from '../i18n/I18nProvider.jsx';
 
 export default function ExperienceSection() {
+  const { t, content } = useI18n();
+  const { experience } = content;
   return (
     <Box id="experience" component="section" sx={{ py: { xs: 5, sm: 6, md: 10 }, scrollMarginTop: 96  }}>
       <SectionHeader
-        tag="01. Where I've worked"
-        title="Experience"
-        subtitle="A few of the places I've contributed code, broken builds, and shipped fixes."
+        tag={t.experience.tag}
+        title={t.experience.title}
+        subtitle={t.experience.subtitle}
       />
 
         <Box

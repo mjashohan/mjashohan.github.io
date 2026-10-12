@@ -2,15 +2,17 @@ import { Box, Button, Card, CardContent, Chip, Divider, Stack, Typography } from
 import LaunchIcon from '@mui/icons-material/Launch';
 import ScienceOutlinedIcon from '@mui/icons-material/ScienceOutlined';
 import { motion } from 'framer-motion';
-import { thesisProjects } from '../data/thesisProjects.js';
+import { useI18n } from '../i18n/I18nProvider.jsx';
 
 export default function ThesisProjects() {
+  const { t, content } = useI18n();
+  const { thesisProjects } = content;
   return (
     <Box>
       <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 2.5 }}>
         <ScienceOutlinedIcon sx={{ color: 'primary.main' }} />
         <Typography variant="h5" sx={{ fontWeight: 700 }}>
-          Thesis &amp; Research Projects
+          {t.projects.thesisHeading}
         </Typography>
       </Stack>
 
@@ -92,7 +94,7 @@ export default function ThesisProjects() {
                     letterSpacing: '0.05em',
                   }}
                 >
-                  // Functions
+                  {t.projects.functions}
                 </Typography>
 
                 <Box component="ul" sx={{ pl: 2.5, my: 1, color: 'text.secondary' }}>
@@ -108,10 +110,10 @@ export default function ThesisProjects() {
                 </Box>
 
                 <Stack direction="row" spacing={0.8} flexWrap="wrap" useFlexGap sx={{ mt: 2 }}>
-                  {p.tags.map((t) => (
+                  {p.tags.map((tag) => (
                     <Chip
-                      key={t}
-                      label={t}
+                      key={tag}
+                      label={tag}
                       size="small"
                       sx={{
                         bgcolor: 'rgba(100, 255, 218, 0.06)',

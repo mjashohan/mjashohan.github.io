@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
     AppBar,
+    Box,
     Button,
     Drawer,
     IconButton,
@@ -20,15 +21,18 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
+import LanguageSwitcher from './LanguageSwitcher.jsx';
+import { useI18n } from '../i18n/I18nProvider.jsx';
 
 export const NAV_HEIGHT = { xs: 56, sm: 64, md: 72 };
 
+// Labels are looked up per language via t.nav.sections[id].
 const sections = [
-    { id: 'home', label: 'Home', code: '00' },
-    { id: 'experience', label: 'Experience', code: '01' },
-    { id: 'education', label: 'Education', code: '02' },
-    { id: 'projects', label: 'Projects', code: '03' },
-    { id: 'activities', label: 'Activities', code: '04' },
+    { id: 'home', code: '00' },
+    { id: 'experience', code: '01' },
+    { id: 'education', code: '02' },
+    { id: 'projects', code: '03' },
+    { id: 'activities', code: '04' },
 ];
 
 // Standalone static pages served straight out of public/.
@@ -51,6 +55,7 @@ export const getNavHeight = () => {
 };
 
 export default function Navigation() {
+    const { t } = useI18n();
     const [active, setActive] = useState('home');
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [menuAnchor, setMenuAnchor] = useState(null);
@@ -180,7 +185,7 @@ export default function Navigation() {
                                         >
                                             {s.code}.
                                         </Typography>
-                                        {s.label}
+                                        {t.nav.sections[s.id]}
                                         {isActive && (
                                             <motion.span
                                                 layoutId="nav-active"
@@ -238,7 +243,7 @@ export default function Navigation() {
                                 >
                                     05.
                                 </Typography>
-                                German
+                                {t.nav.german}
                             </Button>
 
                             <Menu
@@ -289,18 +294,25 @@ export default function Navigation() {
                                     </MenuItem>
                                 ))}
                             </Menu>
+
+                            <Box sx={{ ml: 1 }}>
+                                <LanguageSwitcher />
+                            </Box>
                         </Stack>
                     )}
 
                     {/* Mobile / tablet menu button */}
                     {isMobile && (
-                        <IconButton
-                            onClick={() => setDrawerOpen(true)}
-                            aria-label="Open navigation menu"
-                            sx={{ color: 'primary.main', width: 44, height: 44 }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
+                        <Stack direction="row" alignItems="center" spacing={0.5}>
+                            <LanguageSwitcher />
+                            <IconButton
+                                onClick={() => setDrawerOpen(true)}
+                                aria-label={t.nav.openMenu}
+                                sx={{ color: 'primary.main', width: 44, height: 44 }}
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                        </Stack>
                     )}
                 </Toolbar>
             </AppBar>
@@ -341,7 +353,7 @@ export default function Navigation() {
                     </Typography>
                     <IconButton
                         onClick={() => setDrawerOpen(false)}
-                        aria-label="Close navigation menu"
+                        aria-label={t.nav.closeMenu}
                         sx={{ color: 'text.primary', width: 44, height: 44 }}
                     >
                         <CloseIcon />
@@ -378,7 +390,7 @@ export default function Navigation() {
                                     {s.code}.
                                 </Typography>
                                 <ListItemText
-                                    primary={s.label}
+                                    primary={t.nav.sections[s.id]}
                                     primaryTypographyProps={{
                                         sx: {
                                             color: isActive ? 'primary.main' : 'text.primary',
@@ -402,7 +414,7 @@ export default function Navigation() {
                             opacity: 0.8,
                         }}
                     >
-                        05. German
+                        05. {t.nav.german}
                     </Typography>
 
                     {germanLinks.map((l) => (

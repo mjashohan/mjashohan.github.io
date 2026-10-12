@@ -3,7 +3,7 @@ import { Box, Button, Stack, Typography } from '@mui/material';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import LaunchIcon from '@mui/icons-material/Launch';
 import { motion } from 'framer-motion';
-import { personal } from '../data/personal.js';
+import { useI18n } from '../i18n/I18nProvider.jsx';
 import { getNavHeight } from './Navigation.jsx';
 
 function useTypewriter(lines, speed = 55, pause = 1600) {
@@ -46,6 +46,8 @@ const fadeIn = {
 };
 
 export default function Hero() {
+    const { t, content } = useI18n();
+    const { personal } = content;
     const typed = useTypewriter(personal.tagline);
 
     const scrollTo = (id) => {
@@ -89,7 +91,7 @@ export default function Hero() {
                         wordBreak: 'break-word',
                     }}
                 >
-                    Hi, I'm{' '}
+                    {t.hero.greeting}{' '}
                     <Box component="span" className="gradient-text">
                         Shohan.
                     </Box>
@@ -157,7 +159,7 @@ export default function Hero() {
                             transition: 'all 0.25s ease',
                         }}
                     >
-                        See my work
+                        {t.hero.seeWork}
                     </Button>
                     <Button
                         variant="outlined"
@@ -175,7 +177,7 @@ export default function Hero() {
                             transition: 'all 0.25s ease',
                         }}
                     >
-                        Get in touch
+                        {t.hero.getInTouch}
                     </Button>
                 </Stack>
             </motion.div>

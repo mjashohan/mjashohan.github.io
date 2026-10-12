@@ -1,5 +1,6 @@
 export const activities = [
   {
+    id: 'competitions',
     category: 'University Competitions',
     items: [
       {
@@ -13,6 +14,7 @@ export const activities = [
     ],
   },
   {
+    id: 'events',
     category: 'Event Management',
     items: [
       {

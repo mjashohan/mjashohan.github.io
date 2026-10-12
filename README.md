@@ -78,7 +78,7 @@ Two options.
 
 ### Option B — Project page at `mjashohan.github.io/portfolio`
 
-1. Edit `vite.config.js` and change `base: './'` to `base: '/portfolio/'` (use whatever your repo name is).
+1. Edit `vite.config.js` and change `base: '/'` to `base: '/portfolio/'` (use whatever your repo name is).
 2. Edit `package.json` and change `"homepage"` to match.
 3. Push to GitHub and run `npm run deploy`.
 

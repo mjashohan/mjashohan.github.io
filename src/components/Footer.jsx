@@ -2,7 +2,7 @@ import { Box, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmailIcon from '@mui/icons-material/EmailOutlined';
-import { personal } from '../data/personal.js';
+import { useI18n } from '../i18n/I18nProvider.jsx';
 
 const captionSx = {
     color: 'text.secondary',
@@ -11,6 +11,8 @@ const captionSx = {
 };
 
 export default function Footer() {
+    const { t, content } = useI18n();
+    const { personal } = content;
     return (
         <Box
             component="footer"
@@ -29,12 +31,12 @@ export default function Footer() {
             >
                 <Stack spacing={0.5} alignItems={{ xs: 'center', sm: 'flex-start' }}>
                     <Typography variant="caption" sx={captionSx}>
-                        // designed &amp; built by {personal.shortName} · {new Date().getFullYear()}
+                        // {t.footer.builtBy} {personal.shortName} · {new Date().getFullYear()}
                     </Typography>
 
                     {personal.lastUpdated && (
                         <Typography variant="caption" sx={{ ...captionSx, opacity: 0.75 }}>
-                            Updated on: {personal.lastUpdated.date}, {personal.lastUpdated.place}
+                            {t.footer.updatedOn} {personal.lastUpdated.date}, {personal.lastUpdated.place}
                         </Typography>
                     )}
                 </Stack>
@@ -68,7 +70,7 @@ export default function Footer() {
                             <LinkedInIcon fontSize="small" />
                         </IconButton>
                     </Tooltip>
-                    <Tooltip title="Email">
+                    <Tooltip title={t.footer.email}>
                         <IconButton
                             href={`mailto:${personal.email}`}
                             size="small"

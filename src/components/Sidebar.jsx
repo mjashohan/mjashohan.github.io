@@ -15,8 +15,7 @@ import PlaceIcon from '@mui/icons-material/PlaceOutlined';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { motion } from 'framer-motion';
-import { personal, languages } from '../data/personal.js';
-import { skillCategories } from '../data/skills.js';
+import { useI18n } from '../i18n/I18nProvider.jsx';
 
 const SkillDots = ({ level }) => (
     <Stack direction="row" spacing={0.5}>
@@ -37,6 +36,8 @@ const SkillDots = ({ level }) => (
 );
 
 export default function Sidebar() {
+    const { t, content } = useI18n();
+    const { personal, languages, skillCategories } = content;
     return (
         <Box
             component={motion.aside}
@@ -161,7 +162,7 @@ export default function Sidebar() {
                         target="_blank"
                         rel="noopener"
                         size="small"
-                        aria-label="GitHub profile"
+                        aria-label={t.sidebar.githubAria}
                         sx={{
                             border: '1px solid',
                             borderColor: 'divider',
@@ -179,7 +180,7 @@ export default function Sidebar() {
                         target="_blank"
                         rel="noopener"
                         size="small"
-                        aria-label="LinkedIn profile"
+                        aria-label={t.sidebar.linkedinAria}
                         sx={{
                             border: '1px solid',
                             borderColor: 'divider',

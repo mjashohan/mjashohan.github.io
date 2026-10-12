@@ -3,27 +3,29 @@ import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import { motion } from 'framer-motion';
 import SectionHeader from './SectionHeader.jsx';
-import { activities } from '../data/activities.js';
+import { useI18n } from '../i18n/I18nProvider.jsx';
 
 const ICONS = {
-  'University Competitions': EmojiEventsOutlinedIcon,
-  'Event Management': GroupsOutlinedIcon,
+  competitions: EmojiEventsOutlinedIcon,
+  events: GroupsOutlinedIcon,
 };
 
 export default function ActivitiesSection() {
+  const { t, content } = useI18n();
+  const { activities } = content;
   return (
      <Box id="activities" component="section" sx={{ py: { xs: 5, sm: 6, md: 10 }, scrollMarginTop: 96 }}>
       <SectionHeader
-        tag="04. Off the clock"
-        title="Extra-Curricular"
-        subtitle="A few things I've done outside of work and studies."
+        tag={t.activities.tag}
+        title={t.activities.title}
+        subtitle={t.activities.subtitle}
       />
 
       <Grid container spacing={{ xs: 2, sm: 3 }}>
         {activities.map((cat, idx) => {
-          const Icon = ICONS[cat.category] || EmojiEventsOutlinedIcon;
+          const Icon = ICONS[cat.id] || EmojiEventsOutlinedIcon;
           return (
-            <Grid item xs={12} md={6} key={cat.category}>
+            <Grid item xs={12} md={6} key={cat.id}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}

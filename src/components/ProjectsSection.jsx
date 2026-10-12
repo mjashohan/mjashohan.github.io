@@ -2,14 +2,16 @@ import { Box, Divider } from '@mui/material';
 import SectionHeader from './SectionHeader.jsx';
 import GithubCarousel from './GithubCarousel.jsx';
 import ThesisProjects from './ThesisProjects.jsx';
+import { useI18n } from '../i18n/I18nProvider.jsx';
 
 export default function ProjectsSection() {
+  const { t } = useI18n();
   return (
     <Box id="projects" component="section" sx={{ py: { xs: 5, sm: 6, md: 10 }, scrollMarginTop: 96 }}>
       <SectionHeader
-        tag="03. What I've built"
-        title="Projects"
-        subtitle="Repos pulled from GitHub (private ones are listed without a source link), plus deeper writeups of thesis and research work."
+        tag={t.projects.tag}
+        title={t.projects.title}
+        subtitle={t.projects.subtitle}
       />
 
       <GithubCarousel />
