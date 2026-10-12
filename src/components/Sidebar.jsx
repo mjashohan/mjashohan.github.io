@@ -26,8 +26,8 @@ const SkillDots = ({ level }) => (
                     width: 8,
                     height: 8,
                     borderRadius: '50%',
-                    bgcolor: i < level ? 'primary.main' : 'rgba(100, 255, 218, 0.15)',
-                    boxShadow: i < level ? '0 0 8px rgba(100,255,218,0.5)' : 'none',
+                    bgcolor: i < level ? 'primary.main' : 'rgba(var(--accent-rgb), 0.15)',
+                    boxShadow: i < level ? '0 0 8px rgba(var(--accent-rgb),0.5)' : 'none',
                     transition: 'all 0.3s ease',
                 }}
             />
@@ -55,7 +55,7 @@ export default function Sidebar() {
                 overflowY: { lg: 'auto' },
                 p: { xs: 2.5, sm: 3 },
                 borderRadius: 3,
-                bgcolor: 'rgba(19, 24, 38, 0.55)',
+                bgcolor: 'rgba(var(--surface-rgb), 0.55)',
                 backdropFilter: 'blur(14px)',
                 border: '1px solid',
                 borderColor: 'divider',
@@ -71,7 +71,7 @@ export default function Sidebar() {
                             position: 'absolute',
                             inset: -8,
                             borderRadius: '50%',
-                            background: 'conic-gradient(from 0deg, #64ffda, #ff7e5f, #64ffda)',
+                            background: 'conic-gradient(from 0deg, var(--primary), var(--secondary), var(--primary))',
                             filter: 'blur(10px)',
                             opacity: 0.5,
                         }}
@@ -102,7 +102,7 @@ export default function Sidebar() {
                         label={personal.title}
                         size="small"
                         sx={{
-                            bgcolor: 'rgba(100, 255, 218, 0.08)',
+                            bgcolor: 'rgba(var(--accent-rgb), 0.08)',
                             color: 'primary.main',
                             border: '1px solid',
                             borderColor: 'primary.dark',
@@ -291,9 +291,9 @@ export default function Sidebar() {
                             sx={{
                                 height: 4,
                                 borderRadius: 2,
-                                bgcolor: 'rgba(100, 255, 218, 0.08)',
+                                bgcolor: 'rgba(var(--accent-rgb), 0.08)',
                                 '& .MuiLinearProgress-bar': {
-                                    background: 'linear-gradient(90deg, #64ffda, #8effe7)',
+                                    background: 'linear-gradient(90deg, var(--primary), var(--primary-light))',
                                     borderRadius: 2,
                                 },
                             }}

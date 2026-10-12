@@ -32,7 +32,7 @@ export default function ThesisProjects() {
                 transition: 'all 0.3s ease',
                 '&:hover': {
                   borderColor: 'primary.main',
-                  boxShadow: '0 12px 40px rgba(100, 255, 218, 0.12)',
+                  boxShadow: '0 12px 40px rgba(var(--accent-rgb), 0.12)',
                 },
               }}
             >
@@ -50,7 +50,7 @@ export default function ThesisProjects() {
                         label={p.type}
                         size="small"
                         sx={{
-                          bgcolor: 'rgba(100, 255, 218, 0.1)',
+                          bgcolor: 'rgba(var(--accent-rgb), 0.1)',
                           color: 'primary.main',
                           fontWeight: 600,
                           fontSize: '0.7rem',
@@ -116,10 +116,10 @@ export default function ThesisProjects() {
                       label={tag}
                       size="small"
                       sx={{
-                        bgcolor: 'rgba(100, 255, 218, 0.06)',
+                        bgcolor: 'rgba(var(--accent-rgb), 0.06)',
                         color: 'primary.main',
                         border: '1px solid',
-                        borderColor: 'rgba(100, 255, 218, 0.15)',
+                        borderColor: 'rgba(var(--accent-rgb), 0.15)',
                         fontFamily: '"JetBrains Mono", monospace',
                         fontSize: '0.7rem',
                         height: 22,
@@ -140,7 +140,7 @@ export default function ThesisProjects() {
                         size="small"
                         endIcon={<LaunchIcon sx={{ fontSize: 14 }} />}
                         sx={{
-                          borderColor: 'rgba(100, 255, 218, 0.3)',
+                          borderColor: 'rgba(var(--accent-rgb), 0.3)',
                           fontSize: '0.8rem',
                           '&:hover': { borderColor: 'primary.main' },
                         }}

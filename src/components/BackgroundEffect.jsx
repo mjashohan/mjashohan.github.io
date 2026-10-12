@@ -23,7 +23,7 @@ export default function BackgroundEffect() {
                         height: { xs: 280, sm: 360, md: 480 },
                         top: '-10%',
                         left: '-8%',
-                        background: 'radial-gradient(circle, rgba(100,255,218,0.18), transparent 70%)',
+                        background: 'radial-gradient(circle, rgba(var(--accent-rgb),0.18), transparent 70%)',
                         animationDelay: '0s',
                     }}
                 />
@@ -34,7 +34,7 @@ export default function BackgroundEffect() {
                         height: { xs: 220, sm: 300, md: 380 },
                         bottom: '5%',
                         right: '-6%',
-                        background: 'radial-gradient(circle, rgba(255,126,95,0.14), transparent 70%)',
+                        background: 'radial-gradient(circle, rgba(var(--secondary-rgb),0.14), transparent 70%)',
                         animationDelay: '-3s',
                     }}
                 />

@@ -97,7 +97,7 @@ function RepoCard({ repo, index }) {
                     '&:hover': {
                         transform: 'translateY(-6px)',
                         borderColor: 'primary.main',
-                        boxShadow: '0 16px 48px rgba(100, 255, 218, 0.15)',
+                        boxShadow: '0 16px 48px rgba(var(--accent-rgb), 0.15)',
                         '& .repo-thumb': {
                             transform: 'scale(1.05)',
                         },
@@ -122,8 +122,8 @@ function RepoCard({ repo, index }) {
                             transition: 'transform 0.6s ease',
                             background: `
                 radial-gradient(ellipse at 30% 30%, ${langColor}30, transparent 60%),
-                radial-gradient(ellipse at 70% 70%, rgba(100, 255, 218, 0.15), transparent 60%),
-                linear-gradient(135deg, #131826 0%, #1a2032 100%)
+                radial-gradient(ellipse at 70% 70%, rgba(var(--accent-rgb), 0.15), transparent 60%),
+                linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%)
               `,
                             display: 'flex',
                             alignItems: 'center',
@@ -149,7 +149,7 @@ function RepoCard({ repo, index }) {
                             position: 'absolute',
                             inset: 0,
                             backgroundImage:
-                                'linear-gradient(rgba(100,255,218,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(100,255,218,0.05) 1px, transparent 1px)',
+                                'linear-gradient(rgba(var(--accent-rgb),0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--accent-rgb),0.05) 1px, transparent 1px)',
                             backgroundSize: '20px 20px',
                             opacity: 0.6,
                         }}
@@ -243,12 +243,12 @@ function RepoCard({ repo, index }) {
                                     label={t}
                                     size="small"
                                     sx={{
-                                        bgcolor: 'rgba(100, 255, 218, 0.06)',
+                                        bgcolor: 'rgba(var(--accent-rgb), 0.06)',
                                         color: 'primary.main',
                                         fontSize: '0.65rem',
                                         height: 18,
                                         border: '1px solid',
-                                        borderColor: 'rgba(100, 255, 218, 0.15)',
+                                        borderColor: 'rgba(var(--accent-rgb), 0.15)',
                                     }}
                                 />
                             ))}
@@ -346,7 +346,7 @@ export default function GithubCarousel() {
                         label={`${repos.length} ${repos.length === 1 ? g.repo : g.repos}`}
                         size="small"
                         sx={{
-                            bgcolor: 'rgba(100, 255, 218, 0.08)',
+                            bgcolor: 'rgba(var(--accent-rgb), 0.08)',
                             color: 'primary.main',
                             fontFamily: '"JetBrains Mono", monospace',
                             fontSize: '0.7rem',
@@ -388,7 +388,7 @@ export default function GithubCarousel() {
                   size="small"
                   variant="outlined"
                   sx={{
-                      borderColor: 'rgba(100, 255, 218, 0.3)',
+                      borderColor: 'rgba(var(--accent-rgb), 0.3)',
                       fontSize: '0.78rem',
                   }}
               >
@@ -426,8 +426,8 @@ export default function GithubCarousel() {
                     severity="warning"
                     sx={{
                         mb: 2,
-                        bgcolor: 'rgba(255, 126, 95, 0.08)',
-                        border: '1px solid rgba(255, 126, 95, 0.2)',
+                        bgcolor: 'rgba(var(--secondary-rgb), 0.08)',
+                        border: '1px solid rgba(var(--secondary-rgb), 0.2)',
                     }}
                 >
                     {g.errorPrefix} {error}.{' '}
@@ -457,7 +457,7 @@ export default function GithubCarousel() {
                     scrollbarWidth: 'thin',
                     '&::-webkit-scrollbar': { height: 6 },
                     '&::-webkit-scrollbar-thumb': {
-                        background: 'rgba(100, 255, 218, 0.2)',
+                        background: 'rgba(var(--accent-rgb), 0.2)',
                         borderRadius: 3,
                     },
                 }}
@@ -475,7 +475,7 @@ export default function GithubCarousel() {
                             <Skeleton
                                 variant="rounded"
                                 height={340}
-                                sx={{ bgcolor: 'rgba(100, 255, 218, 0.04)' }}
+                                sx={{ bgcolor: 'rgba(var(--accent-rgb), 0.04)' }}
                             />
                         </Box>
                     ))

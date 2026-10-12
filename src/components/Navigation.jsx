@@ -22,6 +22,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 import LanguageSwitcher from './LanguageSwitcher.jsx';
+import ThemeToggle from './ThemeToggle.jsx';
 import { useI18n } from '../i18n/I18nProvider.jsx';
 
 export const NAV_HEIGHT = { xs: 56, sm: 64, md: 72 };
@@ -111,7 +112,8 @@ export default function Navigation() {
                     left: 0,
                     right: 0,
                     width: '100%',
-                    bgcolor: 'rgba(10, 14, 23, 0.78)',
+                    bgcolor: 'rgba(var(--bg-rgb), 0.78)',
+                    color: 'text.primary',
                     backdropFilter: 'blur(16px)',
                     WebkitBackdropFilter: 'blur(16px)',
                     borderBottom: '1px solid',
@@ -195,9 +197,9 @@ export default function Navigation() {
                                                     right: 8,
                                                     bottom: 2,
                                                     height: 2,
-                                                    background: 'linear-gradient(90deg, #64ffda, #8effe7)',
+                                                    background: 'linear-gradient(90deg, var(--primary), var(--primary-light))',
                                                     borderRadius: 2,
-                                                    boxShadow: '0 0 8px rgba(100,255,218,0.6)',
+                                                    boxShadow: '0 0 8px rgba(var(--accent-rgb),0.6)',
                                                 }}
                                                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                                             />
@@ -257,7 +259,7 @@ export default function Navigation() {
                                         sx: {
                                             mt: 1,
                                             minWidth: 210,
-                                            bgcolor: 'rgba(10, 14, 23, 0.96)',
+                                            bgcolor: 'rgba(var(--bg-rgb), 0.96)',
                                             backdropFilter: 'blur(20px)',
                                             WebkitBackdropFilter: 'blur(20px)',
                                             backgroundImage: 'none',
@@ -282,7 +284,7 @@ export default function Navigation() {
                                             px: 2,
                                             color: 'text.primary',
                                             '&:hover': {
-                                                bgcolor: 'rgba(100, 255, 218, 0.08)',
+                                                bgcolor: 'rgba(var(--accent-rgb), 0.08)',
                                                 color: 'primary.main',
                                             },
                                         }}
@@ -295,15 +297,17 @@ export default function Navigation() {
                                 ))}
                             </Menu>
 
-                            <Box sx={{ ml: 1 }}>
+                            <Stack direction="row" alignItems="center" spacing={1} sx={{ ml: 1 }}>
+                                <ThemeToggle />
                                 <LanguageSwitcher />
-                            </Box>
+                            </Stack>
                         </Stack>
                     )}
 
                     {/* Mobile / tablet menu button */}
                     {isMobile && (
                         <Stack direction="row" alignItems="center" spacing={0.5}>
+                            <ThemeToggle />
                             <LanguageSwitcher />
                             <IconButton
                                 onClick={() => setDrawerOpen(true)}
@@ -326,7 +330,7 @@ export default function Navigation() {
                     sx: {
                         width: { xs: '78vw', sm: 320 },
                         maxWidth: 360,
-                        bgcolor: 'rgba(10, 14, 23, 0.96)',
+                        bgcolor: 'rgba(var(--bg-rgb), 0.96)',
                         backdropFilter: 'blur(20px)',
                         WebkitBackdropFilter: 'blur(20px)',
                         borderLeft: '1px solid',
@@ -372,9 +376,9 @@ export default function Navigation() {
                                     px: 3,
                                     borderLeft: '2px solid',
                                     borderColor: isActive ? 'primary.main' : 'transparent',
-                                    bgcolor: isActive ? 'rgba(100, 255, 218, 0.06)' : 'transparent',
+                                    bgcolor: isActive ? 'rgba(var(--accent-rgb), 0.06)' : 'transparent',
                                     transition: 'all 0.2s ease',
-                                    '&:hover': { bgcolor: 'rgba(100, 255, 218, 0.08)' },
+                                    '&:hover': { bgcolor: 'rgba(var(--accent-rgb), 0.08)' },
                                 }}
                             >
                                 <Typography
@@ -432,7 +436,7 @@ export default function Navigation() {
                                 borderLeft: '2px solid',
                                 borderColor: 'transparent',
                                 transition: 'all 0.2s ease',
-                                '&:hover': { bgcolor: 'rgba(100, 255, 218, 0.08)' },
+                                '&:hover': { bgcolor: 'rgba(var(--accent-rgb), 0.08)' },
                             }}
                         >
                             <ListItemText

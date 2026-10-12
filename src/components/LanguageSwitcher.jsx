@@ -64,7 +64,7 @@ export default function LanguageSwitcher() {
                         sx: {
                             mt: 1,
                             minWidth: 160,
-                            bgcolor: 'rgba(10, 14, 23, 0.96)',
+                            bgcolor: 'rgba(var(--bg-rgb), 0.96)',
                             backdropFilter: 'blur(20px)',
                             WebkitBackdropFilter: 'blur(20px)',
                             backgroundImage: 'none',
@@ -87,11 +87,11 @@ export default function LanguageSwitcher() {
                             px: 2,
                             color: l.code === lang ? 'primary.main' : 'text.primary',
                             '&:hover': {
-                                bgcolor: 'rgba(100, 255, 218, 0.08)',
+                                bgcolor: 'rgba(var(--accent-rgb), 0.08)',
                                 color: 'primary.main',
                             },
                             '&.Mui-selected, &.Mui-selected:hover': {
-                                bgcolor: 'rgba(100, 255, 218, 0.06)',
+                                bgcolor: 'rgba(var(--accent-rgb), 0.06)',
                             },
                         }}
                     >

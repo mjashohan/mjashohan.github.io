@@ -6,6 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="description" content="Md Jahan Ali Shohan – Software Engineer. Java, Liferay, Spring Boot, React. Based in Essen, Germany." />
   <meta name="theme-color" content="#0a0e17" />
+  <!-- Apply the theme before first paint to avoid a dark/light flash:
+       an explicit saved choice wins, otherwise follow the OS setting. -->
+  <script>
+    (function () {
+      var mode = null;
+      try { mode = localStorage.getItem('theme-mode'); } catch (e) { /* storage unavailable */ }
+      if (mode !== 'light' && mode !== 'dark') {
+        mode = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      }
+      document.documentElement.setAttribute('data-theme', mode);
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', mode === 'light' ? '#f4f7fb' : '#0a0e17');
+    })();
+  </script>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Shohan" />

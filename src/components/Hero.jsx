@@ -151,9 +151,9 @@ export default function Hero() {
                         onClick={() => scrollTo('projects')}
                         endIcon={<ArrowDownwardIcon />}
                         sx={{
-                            boxShadow: '0 8px 32px rgba(100, 255, 218, 0.25)',
+                            boxShadow: '0 8px 32px rgba(var(--accent-rgb), 0.25)',
                             '&:hover': {
-                                boxShadow: '0 12px 40px rgba(100, 255, 218, 0.4)',
+                                boxShadow: '0 12px 40px rgba(var(--accent-rgb), 0.4)',
                                 transform: 'translateY(-2px)',
                             },
                             transition: 'all 0.25s ease',
@@ -171,7 +171,7 @@ export default function Hero() {
                             borderWidth: 1.5,
                             '&:hover': {
                                 borderWidth: 1.5,
-                                bgcolor: 'rgba(100, 255, 218, 0.05)',
+                                bgcolor: 'rgba(var(--accent-rgb), 0.05)',
                                 transform: 'translateY(-2px)',
                             },
                             transition: 'all 0.25s ease',

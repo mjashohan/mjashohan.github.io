@@ -27,7 +27,7 @@ export default function ExperienceSection() {
                     bottom: 8,
                     width: 2,
                     background:
-                        'linear-gradient(180deg, rgba(100,255,218,0.5) 0%, rgba(100,255,218,0.05) 100%)',
+                        'linear-gradient(180deg, rgba(var(--accent-rgb),0.5) 0%, rgba(var(--accent-rgb),0.05) 100%)',
                 },
             }}
         >
@@ -52,7 +52,7 @@ export default function ExperienceSection() {
                   bgcolor: 'background.default',
                   border: '2px solid',
                   borderColor: 'primary.main',
-                  boxShadow: '0 0 12px rgba(100, 255, 218, 0.6)',
+                  boxShadow: '0 0 12px rgba(var(--accent-rgb), 0.6)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -72,7 +72,7 @@ export default function ExperienceSection() {
                   '&:hover': {
                     transform: 'translateX(4px)',
                     borderColor: 'primary.main',
-                    boxShadow: '0 8px 32px rgba(100, 255, 218, 0.1)',
+                    boxShadow: '0 8px 32px rgba(var(--accent-rgb), 0.1)',
                   },
                 }}
               >
@@ -95,7 +95,7 @@ export default function ExperienceSection() {
                       sx={{
                         color: 'primary.main',
                         fontFamily: '"JetBrains Mono", monospace',
-                        bgcolor: 'rgba(100, 255, 218, 0.08)',
+                        bgcolor: 'rgba(var(--accent-rgb), 0.08)',
                         px: 1.2,
                         py: 0.4,
                         borderRadius: 1,
@@ -137,10 +137,10 @@ export default function ExperienceSection() {
                         label={t}
                         size="small"
                         sx={{
-                          bgcolor: 'rgba(100, 255, 218, 0.06)',
+                          bgcolor: 'rgba(var(--accent-rgb), 0.06)',
                           color: 'primary.main',
                           border: '1px solid',
-                          borderColor: 'rgba(100, 255, 218, 0.15)',
+                          borderColor: 'rgba(var(--accent-rgb), 0.15)',
                           fontFamily: '"JetBrains Mono", monospace',
                           fontSize: '0.7rem',
                           height: 22,

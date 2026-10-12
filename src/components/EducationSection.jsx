@@ -28,7 +28,7 @@ export default function EducationSection() {
                 '&:hover': {
                   transform: 'translateY(-4px)',
                   borderColor: 'primary.main',
-                  boxShadow: '0 12px 40px rgba(100, 255, 218, 0.12)',
+                  boxShadow: '0 12px 40px rgba(var(--accent-rgb), 0.12)',
                 },
               }}
             >
@@ -41,7 +41,7 @@ export default function EducationSection() {
                   width: 3,
                   height: '100%',
                   background:
-                    'linear-gradient(180deg, #64ffda 0%, transparent 100%)',
+                    'linear-gradient(180deg, var(--primary) 0%, transparent 100%)',
                   borderTopLeftRadius: 12,
                   borderBottomLeftRadius: 12,
                 }}
@@ -65,7 +65,7 @@ export default function EducationSection() {
                     sx={{
                       color: 'primary.main',
                       fontFamily: '"JetBrains Mono", monospace',
-                      bgcolor: 'rgba(100, 255, 218, 0.08)',
+                      bgcolor: 'rgba(var(--accent-rgb), 0.08)',
                       px: 1.2,
                       py: 0.4,
                       borderRadius: 1,
@@ -108,7 +108,7 @@ export default function EducationSection() {
                       size="small"
                       variant="outlined"
                       sx={{
-                        borderColor: 'rgba(100, 255, 218, 0.2)',
+                        borderColor: 'rgba(var(--accent-rgb), 0.2)',
                         color: 'text.primary',
                         fontSize: '0.78rem',
                       }}

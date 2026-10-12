@@ -16,7 +16,7 @@ export default function ProjectsSection() {
 
       <GithubCarousel />
 
-      <Divider sx={{ my: { xs: 5, md: 7 }, borderColor: 'rgba(100, 255, 218, 0.1)' }} />
+      <Divider sx={{ my: { xs: 5, md: 7 }, borderColor: 'rgba(var(--accent-rgb), 0.1)' }} />
 
       <ThesisProjects />
     </Box>

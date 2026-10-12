@@ -39,7 +39,7 @@ export default function ActivitiesSection() {
                     '&:hover': {
                       borderColor: 'primary.main',
                       transform: 'translateY(-4px)',
-                      boxShadow: '0 12px 40px rgba(100, 255, 218, 0.1)',
+                      boxShadow: '0 12px 40px rgba(var(--accent-rgb), 0.1)',
                     },
                   }}
                 >
@@ -50,12 +50,12 @@ export default function ActivitiesSection() {
                           width: 44,
                           height: 44,
                           borderRadius: 2,
-                          bgcolor: 'rgba(100, 255, 218, 0.08)',
+                          bgcolor: 'rgba(var(--accent-rgb), 0.08)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                           border: '1px solid',
-                          borderColor: 'rgba(100, 255, 218, 0.2)',
+                          borderColor: 'rgba(var(--accent-rgb), 0.2)',
                         }}
                       >
                         <Icon sx={{ color: 'primary.main', fontSize: 22 }} />
@@ -81,7 +81,7 @@ export default function ActivitiesSection() {
                               height: 4,
                               borderRadius: '50%',
                               bgcolor: 'primary.main',
-                              boxShadow: '0 0 6px rgba(100, 255, 218, 0.6)',
+                              boxShadow: '0 0 6px rgba(var(--accent-rgb), 0.6)',
                             },
                           }}
                         >

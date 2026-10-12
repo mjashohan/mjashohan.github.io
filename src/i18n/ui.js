@@ -18,6 +18,8 @@ export const ui = {
       openMenu: 'Open navigation menu',
       closeMenu: 'Close navigation menu',
       language: 'Language',
+      switchToLight: 'Switch to light mode',
+      switchToDark: 'Switch to dark mode',
     },
     hero: {
       greeting: "Hi, I'm",
@@ -101,6 +103,8 @@ export const ui = {
       openMenu: 'Navigationsmenü öffnen',
       closeMenu: 'Navigationsmenü schließen',
       language: 'Sprache',
+      switchToLight: 'Zum hellen Modus wechseln',
+      switchToDark: 'Zum dunklen Modus wechseln',
     },
     hero: {
       greeting: 'Hallo, ich bin',
